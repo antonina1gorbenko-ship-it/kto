@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Лекція 7. Інтерактивні сервіси оцінювання та зворотного зв’язку</title>
+<meta name="description" content="Лекція 7 електронного посібника «Комп’ютерні технології в освітньому процесі»: Інтерактивні сервіси оцінювання та зворотного зв’язку">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23F26B1D'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23fff'%3EКТ%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>try{var t=localStorage.getItem('posibnyk-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body data-lecture="7">
+
+<div class="course-bar">
+  <div class="course-bar-inner">
+    <a class="course-home" href="index.html" title="На титульну сторінку">
+      <span class="logo">КТ</span><span class="t">Комп’ютерні технології в освітньому процесі</span>
+    </a>
+    <div class="course-actions">
+      <details class="course-menu">
+        <summary class="bar-btn">☰ <span class="lbl">Лекції</span></summary>
+        <div class="menu-panel"><ol id="courseMenuList"></ol></div>
+      </details>
+      <button class="bar-btn" id="themeToggle" type="button" aria-label="Змінити тему оформлення">◐ <span class="lbl">Тема</span></button>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <img class="hero-net" src="assets/img/hero-net.svg" alt="" aria-hidden="true">
+  <div class="hero-inner">
+    <span class="eyebrow">Лекція 7 · Тема 7</span>
+    <h1>Інтерактивні сервіси оцінювання <span class="hl">та зворотного зв’язку</span></h1>
+    <p class="theme">Цифрові інструменти формувального й підсумкового оцінювання та аналіз результатів здобувачів освіти.</p>
+    <div class="meta-row">
+      <span class="meta-chip draft-chip">✎ <b>Заготовка</b> лекція в розробці</span>
+    </div>
+  </div>
+</header>
+
+<nav class="toc-bar">
+  <div class="toc-inner">
+    <a href="#s1" data-toc="s1">1. Оцінювання</a>
+    <a href="#s2" data-toc="s2">2. Вікторини</a>
+    <a href="#s3" data-toc="s3">3. Вправи</a>
+    <a href="#s4" data-toc="s4">4. Аналіз</a>
+    <a href="#summary" data-toc="summary">Підсумок</a>
+    <a href="#literature" data-toc="literature">Література</a>
+    <span class="toc-progress" id="tocProgress">прогрес: <b>0%</b></span>
+  </div>
+  <div class="progress-track"><div class="fill" id="progressFill"></div></div>
+</nav>
+
+<main>
+
+  <div class="goal">
+    <h2>Мета лекції</h2>
+    <p class="placeholder">Сформулюйте мету лекції: які знання, уміння та компетентності сформує тема в здобувачів освіти.</p>
+  </div>
+
+  <!-- ================= 1. ФОРМУВАЛЬНЕ ТА ПІДСУМКОВЕ ОЦІНЮВАННЯ ================= -->
+  <section class="topic" id="s1">
+    <div class="topic-head">
+      <span class="topic-num">01</span>
+      <h2>Формувальне та підсумкове оцінювання</h2>
+    </div>
+
+    <div class="draft">
+        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+        <p>Підказка: готові блоки (схема, таблиця, картки, кейс, виноска) можна скопіювати з <a href="lecture-08.html">лекції 8</a> — стилі вже підключено до всіх сторінок.</p>
+    </div>
+  </section>
+
+  <!-- ================= 2. ОНЛАЙН-ВІКТОРИНИ ТА ТЕСТИ ================= -->
+  <section class="topic" id="s2">
+    <div class="topic-head">
+      <span class="topic-num">02</span>
+      <h2>Онлайн-вікторини та тести</h2>
+    </div>
+
+    <div class="draft">
+        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+    </div>
+
+    <!-- ТЕСТ: змініть текст запитання та варіантів.
+         data-correct — номер правильної відповіді, відлік від 0 (0 — перший варіант). -->
+    <div class="box test" id="test-1">
+      <div class="box-title"><span class="box-tag">ТЕСТ 1</span> Назва тесту<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Сформулюйте запитання тесту.</div>
+      <div class="quiz" data-correct="0">
+        <button class="test-opt" type="button">варіант відповіді 1 (правильний)</button>
+        <button class="test-opt" type="button">варіант відповіді 2</button>
+        <button class="test-opt" type="button">варіант відповіді 3</button>
+        <button class="test-opt" type="button">варіант відповіді 4</button>
+        <div class="test-feedback"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. ІНТЕРАКТИВНІ ВПРАВИ ================= -->
+  <section class="topic" id="s3">
+    <div class="topic-head">
+      <span class="topic-num">03</span>
+      <h2>Інтерактивні вправи</h2>
+    </div>
+
+    <div class="draft">
+        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+    </div>
+  </section>
+
+  <!-- ================= 4. АНАЛІЗ РЕЗУЛЬТАТІВ І ЗВОРОТНИЙ ЗВ’ЯЗОК ================= -->
+  <section class="topic" id="s4">
+    <div class="topic-head">
+      <span class="topic-num">04</span>
+      <h2>Аналіз результатів і зворотний зв’язок</h2>
+    </div>
+
+    <div class="draft">
+        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+    </div>
+
+    <!-- ЗАВДАННЯ: кожен пункт списку — окремий крок, який здобувач освіти позначає галочкою. -->
+    <div class="box task" id="task-1">
+      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 1</span> Назва практичного завдання<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <ol>
+        <li>Опишіть перший крок завдання.</li>
+        <li>Опишіть другий крок завдання.</li>
+        <li>Опишіть, де та як здобувач освіти здає результат (наприклад, у <b>Classroom</b>).</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ================= ПІДСУМОК ================= -->
+  <section class="topic" id="summary">
+    <div class="topic-head">
+      <span class="topic-num">✓</span>
+      <h2>Ключові поняття та самоперевірка</h2>
+    </div>
+
+    <h3 class="sub-h" style="margin-top:0">Ключові поняття</h3>
+    <dl class="glossary">
+      <div class="term"><dt>Термін 1</dt><dd class="placeholder">визначення терміна.</dd></div>
+      <div class="term"><dt>Термін 2</dt><dd class="placeholder">визначення терміна.</dd></div>
+      <div class="term"><dt>Термін 3</dt><dd class="placeholder">визначення терміна.</dd></div>
+      <div class="term"><dt>Термін 4</dt><dd class="placeholder">визначення терміна.</dd></div>
+    </dl>
+
+    <h3 class="sub-h">Питання для самоперевірки</h3>
+    <ol class="questions">
+      <li class="placeholder">Питання для самоперевірки.</li>
+      <li class="placeholder">Питання для самоперевірки.</li>
+      <li class="placeholder">Питання для самоперевірки.</li>
+    </ol>
+  </section>
+
+  <!-- ================= ЛІТЕРАТУРА ================= -->
+  <section class="lit end" id="literature">
+    <h2>Література <span>до теми</span></h2>
+    <ol>
+      <li>Додайте джерело, оформлене за ДСТУ 8302:2015.</li>
+      <li>Для електронних ресурсів укажіть URL та дату звернення.</li>
+    </ol>
+  </section>
+
+</main>
+
+<nav class="lecture-nav" id="lectureNav" aria-label="Навігація між лекціями"></nav>
+
+<footer>
+  <span>Лекція 7 · Тема 7 · Спеціальність «Професійна освіта»</span>
+  <button class="reset-btn" id="resetBtn" type="button">↺ скинути прогрес</button>
+  <span class="mono">оновлено: 08.11.2026</span>
+</footer>
+
+<script src="assets/js/course.js"></script>
+<script src="assets/js/lecture.js"></script>
+</body>
+</html>

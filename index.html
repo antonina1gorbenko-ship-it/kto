@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Комп’ютерні технології в освітньому процесі — електронний навчальний посібник</title>
+<meta name="description" content="Електронний навчальний посібник «Комп’ютерні технології в освітньому процесі» для здобувачів освіти спеціальності «Професійна освіта»: 15 лекцій з тестами, практичними завданнями та самоперевіркою">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23F26B1D'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23fff'%3EКТ%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<script>try{var t=localStorage.getItem('posibnyk-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body data-lecture="0">
+
+<div class="course-bar">
+  <div class="course-bar-inner">
+    <a class="course-home" href="index.html" title="На титульну сторінку">
+      <span class="logo">КТ</span><span class="t">Комп’ютерні технології в освітньому процесі</span>
+    </a>
+    <div class="course-actions">
+      <details class="course-menu">
+        <summary class="bar-btn">☰ <span class="lbl">Лекції</span></summary>
+        <div class="menu-panel"><ol id="courseMenuList"></ol></div>
+      </details>
+      <button class="bar-btn" id="themeToggle" type="button" aria-label="Змінити тему оформлення">◐ <span class="lbl">Тема</span></button>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <img class="hero-net" src="assets/img/hero-net.svg" alt="" aria-hidden="true">
+  <div class="hero-inner">
+    <span class="eyebrow">Електронний навчальний посібник</span>
+    <h1>Комп’ютерні технології <span class="hl">в освітньому процесі</span></h1>
+    <p class="theme">Курс лекцій для майбутніх педагогів професійного навчання: від хмарних сервісів і мультимедіа до штучного інтелекту, кібербезпеки та цифрового портфоліо.</p>
+    <div class="meta-row">
+      <span class="meta-chip"><b>15</b> лекцій</span>
+      <span class="meta-chip">🎓 Спеціальність «Професійна освіта»</span>
+      <span class="meta-chip">✍ Укладачка: <b>А. Горбенко</b></span>
+      <span class="meta-chip">📅 2026/2027 н. р.</span>
+    </div>
+    <div class="hero-actions">
+      <a class="hero-btn" href="#contents">Зміст посібника ↓</a>
+      <a class="hero-btn ghost" id="continueBtn" href="#contents" hidden>Продовжити →</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="goal">
+    <h2>Про посібник</h2>
+    <p>Посібник допомагає сформувати цифрову компетентність майбутнього педагога професійного навчання: обирати доцільні цифрові інструменти, створювати власні електронні освітні ресурси та безпечно, доброчесно впроваджувати технології в освітній процес. Кожна лекція містить теоретичний матеріал, схеми, кейси, інтерактивні тести й практичні завдання.</p>
+  </div>
+
+  <!-- ================= 1. ЯК ПРАЦЮВАТИ ================= -->
+  <section class="topic" id="how">
+    <div class="topic-head">
+      <span class="topic-num">01</span>
+      <h2>Як працювати з посібником</h2>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="ic">🎯</div>
+        <h3>Почніть із мети</h3>
+        <p>На початку кожної лекції сформульовано мету: які знання та вміння ви отримаєте. Зміст лекції закріплено вгорі сторінки — по ньому зручно переходити між розділами.</p>
+      </div>
+      <div class="card">
+        <div class="ic">🧪</div>
+        <h3>Перевіряйте себе тестами</h3>
+        <p>Помаранчеві блоки — тести з миттєвою перевіркою. Оберіть відповідь, і система одразу покаже, чи правильно ви відповіли.</p>
+      </div>
+      <div class="card">
+        <div class="ic">✅</div>
+        <h3>Виконуйте завдання</h3>
+        <p>Сині блоки — практичні завдання. Позначайте виконані кроки галочкою: вони зберігаються, навіть якщо ви закриєте сторінку.</p>
+      </div>
+      <div class="card">
+        <div class="ic">📈</div>
+        <h3>Стежте за прогресом</h3>
+        <p>Смуга вгорі лекції показує відсоток виконання. Прогрес кожної лекції видно і в змісті посібника нижче.</p>
+      </div>
+      <div class="card">
+        <div class="ic">❓</div>
+        <h3>Підбийте підсумок</h3>
+        <p>Наприкінці лекції — ключові поняття, питання для самоперевірки та література до теми з активними посиланнями.</p>
+      </div>
+      <div class="card">
+        <div class="ic">🌗</div>
+        <h3>Налаштуйте зручність</h3>
+        <p>Кнопка «Тема» вгорі вмикає темне оформлення. Посібник адаптовано для телефона, планшета й комп’ютера.</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>Важливо.</b> Прогрес зберігається лише у вашому браузері на цьому пристрої. Якщо відкриєте посібник на іншому пристрої або очистите дані браузера, позначки доведеться ставити знову.</div>
+  </section>
+
+  <!-- ================= 2. ЗМІСТ ================= -->
+  <section class="topic" id="contents">
+    <div class="topic-head">
+      <span class="topic-num">02</span>
+      <h2>Зміст посібника</h2>
+    </div>
+
+    <div class="legend-row">
+      <span class="legend-pill"><i style="background:var(--accent)"></i>готова лекція</span>
+      <span class="legend-pill"><i style="background:var(--surface-2);border:1px solid var(--line)"></i>лекція в розробці</span>
+    </div>
+
+    <div class="lec-grid" id="lectureGrid">
+      <noscript><p>Увімкніть JavaScript, щоб побачити зміст, або відкрийте <a href="lecture-01.html">лекцію 1</a>.</p></noscript>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span>© 2026 А. Горбенко · Електронний навчальний посібник «Комп’ютерні технології в освітньому процесі»</span>
+  <span class="mono">оновлено: 08.11.2026</span>
+</footer>
+
+<script src="assets/js/course.js"></script>
+</body>
+</html>

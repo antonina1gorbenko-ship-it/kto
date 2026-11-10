@@ -3,50 +3,704 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Лекція 9. Дистанційне та змішане навчання</title>
-<meta name="description" content="Лекція 9 електронного посібника «Комп’ютерні технології в освітньому процесі»: Дистанційне та змішане навчання">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23F26B1D'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23fff'%3EКТ%3C/text%3E%3C/svg%3E">
+<title>Гейміфікація освітнього процесу</title>
+<meta name="description" content="Лекція 9 для спеціальності «Професійна освіта»: гейміфікація освітнього процесу — поняття, психологічні засади, ігрові механіки, проєктування, ризики та етика">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
-<script>try{var t=localStorage.getItem('posibnyk-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
-</head>
-<body data-lecture="9">
+<style>
+  :root{
+    --navy:#0E1F4D;
+    --ink:#0E1F4D;
+    --ink-soft:#2B3A63;
+    --ink-muted:#5A6788;
+    --paper:#FFFFFF;
+    --surface:#FFFFFF;
+    --surface-2:#F4F7FF;
+    --line:#DCE3F4;
+    --accent:#1D4ED8;
+    --accent-ink:#163BA6;
+    --accent-tint:#E8EEFF;
+    --task:#1597E5;
+    --task-ink:#0B6AA8;
+    --task-tint:#E4F4FD;
+    --test:#F26B1D;
+    --test-ink:#C2500C;
+    --test-tint:#FFF1E7;
+    --bad:#C0262D;
+    --hero-a:#0E1F4D;
+    --hero-b:#1D4ED8;
+    --shadow:0 1px 2px rgba(14,31,77,.05), 0 14px 32px -18px rgba(14,31,77,.35);
+    --radius:18px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#EEF2FF;
+      --ink-soft:#C9D3F2;
+      --ink-muted:#93A1C8;
+      --paper:#081332;
+      --surface:#0F1D45;
+      --surface-2:#132453;
+      --line:#22346B;
+      --accent:#7C9BFF;
+      --accent-ink:#AFC2FF;
+      --accent-tint:#18295C;
+      --task:#4DB8F7;
+      --task-ink:#8FD3FB;
+      --task-tint:#0F2D4F;
+      --test:#FF8A3D;
+      --test-ink:#FFB27D;
+      --test-tint:#3A2210;
+      --bad:#FF6B6B;
+      --hero-a:#050C24;
+      --hero-b:#1636B0;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 34px -18px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#EEF2FF;
+    --ink-soft:#C9D3F2;
+    --ink-muted:#93A1C8;
+    --paper:#081332;
+    --surface:#0F1D45;
+    --surface-2:#132453;
+    --line:#22346B;
+    --accent:#7C9BFF;
+    --accent-ink:#AFC2FF;
+    --accent-tint:#18295C;
+    --task:#4DB8F7;
+    --task-ink:#8FD3FB;
+    --task-tint:#0F2D4F;
+    --test:#FF8A3D;
+    --test-ink:#FFB27D;
+    --test-tint:#3A2210;
+    --bad:#FF6B6B;
+    --hero-a:#050C24;
+    --hero-b:#1636B0;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 34px -18px rgba(0,0,0,.7);
+  }
 
-<div class="course-bar">
-  <div class="course-bar-inner">
-    <a class="course-home" href="index.html" title="На титульну сторінку">
-      <span class="logo">КТ</span><span class="t">Комп’ютерні технології в освітньому процесі</span>
-    </a>
-    <div class="course-actions">
-      <details class="course-menu">
-        <summary class="bar-btn">☰ <span class="lbl">Лекції</span></summary>
-        <div class="menu-panel"><ol id="courseMenuList"></ol></div>
-      </details>
-      <button class="bar-btn" id="themeToggle" type="button" aria-label="Змінити тему оформлення">◐ <span class="lbl">Тема</span></button>
-    </div>
-  </div>
-</div>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope',system-ui,'Segoe UI',sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Unbounded',system-ui,sans-serif;margin:0;text-wrap:balance;}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+  a{color:var(--accent);}
+  ::selection{background:var(--test);color:#fff;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    color:#fff;
+    background:
+      radial-gradient(circle at 88% 18%, rgba(242,107,29,.55) 0, rgba(242,107,29,0) 26%),
+      linear-gradient(135deg, var(--hero-a) 0%, var(--hero-b) 100%);
+    padding:72px 24px 120px;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    left:-5%; right:-5%; bottom:-1px;
+    height:90px;
+    background:var(--paper);
+    clip-path:polygon(0 70%, 30% 35%, 62% 72%, 100% 20%, 100% 100%, 0 100%);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    left:-5%; right:-5%; bottom:-1px;
+    height:110px;
+    background:var(--test);
+    clip-path:polygon(0 62%, 30% 27%, 62% 64%, 100% 12%, 100% 22%, 62% 74%, 30% 37%, 0 72%);
+    z-index:1;
+  }
+  .hero-net{
+    position:absolute;
+    right:-40px; top:10px;
+    width:min(560px,70vw);
+    height:auto;
+    opacity:.55;
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:2;max-width:1000px;margin:0 auto;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;
+    background:var(--test);
+    color:#fff;
+    padding:6px 14px;
+    border-radius:99px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;}
+  .hero h1{
+    font-size:clamp(32px,5.2vw,58px);
+    line-height:1.08;
+    font-weight:800;
+    max-width:14em;
+  }
+  .hero h1 .hl{
+    color:#FFB27D;
+  }
+  .hero .theme{
+    margin:18px 0 0;
+    font-size:clamp(16px,2vw,19px);
+    color:rgba(255,255,255,.86);
+    max-width:36em;
+    font-weight:500;
+  }
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+  .meta-chip{
+    display:flex;align-items:center;gap:7px;
+    font-size:13.5px;
+    color:#fff;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:12px;
+    padding:7px 13px;
+    backdrop-filter:blur(4px);
+  }
+  .meta-chip b{color:#FFB27D;font-family:'Unbounded',sans-serif;font-size:15px;}
+
+  /* ---------- sticky toc ---------- */
+  .toc-bar{
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .toc-inner{
+    max-width:1000px;margin:0 auto;padding:0 24px;
+    display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
+  }
+  .toc-inner::-webkit-scrollbar{display:none;}
+  .toc-inner a{
+    flex:none;
+    font-size:13px;font-weight:700;
+    color:var(--ink-muted);
+    text-decoration:none;
+    padding:14px 12px 12px;
+    border-bottom:3px solid transparent;
+    white-space:nowrap;
+  }
+  .toc-inner a:hover{color:var(--accent);}
+  .toc-inner a.active{color:var(--accent);border-bottom-color:var(--test);}
+  .toc-progress{
+    flex:none;margin-left:auto;
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--ink-muted);
+    padding:14px 0 12px 14px;white-space:nowrap;
+  }
+  .toc-progress b{color:var(--test);}
+  .progress-track{height:4px;background:var(--surface-2);}
+  .progress-track .fill{
+    height:100%;width:0%;
+    background:linear-gradient(90deg, var(--accent), var(--test));
+    border-radius:0 4px 4px 0;
+    transition:width .35s ease;
+  }
+
+  /* ---------- content ---------- */
+  main{max-width:1000px;margin:0 auto;padding:0 24px 40px;}
+
+  .goal{
+    position:relative;
+    margin:40px 0 0;
+    padding:26px 28px 24px 96px;
+    background:var(--accent-tint);
+    border-radius:var(--radius);
+  }
+  .goal::before{
+    content:"🎯";
+    position:absolute;left:24px;top:24px;
+    width:52px;height:52px;border-radius:16px;
+    background:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;
+    box-shadow:0 8px 18px -8px var(--accent);
+  }
+  .goal h2{font-size:15px;color:var(--accent-ink);margin-bottom:8px;letter-spacing:.02em;}
+  .goal p{margin:0;color:var(--ink-soft);font-size:16px;}
+
+  section.topic{margin-top:80px;scroll-margin-top:70px;}
+  .topic-head{
+    display:flex;align-items:center;gap:18px;
+    margin-bottom:26px;
+  }
+  .topic-num{
+    flex:none;
+    font-family:'Unbounded',sans-serif;
+    font-weight:800;
+    font-size:54px;
+    line-height:1;
+    color:transparent;
+    -webkit-text-stroke:2px var(--test);
+    letter-spacing:-.02em;
+  }
+  .topic h2{
+    font-size:clamp(22px,2.8vw,30px);
+    font-weight:700;
+    color:var(--ink);
+    position:relative;
+    padding-bottom:10px;
+  }
+  .topic h2::after{
+    content:"";position:absolute;left:0;bottom:0;
+    width:64px;height:5px;border-radius:5px;
+    background:linear-gradient(90deg, var(--test), var(--accent));
+  }
+  .topic p{color:var(--ink-soft);font-size:16.5px;margin:0 0 16px;}
+  .topic p b,.topic li b{color:var(--ink);font-weight:800;}
+  .topic ul{margin:0 0 20px;padding-left:0;list-style:none;color:var(--ink-soft);font-size:16px;}
+  .topic ul li{position:relative;padding-left:26px;margin-bottom:10px;}
+  .topic ul li::before{
+    content:"";position:absolute;left:4px;top:.62em;
+    width:9px;height:9px;border-radius:3px;
+    background:var(--test);
+    transform:rotate(45deg);
+  }
+
+  .callout{
+    position:relative;
+    background:var(--surface-2);
+    border-radius:14px;
+    padding:16px 20px 16px 22px;
+    margin:0 0 20px;
+    font-size:15px;
+    color:var(--ink-soft);
+    border-left:5px solid var(--test);
+  }
+  .callout b{color:var(--accent-ink);}
+
+  .sub-h{font-size:19px;font-weight:700;color:var(--ink);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .sub-h::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:5px 0 0 var(--test);margin-right:6px;}
+
+  /* ---------- diagrams ---------- */
+  figure.diagram{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 20px 16px;
+    margin:28px 0 30px;
+    box-shadow:var(--shadow);
+    position:relative;
+  }
+  figure.diagram::before{
+    content:"";position:absolute;left:24px;top:-1px;width:80px;height:4px;border-radius:0 0 4px 4px;
+    background:var(--test);
+  }
+  figure.diagram svg{display:block;width:100%;height:auto;}
+  figure.diagram figcaption{margin-top:14px;font-size:13.5px;color:var(--ink-muted);text-align:center;}
+  .svg-ink{fill:var(--ink);}
+  .svg-muted{fill:var(--ink-muted);}
+
+  /* ---------- tables ---------- */
+  .table-wrap{overflow-x:auto;}
+  .table-cap{font-size:14.5px;color:var(--ink-muted);margin:0 0 8px;}
+  .table-cap b{color:var(--test-ink);}
+  .data-table{
+    width:100%;border-collapse:separate;border-spacing:0;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;
+    font-size:14.5px;margin:6px 0 24px;
+  }
+  .data-table th{
+    text-align:left;
+    font-size:12.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+    color:#fff;background:var(--accent);
+    padding:11px 14px;
+  }
+  .data-table td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink-soft);vertical-align:top;}
+  .data-table tr:nth-child(even) td{background:var(--surface-2);}
+  .data-table tr:last-child td{border-bottom:none;}
+  .data-table td.yr{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--test-ink);white-space:nowrap;}
+  details.more{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:0 0 26px;overflow:hidden;}
+  details.more summary{
+    cursor:pointer;list-style:none;
+    padding:13px 18px;font-weight:800;font-size:15px;color:var(--accent-ink);
+    display:flex;align-items:center;gap:10px;
+  }
+  details.more summary::-webkit-details-marker{display:none;}
+  details.more summary::before{
+    content:"+";flex:none;
+    width:24px;height:24px;border-radius:8px;background:var(--test);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:800;
+  }
+  details.more[open] summary::before{content:"−";}
+  details.more .data-table{margin:0;border:none;border-radius:0;}
+  .risk{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:var(--ink);white-space:nowrap;}
+  .risk::before{content:"";width:11px;height:11px;border-radius:50%;background:var(--dot);flex:none;}
+  .risk.r1{--dot:var(--bad);}
+  .risk.r2{--dot:var(--test);}
+  .risk.r3{--dot:var(--accent);}
+  .risk.r4{--dot:var(--task);}
+
+  /* ---------- boxes ---------- */
+  .box{
+    position:relative;
+    border-radius:var(--radius);
+    padding:26px 26px 22px;
+    margin:28px 0 32px;
+    box-shadow:var(--shadow);
+    background:var(--surface);
+    border:2px solid var(--line);
+  }
+  .box.test{border-color:var(--test);background:linear-gradient(180deg, var(--test-tint), var(--surface) 70%);}
+  .box.task{border-color:var(--accent);background:linear-gradient(180deg, var(--accent-tint), var(--surface) 80%);}
+  .box-title{
+    font-family:'Unbounded',sans-serif;font-weight:700;font-size:16px;
+    margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .box.test .box-title{color:var(--test-ink);}
+  .box.task .box-title{color:var(--accent-ink);}
+  .box-tag{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:.06em;
+    padding:4px 10px;border-radius:8px;color:#fff;
+  }
+  .box.test .box-tag{background:var(--test);}
+  .box.task .box-tag{background:var(--accent);}
+  .box-check{display:none;font-size:13px;}
+  .box.done .box-check{display:inline;}
+  .box-progress{
+    margin-left:auto;
+    font-family:'JetBrains Mono',monospace;font-weight:600;font-size:11.5px;
+    padding:3px 10px;border-radius:99px;
+    background:var(--surface);color:var(--ink-muted);border:1px solid var(--line);
+    white-space:nowrap;
+  }
+  .box-progress:empty{display:none;}
+  .box.done .box-progress{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .box.test.done .box-progress{background:var(--test);border-color:var(--test);}
+  .box-close{
+    margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);
+    font-size:14.5px;color:var(--ink-soft);
+  }
+
+  .box ol{margin:0;padding:0;list-style:none;}
+  .box ol li{margin-bottom:12px;font-size:15.5px;color:var(--ink-soft);}
+  .box ol li:last-child{margin-bottom:0;}
+  .box ol li b{color:var(--ink);}
+  .step{display:flex;gap:12px;align-items:flex-start;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .step .num{
+    flex:none;width:28px;height:28px;border-radius:9px;
+    background:var(--surface);border:2px solid var(--accent);color:var(--accent);
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .15s,color .15s;
+  }
+  .chk{position:absolute;opacity:0;width:1px;height:1px;}
+  .step:has(.chk:checked) .num,.step.checked .num{background:var(--accent);color:#fff;}
+  .step:has(.chk:checked) .step-text,.step.checked .step-text{color:var(--ink-muted);text-decoration:line-through;text-decoration-color:var(--test);}
+  .chk:focus-visible ~ .num{outline:2px solid var(--test);outline-offset:2px;}
+  .step-text{flex:1;padding-top:2px;}
+
+  .test-q{font-weight:700;color:var(--ink);margin-bottom:14px;font-size:16px;}
+  .quiz{display:grid;gap:8px;}
+  .test-opt{
+    display:flex;width:100%;gap:12px;align-items:center;
+    font-size:15px;color:var(--ink-soft);
+    padding:11px 14px;margin:0;
+    border:2px solid var(--line);border-radius:12px;
+    background:var(--surface);
+    font-family:inherit;text-align:left;cursor:pointer;
+    transition:border-color .15s, transform .15s, background .15s;
+  }
+  .test-opt::before{
+    content:"";flex:none;width:18px;height:18px;border-radius:50%;
+    border:2px solid var(--test);background:var(--surface);
+  }
+  .test-opt:hover:not(:disabled){border-color:var(--test);transform:translateX(3px);}
+  .test-opt:disabled{cursor:default;}
+  .test-opt.is-correct{border-color:var(--accent);background:var(--accent-tint);color:var(--accent-ink);font-weight:800;}
+  .test-opt.is-correct::before{background:var(--accent);border-color:var(--accent);box-shadow:inset 0 0 0 3px var(--surface);}
+  .test-opt.is-wrong{border-color:var(--bad);background:color-mix(in srgb, var(--bad) 10%, var(--surface));}
+  .test-opt.is-wrong::before{background:var(--bad);border-color:var(--bad);box-shadow:inset 0 0 0 3px var(--surface);}
+  .test-feedback{margin-top:6px;font-size:14px;font-weight:800;display:none;}
+  .test-feedback.show{display:block;}
+  .test-feedback.correct{color:var(--accent-ink);}
+  .test-feedback.wrong{color:var(--bad);}
+  .box.done{box-shadow:var(--shadow), 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);}
+  .box.test.done{box-shadow:var(--shadow), 0 0 0 4px color-mix(in srgb, var(--test) 25%, transparent);}
+
+  /* ---------- prompt anatomy ---------- */
+  .prompt-demo{
+    background:var(--navy);
+    color:#fff;
+    border-radius:var(--radius);
+    padding:24px 26px 20px;
+    margin:28px 0 32px;
+    box-shadow:var(--shadow);
+  }
+  :root[data-theme="dark"] .prompt-demo{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .prompt-demo{background:var(--surface-2);} }
+  .prompt-demo .box-title{color:#fff;}
+  .prompt-demo .box-tag{background:var(--test);}
+  .prompt-text{font-size:16px;line-height:2.05;color:rgba(255,255,255,.9);font-family:'JetBrains Mono',monospace;font-size:14.5px;}
+  .seg{border-radius:6px;padding:2px 4px;cursor:pointer;box-shadow:inset 0 -2px 0 var(--c);transition:background .15s;}
+  .seg:hover,.seg.on{background:var(--c);color:#fff;}
+  .seg-role{--c:#5B8CFF;}
+  .seg-task{--c:#38BDF8;}
+  .seg-ctx{--c:#F26B1D;}
+  .seg-fmt{--c:#FFB27D;}
+  .seg-fmt.on,.seg-fmt:hover{color:var(--navy);}
+  .seg-lim{--c:#FF5A5F;}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px dashed rgba(255,255,255,.25);}
+  .legend button{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;
+    border:2px solid var(--c);color:#fff;background:transparent;
+    border-radius:99px;padding:5px 13px;cursor:pointer;
+  }
+  .legend button.on{background:var(--c);}
+  .legend button.seg-fmt.on{color:var(--navy);}
+  .legend-hint{font-size:13px;color:rgba(255,255,255,.65);margin:10px 0 0;}
+
+  /* ---------- cards ---------- */
+  .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:8px 0 30px;}
+  .card{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px 20px 18px;
+    box-shadow:var(--shadow);
+    transition:transform .2s, border-color .2s;
+  }
+  .card:hover{transform:translateY(-3px);border-color:var(--test);}
+  .card:nth-child(odd) .ic{background:var(--accent);}
+  .card:nth-child(even) .ic{background:var(--test);}
+  .card .ic{
+    width:44px;height:44px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:21px;margin-bottom:12px;
+  }
+  .card h3{font-family:'Manrope',sans-serif;font-size:16.5px;font-weight:800;margin-bottom:8px;color:var(--ink);}
+  .card p{font-size:14.5px;margin:0;color:var(--ink-soft);}
+
+  /* ---------- case ---------- */
+  .case{
+    background:var(--surface);
+    border:2px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 26px 20px;margin:28px 0 32px;box-shadow:var(--shadow);
+  }
+  .case .box-title{color:var(--ink);}
+  .case .box-tag{background:var(--navy);}
+  :root[data-theme="dark"] .case .box-tag{background:var(--accent);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .case .box-tag{background:var(--accent);} }
+  .case-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .case-side{border-radius:14px;padding:16px 18px;font-size:15px;color:var(--ink-soft);}
+  .case-side h4{margin:0 0 8px;font-size:14px;font-family:'Unbounded',sans-serif;}
+  .case-side.plus{background:var(--accent-tint);border-top:4px solid var(--accent);}
+  .case-side.plus h4{color:var(--accent-ink);}
+  .case-side.minus{background:var(--test-tint);border-top:4px solid var(--test);}
+  .case-side.minus h4{color:var(--test-ink);}
+  .case-side p{margin:0;}
+  .case .box-close i{color:var(--test-ink);font-weight:800;font-style:normal;}
+
+  /* ---------- rules ---------- */
+  .topic ul.rules{counter-reset:r;display:grid;gap:10px;margin-bottom:26px;}
+  .topic ul.rules li{
+    counter-increment:r;
+    margin:0;padding:14px 16px 14px 62px;
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);
+  }
+  .topic ul.rules li::before{
+    content:counter(r);
+    transform:none;
+    left:14px;top:50%;margin-top:-17px;
+    width:34px;height:34px;border-radius:11px;
+    background:var(--accent);
+    color:#fff;font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  .topic ul.rules li:nth-child(even)::before{background:var(--test);}
+
+  /* ---------- glossary & questions ---------- */
+  .glossary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:6px 0 28px;}
+  .term{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:14px 16px;}
+  .term:nth-child(4n+2),.term:nth-child(4n+3){border-left-color:var(--test);}
+  .term dt{font-weight:800;color:var(--ink);font-size:15.5px;margin-bottom:4px;}
+  .term dd{margin:0;font-size:14.5px;color:var(--ink-soft);}
+  .questions{counter-reset:q;list-style:none;padding:0;margin:0 0 10px;}
+  .questions li{
+    counter-increment:q;
+    display:flex;gap:14px;align-items:flex-start;
+    padding:12px 0;border-bottom:1px solid var(--line);
+    color:var(--ink-soft);font-size:16px;
+  }
+  .questions li:last-child{border-bottom:none;}
+  .questions li::before{
+    content:counter(q, decimal-leading-zero);
+    flex:none;font-family:'Unbounded',sans-serif;font-weight:800;font-size:15px;
+    color:var(--test);min-width:30px;
+  }
+
+  /* ---------- literature (end) ---------- */
+  .lit{
+    margin:80px 0 0;
+    background:var(--navy);
+    color:#fff;
+    border-radius:24px;
+    padding:34px 34px 30px;
+    position:relative;overflow:hidden;
+    scroll-margin-top:70px;
+  }
+  :root[data-theme="dark"] .lit{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .lit{background:var(--surface-2);} }
+  .lit::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle, rgba(242,107,29,.55), rgba(242,107,29,0) 70%);
+  }
+  .lit h2{font-size:22px;margin-bottom:20px;position:relative;z-index:1;}
+  .lit h2 span{color:#FFB27D;}
+  .lit ol{counter-reset:l;list-style:none;margin:0;padding:0;position:relative;z-index:1;}
+  .lit li{
+    counter-increment:l;
+    position:relative;
+    padding:0 0 12px 46px;margin-bottom:12px;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    font-size:14.5px;color:rgba(255,255,255,.85);
+  }
+  .lit li:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .lit li::before{
+    content:counter(l);
+    position:absolute;left:0;top:0;
+    width:30px;height:30px;border-radius:9px;
+    background:var(--test);color:#fff;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12.5px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .lit a{color:#9DB7FF;word-break:break-all;}
+  .lit i{color:#fff;}
+
+  footer{
+    max-width:1000px;margin:0 auto;padding:30px 24px 56px;
+    color:var(--ink-muted);font-size:13.5px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .reset-btn{
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--accent);background:var(--surface);
+    border:2px solid var(--accent);border-radius:10px;
+    padding:7px 14px;cursor:pointer;font-weight:700;
+  }
+  .reset-btn:hover{background:var(--accent);color:#fff;}
+
+  @media (max-width:860px){
+    .cards{grid-template-columns:repeat(2,minmax(0,1fr));}
+  }
+  @media (max-width:640px){
+    .hero{padding:52px 16px 100px;}
+    .toc-inner,main,footer{padding-left:16px;padding-right:16px;}
+    .goal{padding:84px 20px 20px;}
+    .goal::before{top:18px;left:20px;}
+    .topic-num{font-size:40px;}
+    .box,.prompt-demo,.case{padding:20px 16px 16px;}
+    .cards,.glossary,.case-cols{grid-template-columns:1fr;}
+    .lit{padding:26px 20px 22px;}
+  }
+
+  /* ---------- lecture 9 additions ---------- */
+  .example{
+    background:var(--navy);color:#fff;border-radius:var(--radius);
+    padding:24px 26px 20px;margin:28px 0 32px;box-shadow:var(--shadow);
+  }
+  :root[data-theme="dark"] .example{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .example{background:var(--surface-2);} }
+  .example .box-title{color:#fff;}
+  .example .box-tag{background:var(--test);}
+  .levels{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 18px;}
+  .levels span{
+    position:relative;flex:1 1 120px;text-align:center;
+    font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;
+    padding:10px 14px;border-radius:10px;
+    background:rgba(255,255,255,.12);color:#fff;
+  }
+  .levels span:nth-child(2){background:rgba(255,255,255,.2);}
+  .levels span:nth-child(3){background:rgba(242,107,29,.55);}
+  .levels span:nth-child(4){background:var(--test);}
+  .topic ul.ex-list{color:rgba(255,255,255,.9);font-size:15.5px;margin:0;}
+  .topic ul.ex-list li b{color:#FFB27D;}
+  .steps6{list-style:none;padding:0;margin:8px 0 26px;counter-reset:s;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+  .steps6 li{
+    counter-increment:s;position:relative;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:52px 18px 16px;box-shadow:var(--shadow);
+  }
+  .steps6 li::before{
+    content:counter(s);position:absolute;left:18px;top:14px;
+    width:30px;height:30px;border-radius:10px;
+    background:var(--accent);color:#fff;
+    font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .steps6 li:nth-child(even)::before{background:var(--test);}
+  .steps6 li b{display:block;color:var(--ink);font-size:16px;margin-bottom:6px;}
+  .steps6 li span{display:block;color:var(--ink-soft);font-size:14.5px;}
+  .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:8px 0 26px;}
+  .stat{background:var(--accent-tint);border-radius:var(--radius);padding:18px 20px;}
+  .stat:nth-child(2){background:var(--test-tint);}
+  .stat b{display:block;font-family:'Unbounded',sans-serif;font-size:36px;line-height:1.1;color:var(--accent);}
+  .stat:nth-child(2) b{color:var(--test-ink);}
+  .stat span{display:block;margin-top:6px;font-size:14.5px;color:var(--ink-soft);}
+  .card .ic{color:#fff;}
+  @media (max-width:860px){ .steps6{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  @media (max-width:640px){ .hero-net{display:none;} .steps6,.stats{grid-template-columns:1fr;} .example{padding:20px 16px 16px;} }
+</style>
+
+</head>
+<body>
 
 <header class="hero">
-  <img class="hero-net" src="assets/img/hero-net.svg" alt="" aria-hidden="true">
+  <svg class="hero-net" viewBox="0 0 570 420" aria-hidden="true">
+    <g fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="1.5">
+      <path d="M90 330 L210 250 L330 290 L450 170 L540 120"/>
+    </g>
+    <g>
+      <circle cx="90" cy="330" r="30" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-opacity=".5" stroke-width="2"/>
+      <polygon points="90,312 95,325 109,325 98,333 102,347 90,339 78,347 82,333 71,325 85,325" fill="#fff" fill-opacity=".8"/>
+      <circle cx="210" cy="250" r="34" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-opacity=".5" stroke-width="2"/>
+      <polygon points="210,230 216,244 231,244 219,253 223,268 210,259 197,268 201,253 189,244 204,244" fill="#fff" fill-opacity=".8"/>
+      <circle cx="330" cy="290" r="30" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-opacity=".5" stroke-width="2"/>
+      <polygon points="330,272 335,285 349,285 338,293 342,307 330,299 318,307 322,293 311,285 325,285" fill="#fff" fill-opacity=".8"/>
+      <circle cx="450" cy="170" r="42" fill="#F26B1D" stroke="#FFB27D" stroke-width="3"/>
+      <polygon points="450,145 457,163 476,163 461,174 466,193 450,182 434,193 439,174 424,163 443,163" fill="#fff"/>
+      <circle cx="540" cy="120" r="22" fill="#fff" fill-opacity=".1" stroke="#fff" stroke-opacity=".4" stroke-width="2" stroke-dasharray="4 4"/>
+    </g>
+    <g>
+      <rect x="120" y="60" width="330" height="22" rx="11" fill="#fff" fill-opacity=".15"/>
+      <rect x="120" y="60" width="230" height="22" rx="11" fill="#F26B1D"/>
+      <text x="120" y="48" fill="#fff" fill-opacity=".85" font-family="JetBrains Mono, monospace" font-size="15" font-weight="700">РІВЕНЬ 3 · 70%</text>
+    </g>
+  </svg>
   <div class="hero-inner">
     <span class="eyebrow">Лекція 9 · Тема 9</span>
-    <h1>Дистанційне та <span class="hl">змішане навчання</span></h1>
-    <p class="theme">Моделі змішаного навчання, нормативне забезпечення та організація синхронної й асинхронної взаємодії.</p>
-    <div class="meta-row">
-      <span class="meta-chip draft-chip">✎ <b>Заготовка</b> лекція в розробці</span>
-    </div>
+    <h1>Гейміфікація <span class="hl">освітнього</span> процесу</h1>
+    <p class="theme">Як бали, рівні, бейджі й квести можуть підтримати мотивацію здобувачів освіти — і як не перетворити навчання на гонитву за балами.</p>
   </div>
 </header>
 
 <nav class="toc-bar">
   <div class="toc-inner">
-    <a href="#s1" data-toc="s1">1. Моделі</a>
-    <a href="#s2" data-toc="s2">2. Нормативна база</a>
-    <a href="#s3" data-toc="s3">3. Взаємодія</a>
-    <a href="#s4" data-toc="s4">4. Відеоконференції</a>
+    <a href="#concept" data-toc="concept">1. Поняття</a>
+    <a href="#psy" data-toc="psy">2. Психологія</a>
+    <a href="#mech" data-toc="mech">3. Механіки</a>
+    <a href="#design" data-toc="design">4. Проєктування</a>
+    <a href="#vet" data-toc="vet">5. Професійна освіта</a>
+    <a href="#risks" data-toc="risks">6. Ризики та етика</a>
     <a href="#summary" data-toc="summary">Підсумок</a>
     <a href="#literature" data-toc="literature">Література</a>
     <span class="toc-progress" id="tocProgress">прогрес: <b>0%</b></span>
@@ -58,125 +712,562 @@
 
   <div class="goal">
     <h2>Мета лекції</h2>
-    <p class="placeholder">Сформулюйте мету лекції: які знання, уміння та компетентності сформує тема в здобувачів освіти.</p>
+    <p>Сформувати уявлення про гейміфікацію як освітню технологію, її психологічні засади та ігрові механіки; навчити проєктувати гейміфіковані заняття й курси для закладів професійної (професійно-технічної) освіти з урахуванням мотивації здобувачів освіти; розвинути вміння критично оцінювати ефективність і ризики гейміфікації.</p>
   </div>
 
-  <!-- ================= 1. МОДЕЛІ ЗМІШАНОГО НАВЧАННЯ ================= -->
-  <section class="topic" id="s1">
-    <div class="topic-head">
-      <span class="topic-num">01</span>
-      <h2>Моделі змішаного навчання</h2>
+  <!-- ============ 1 ============ -->
+  <section class="topic" id="concept">
+    <div class="topic-head"><span class="topic-num">01</span><h2>Поняття гейміфікації</h2></div>
+
+    <p><b>Гейміфікація</b> — це використання елементів ігрового дизайну в неігрових контекстах. Саме таке визначення запропонували С. Детердінг, Д. Діксон, Р. Халед і Л. Нак (2011), і воно стало найпоширенішим у науковій літературі. Ключове слово тут — «елементи»: гейміфікація не перетворює заняття на гру, а запозичує з ігор окремі складники — бали, рівні, виклики, сюжет, миттєвий зворотний зв’язок — і вбудовує їх у звичну навчальну діяльність.</p>
+
+    <p>За поширеною версією, термін запровадив британський розробник <b>Нік Пеллінг</b> (2002), проте широкого вжитку слово набуло лише з другої половини 2010 року — передусім у цифровому маркетингу та розробці застосунків. Згодом ідея перейшла в освіту: якщо гра здатна годинами утримувати увагу гравця, чому б не запозичити її механізми для навчання?</p>
+
+    <p>Гейміфікацію варто відрізняти від суміжних підходів (таблиця 1). У гейміфікації навчальний зміст залишається тим самим, змінюється лише «обгортка» діяльності. В <b>ігровому навчанні</b> сама гра стає способом засвоєння матеріалу. <b>Серйозні ігри</b> та <b>симулятори</b> створюють спеціально для навчання, і вони відтворюють реальну професійну діяльність.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 900 200" role="img" aria-label="Шкала «ігровості»: звичайне заняття, гейміфікація, ігрове навчання, серйозна гра, симулятор — від найменшої до найбільшої частки гри">
+        <defs>
+          <linearGradient id="spec" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stop-color="#1D4ED8"/><stop offset="1" stop-color="#F26B1D"/>
+          </linearGradient>
+          
+        </defs>
+        <line x1="40" y1="100" x2="858" y2="100" stroke="url(#spec)" stroke-width="8" stroke-linecap="round"/><polygon points="856,88 880,100 856,112" fill="#F26B1D"/>
+        <g font-family="Manrope, sans-serif" text-anchor="middle">
+          <circle cx="80" cy="100" r="14" style="fill:var(--surface);stroke:var(--ink-muted)" stroke-width="3"/>
+          <text x="80" y="62" font-size="14" font-weight="700" class="svg-ink">Звичайне заняття</text>
+          <text x="80" y="140" font-size="12" class="svg-muted">гри немає</text>
+          <circle cx="270" cy="100" r="16" style="fill:var(--accent)"/>
+          <text x="270" y="62" font-size="14" font-weight="800" class="svg-ink">Гейміфікація</text>
+          <text x="270" y="140" font-size="12" class="svg-muted">ігрові елементи</text>
+          <text x="270" y="156" font-size="12" class="svg-muted">у звичній діяльності</text>
+          <circle cx="460" cy="100" r="16" style="fill:#5B66D0"/>
+          <text x="460" y="62" font-size="14" font-weight="700" class="svg-ink">Ігрове навчання</text>
+          <text x="460" y="140" font-size="12" class="svg-muted">навчання через гру</text>
+          <circle cx="640" cy="100" r="16" style="fill:#B3608F"/>
+          <text x="640" y="62" font-size="14" font-weight="700" class="svg-ink">Серйозна гра</text>
+          <text x="640" y="140" font-size="12" class="svg-muted">гра з навчальною</text>
+          <text x="640" y="156" font-size="12" class="svg-muted">метою</text>
+          <circle cx="810" cy="100" r="16" style="fill:var(--test)"/>
+          <text x="810" y="62" font-size="14" font-weight="700" class="svg-ink">Симулятор</text>
+          <text x="810" y="140" font-size="12" class="svg-muted">відтворення</text>
+          <text x="810" y="156" font-size="12" class="svg-muted">професійних дій</text>
+        </g>
+      </svg>
+      <figcaption>Що правіше на шкалі, то більшу частину заняття займає сама гра. Гейміфікація лише «додає гру» до звичної діяльності.</figcaption>
+    </figure>
+
+    <p class="table-cap"><b>Таблиця 1.</b> Гейміфікація та суміжні підходи</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Підхід</th><th>Суть</th><th>Приклад у професійній освіті</th></tr></thead>
+        <tbody>
+          <tr><td><b>Гейміфікація</b></td><td>Ігрові елементи вбудовано у звичайну навчальну діяльність</td><td>Бали й рівні за виконання лабораторно-практичних робіт, бейдж «Безпечна зміна»</td></tr>
+          <tr><td><b>Ігрове навчання</b></td><td>Навчання відбувається через гру</td><td>Вікторина Kahoot!, вправа Wordwall, квест-кімната з охорони праці</td></tr>
+          <tr><td><b>Серйозна гра</b></td><td>Повноцінна гра, створена з навчальною метою</td><td>Гра-стратегія з організації роботи ресторану чи виробничої дільниці</td></tr>
+          <tr><td><b>Симулятор (тренажер)</b></td><td>Відтворення професійних дій та обладнання в безпечних умовах</td><td>Віртуальний зварювальний тренажер, симулятор керування автомобілем</td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
-        <p>Підказка: готові блоки (схема, таблиця, картки, кейс, виноска) можна скопіювати з <a href="lecture-08.html">лекції 8</a> — стилі вже підключено до всіх сторінок.</p>
-    </div>
+    <p>Інтерес освіти до гейміфікації пояснюється тим, що гра природно поєднує те, чого часто бракує традиційному заняттю: чітку мету, посильний виклик, миттєвий зворотний зв’язок і право на помилку без серйозних наслідків. Для професійної освіти останнє особливо цінне: здобувач освіти може «помилитися» у грі чи на тренажері там, де на виробництві помилка коштувала б дорого.</p>
   </section>
 
-  <!-- ================= 2. НОРМАТИВНЕ ЗАБЕЗПЕЧЕННЯ ДИСТАНЦІЙНОГО НАВЧАННЯ ================= -->
-  <section class="topic" id="s2">
-    <div class="topic-head">
-      <span class="topic-num">02</span>
-      <h2>Нормативне забезпечення дистанційного навчання</h2>
+  <!-- ============ 2 ============ -->
+  <section class="topic" id="psy">
+    <div class="topic-head"><span class="topic-num">02</span><h2>Психологічні засади гейміфікації</h2></div>
+
+    <p>Ефективність гейміфікації залежить не від кількості балів і значків, а від того, чи підтримує вона мотивацію здобувачів освіти. Найчастіше її пояснюють <b>теорією самодетермінації</b> Е. Десі та Р. Раяна. Згідно з нею, людина має три базові психологічні потреби:</p>
+
+    <div class="cards">
+      <div class="card"><div class="ic">🧭</div><h3>Автономія</h3><p>Відчуття вибору й контролю над власними діями: здобувач освіти сам обирає порядок завдань, рівень складності чи спосіб подання результату.</p></div>
+      <div class="card"><div class="ic">📈</div><h3>Компетентність</h3><p>Відчуття, що вдається, і помітне зростання майстерності: рівні, прогрес-бар, поступове ускладнення завдань.</p></div>
+      <div class="card"><div class="ic">🤝</div><h3>Приналежність</h3><p>Відчуття зв’язку з іншими: командні місії, взаємодопомога, спільна мета групи.</p></div>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+    <p>Коли ці потреби задоволено, зростає <b>внутрішня мотивація</b> — бажання діяти заради самої діяльності. <b>Зовнішня мотивація</b> спирається на нагороди й покарання. Гейміфікація легко «скочується» до зовнішніх стимулів, і тут криється пастка, яку називають <b>ефектом надмірного обґрунтування</b> (overjustification effect).</p>
+
+    <div class="callout"><b>Класичний експеримент.</b> У дослідженні М. Леппера, Д. Гріна та Р. Нісбетта (1973) дошкільнята, які вже любили малювати фломастерами, отримували за малювання грамоту «Добрий гравець». Діти, які заздалегідь знали про нагороду, згодом у вільний час малювали менше, ніж ті, хто нагороди не очікував або отримав її несподівано. Висновок для педагога: нагорода за те, що й так цікаво, може зменшити інтерес.</div>
+
+    <p>Ще одне важливе поняття — <b>стан потоку</b>, описаний М. Чиксентмігаї (1990): повна захопленість діяльністю, коли складність завдання відповідає вмінням людини. Надто легке завдання викликає нудьгу, надто складне — тривогу. Добре спроєктована гра постійно утримує гравця в «каналі потоку»: ставить чіткі цілі, дає миттєвий зворотний зв’язок і поступово підвищує складність. Ті самі принципи працюють і на занятті.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 900 380" role="img" aria-label="Канал потоку: по горизонталі вміння, по вертикалі складність. Над діагональним каналом — зона тривоги, під ним — зона нудьги. Ламана лінія рівнів гри піднімається всередині каналу.">
+        <polygon points="110,330 250,330 820,40 820,40 680,40" style="fill:var(--accent-tint)"/>
+        <polygon points="110,330 110,40 680,40" style="fill:var(--test-tint)"/>
+        <polygon points="250,330 820,330 820,40" style="fill:var(--surface-2)"/>
+        <line x1="110" y1="330" x2="840" y2="330" style="stroke:var(--ink-muted)" stroke-width="2"/>
+        <line x1="110" y1="330" x2="110" y2="25" style="stroke:var(--ink-muted)" stroke-width="2"/>
+        <text x="840" y="358" text-anchor="end" font-size="13" font-weight="700" class="svg-muted" font-family="JetBrains Mono, monospace">ВМІННЯ →</text>
+        <text x="100" y="22" text-anchor="end" font-size="13" font-weight="700" class="svg-muted" font-family="JetBrains Mono, monospace">↑ СКЛАДНІСТЬ</text>
+        <text x="250" y="110" font-size="20" font-weight="800" style="fill:var(--test-ink)" font-family="Manrope, sans-serif">Тривога</text>
+        <text x="250" y="132" font-size="13" class="svg-muted" font-family="Manrope, sans-serif">завдання надто складні</text>
+        <text x="610" y="270" font-size="20" font-weight="800" class="svg-ink" font-family="Manrope, sans-serif">Нудьга</text>
+        <text x="610" y="292" font-size="13" class="svg-muted" font-family="Manrope, sans-serif">завдання надто легкі</text>
+        <text x="655" y="150" font-size="18" font-weight="800" style="fill:var(--accent-ink)" font-family="Manrope, sans-serif">◄ Канал потоку</text>
+        <polyline points="150,315 230,315 230,268 320,268 320,222 410,222 410,176 500,176 500,130 590,130 590,86 680,86" fill="none" style="stroke:var(--test)" stroke-width="4" stroke-linejoin="round"/>
+        <g font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" style="fill:var(--test-ink)">
+          <text x="235" y="306">1</text><text x="325" y="259">2</text><text x="415" y="213">3</text><text x="505" y="167">4</text><text x="595" y="121">5</text>
+        </g>
+      </svg>
+      <figcaption>Рівні гри (помаранчева лінія) ускладнюються в міру зростання вмінь — і гравець не випадає ні в тривогу, ні в нудьгу.</figcaption>
+    </figure>
+
+    <p>Здобувачів освіти мотивують різні речі. <b>Р. Бартл</b> (1996), досліджуючи гравців багатокористувацьких онлайн-ігор, виокремив чотири типи (таблиця 2). Типологію створено для ігор, а не для освіти, тож для педагога вона є орієнтиром для різноманіття завдань, а не способом «діагностувати» здобувачів освіти.</p>
+
+    <p class="table-cap"><b>Таблиця 2.</b> Типи гравців за Р. Бартлом та ігрові елементи на занятті</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Тип гравця</th><th>Що мотивує</th><th>Ігровий елемент на занятті</th></tr></thead>
+        <tbody>
+          <tr><td><b>Досягальники</b> (achievers)</td><td>Перемоги, рівні, відчуття майстерності</td><td>Бали, рівні, бейджі за освоєні операції</td></tr>
+          <tr><td><b>Дослідники</b> (explorers)</td><td>Відкриття нового, приховані можливості</td><td>Додаткові «секретні» завдання, нелінійний квест</td></tr>
+          <tr><td><b>Соціалізатори</b> (socialisers)</td><td>Спілкування та співпраця</td><td>Командні місії, взаємооцінювання, ролі в команді</td></tr>
+          <tr><td><b>Змагальники</b> (killers)</td><td>Змагання та вплив на інших</td><td>Дуелі, турніри, командні рейтинги</td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <!-- ТЕСТ: змініть текст запитання та варіантів.
-         data-correct — номер правильної відповіді, відлік від 0 (0 — перший варіант). -->
     <div class="box test" id="test-1">
-      <div class="box-title"><span class="box-tag">ТЕСТ 1</span> Назва тесту<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
-      <div class="test-q">Сформулюйте запитання тесту.</div>
-      <div class="quiz" data-correct="0">
-        <button class="test-opt" type="button">варіант відповіді 1 (правильний)</button>
-        <button class="test-opt" type="button">варіант відповіді 2</button>
-        <button class="test-opt" type="button">варіант відповіді 3</button>
-        <button class="test-opt" type="button">варіант відповіді 4</button>
+      <div class="box-title"><span class="box-tag">ТЕСТ 1</span> Психологічні засади<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Здобувач освіти сам обирає, у якому порядку проходити рівні квесту. Яку базову потребу за теорією самодетермінації це підтримує?</div>
+      <div class="quiz" data-correct="1">
+        <button class="test-opt" type="button">компетентність</button>
+        <button class="test-opt" type="button">автономію</button>
+        <button class="test-opt" type="button">приналежність</button>
+        <button class="test-opt" type="button">зовнішню мотивацію</button>
         <div class="test-feedback"></div>
       </div>
     </div>
   </section>
 
-  <!-- ================= 3. СИНХРОННА ТА АСИНХРОННА ВЗАЄМОДІЯ ================= -->
-  <section class="topic" id="s3">
-    <div class="topic-head">
-      <span class="topic-num">03</span>
-      <h2>Синхронна та асинхронна взаємодія</h2>
-    </div>
+  <!-- ============ 3 ============ -->
+  <section class="topic" id="mech">
+    <div class="topic-head"><span class="topic-num">03</span><h2>Ігрові механіки та елементи</h2></div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+    <p>К. Вербах і Д. Гантер у книзі «For the Win» (2012) запропонували розглядати ігрові елементи на трьох рівнях: <b>динаміки</b>, <b>механіки</b> й <b>компоненти</b>. Найвідоміша тріада компонентів — <b>PBL</b> (points, badges, leaderboards): бали, бейджі та рейтинги. Саме з неї зазвичай починають, але гейміфікація, що обмежується PBL, найшвидше набридає.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 900 330" role="img" aria-label="Три рівні ігрових елементів за Вербахом і Гантером: угорі динаміки, посередині механіки, внизу компоненти">
+        <polygon points="450,20 560,110 340,110" style="fill:var(--test)"/>
+        <text x="450" y="92" text-anchor="middle" font-size="15" font-weight="800" fill="#fff" font-family="Manrope, sans-serif">Динаміки</text>
+        <polygon points="335,118 565,118 680,212 220,212" style="fill:var(--accent)"/>
+        <text x="450" y="172" text-anchor="middle" font-size="16" font-weight="800" fill="#fff" font-family="Manrope, sans-serif">Механіки</text>
+        <polygon points="215,220 685,220 800,314 100,314" style="fill:var(--task)"/>
+        <text x="450" y="274" text-anchor="middle" font-size="16" font-weight="800" fill="#fff" font-family="Manrope, sans-serif">Компоненти</text>
+        <g font-family="Manrope, sans-serif" font-size="13" class="svg-muted">
+          <text x="580" y="58">обмеження, емоції, сюжет,</text>
+          <text x="580" y="76">прогрес, стосунки</text>
+          <text x="700" y="150">виклики, змагання, співпраця,</text>
+          <text x="700" y="168">зворотний зв’язок, винагороди</text>
+          <text x="20" y="196">бали, бейджі, рейтинги,</text>
+          <text x="20" y="214">рівні, аватари, квести</text>
+        </g>
+      </svg>
+      <figcaption>Компоненти (бали, бейджі) — лише видима верхівка роботи педагога: вони мають підтримувати механіки й динаміки, а не підміняти їх.</figcaption>
+    </figure>
+
+    <p>Подібну логіку має модель <b>MDA</b> (Mechanics — Dynamics — Aesthetics), яку Р. Ханіке, М. Леблан і Р. Зубек представили 2004 року. Розробник проєктує механіки (правила), з них під час гри виникає динаміка (поведінка гравців), а гравець переживає естетику — емоційний досвід: відчуття, фантазію, сюжет, виклик, спільність, відкриття, самовираження чи просто приємне проведення часу. Педагог мислить так само: спершу вирішує, які емоції й досвід мають виникнути на занятті, а вже потім добирає правила.</p>
+
+    <p>Ю-Кай Чоу у фреймворку <b>Octalysis</b> (2015) описав вісім рушіїв, що спонукають людей до дії: епічне значення та покликання; розвиток і досягнення; творчість і зворотний зв’язок; володіння; соціальний вплив і приналежність; дефіцит і нетерпіння; непередбачуваність і цікавість; уникнення втрат.</p>
+
+    <div class="callout"><b>«Білий» і «чорний» капелюхи.</b> Рушії «білого капелюха» (значення, досягнення, творчість) викликають позитивні емоції, а рушії «чорного капелюха» (дефіцит, непередбачуваність, уникнення втрат) спонукають через тиск і тривогу. Тому до механік на кшталт «втратиш бали, якщо не зайдеш сьогодні» педагогу варто ставитися зважено.</div>
+
+    <h3 class="sub-h">Найуживаніші ігрові елементи</h3>
+    <dl class="glossary">
+      <div class="term"><dt>Бали (досвід, XP)</dt><dd>кількісна міра прогресу за виконані дії</dd></div>
+      <div class="term"><dt>Рівні</dt><dd>етапи зростання, що відкривають нові можливості чи складніші завдання</dd></div>
+      <div class="term"><dt>Бейджі</dt><dd>цифрові значки за конкретні досягнення, наприклад за освоєння технологічної операції</dd></div>
+      <div class="term"><dt>Рейтинги</dt><dd>порівняння результатів учасників чи команд</dd></div>
+      <div class="term"><dt>Прогрес-бар</dt><dd>наочне відображення пройденого шляху</dd></div>
+      <div class="term"><dt>Квести й місії</dt><dd>завдання, об’єднані спільною метою та сюжетом</dd></div>
+      <div class="term"><dt>Наратив</dt><dd>історія, роль чи легенда, що надає діям сенсу</dd></div>
+      <div class="term"><dt>Серії (streaks)</dt><dd>винагорода за регулярність, наприклад за щоденне повторення</dd></div>
+    </dl>
+
+    <div class="example">
+      <div class="box-title"><span class="box-tag">ПРИКЛАД</span> Гейміфікована тема «Охорона праці в навчальній майстерні»</div>
+      <div class="levels">
+        <span>Учень</span><span>Стажист</span><span>Майстер</span><span>Наставник</span>
+      </div>
+      <ul class="ex-list">
+        <li><b>Наратив:</b> здобувачі освіти — стажисти підприємства, які мають отримати допуск до самостійної роботи.</li>
+        <li><b>Рівні:</b> кожен наступний рівень відкривається після набору балів.</li>
+        <li><b>Бали:</b> за тести з правил безпеки, розпізнавання порушень на фото, виконання практичних операцій без зауважень.</li>
+        <li><b>Бейджі:</b> «Перша допомога», «Безпечна зміна», «Пильне око» (за знайдені порушення на фото).</li>
+        <li><b>Командна місія:</b> квест-кімната «Аварія в цеху» — команда розв’язує ситуаційні задачі, щоб «відкрити» вихід.</li>
+        <li><b>Прогрес:</b> замість загального рейтингу кожен бачить власний шлях, а група — спільну шкалу безпечних днів.</li>
+      </ul>
     </div>
   </section>
 
-  <!-- ================= 4. СЕРВІСИ ВІДЕОКОНФЕРЕНЦІЙ ================= -->
-  <section class="topic" id="s4">
-    <div class="topic-head">
-      <span class="topic-num">04</span>
-      <h2>Сервіси відеоконференцій</h2>
-    </div>
+  <!-- ============ 4 ============ -->
+  <section class="topic" id="design">
+    <div class="topic-head"><span class="topic-num">04</span><h2>Проєктування гейміфікованого навчання</h2></div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
-    </div>
+    <p>Гейміфікація дає результат лише тоді, коли її спроєктовано під конкретну мету. К. Вербах і Д. Гантер запропонували для цього шість кроків (модель <b>6D</b>), які легко адаптувати до освітнього процесу:</p>
 
-    <!-- ЗАВДАННЯ: кожен пункт списку — окремий крок, який здобувач освіти позначає галочкою. -->
+    <ol class="steps6">
+      <li><b>Визначте цілі</b><span>які результати навчання має забезпечити гейміфікація: засвоєння правил, відпрацювання операцій, регулярне повторення</span></li>
+      <li><b>Окресліть цільову поведінку</b><span>що саме мають робити здобувачі освіти і як це виміряти: виконати тест, знайти порушення, допомогти товаришеві</span></li>
+      <li><b>Опишіть гравців</b><span>хто ваші здобувачі освіти, що їх мотивує, які в них цифрові навички та можливості</span></li>
+      <li><b>Сплануйте цикли активності</b><span>«дія → зворотний зв’язок → нова дія» та поступове зростання складності від рівня до рівня</span></li>
+      <li><b>Не забудьте про задоволення</b><span>чи захочеться виконувати завдання без балів; якщо ні, механіки варто переглянути</span></li>
+      <li><b>Доберіть інструменти</b><span>від паперової карти рівнів до цифрових сервісів</span></li>
+    </ol>
+
+    <p>Цифрових інструментів для гейміфікації чимало: <b>Kahoot!</b> і <b>Wayground</b> (до червня 2025 року — Quizizz) для вікторин-змагань, <b>Wordwall</b> і <b>LearningApps</b> для інтерактивних вправ, <b>Genially</b> для квестів і віртуальних квест-кімнат, Google Forms із переходами між розділами для нелінійних квестів, Google Classroom для публікації місій і збору результатів. Обираючи сервіс, варто перевірити умови безкоштовної версії, вікові обмеження та те, які дані здобувачів освіти він збирає.</p>
+
+    <div class="callout"><b>Сервіси змінюються.</b> Гейміфіковану платформу Classcraft після придбання компанією HMH закрили 30 червня 2024 року, замінивши іншим продуктом під тією самою назвою. Тому механіки гейміфікації варто проєктувати так, щоб їх можна було перенести в інший сервіс або навіть реалізувати на папері.</div>
+
     <div class="box task" id="task-1">
-      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 1</span> Назва практичного завдання<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 1</span> Вікторина Kahoot! «Основи гейміфікації»<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
       <ol>
-        <li>Опишіть перший крок завдання.</li>
-        <li>Опишіть другий крок завдання.</li>
-        <li>Опишіть, де та як здобувач освіти здає результат (наприклад, у <b>Classroom</b>).</li>
+        <li>Відкрийте в <b>Classroom</b> посилання на самостійне проходження вікторини та пройдіть її.</li>
       </ol>
     </div>
   </section>
 
-  <!-- ================= ПІДСУМОК ================= -->
-  <section class="topic" id="summary">
-    <div class="topic-head">
-      <span class="topic-num">✓</span>
-      <h2>Ключові поняття та самоперевірка</h2>
+  <!-- ============ 5 ============ -->
+  <section class="topic" id="vet">
+    <div class="topic-head"><span class="topic-num">05</span><h2>Гейміфікація у професійній освіті</h2></div>
+
+    <p>Професійна освіта має для гейміфікації особливі переваги: навчання тут спрямоване на конкретні дії, які легко перетворити на виклики, рівні й досягнення, а помилки на виробництві коштують дорого, тож безпечний ігровий простір для тренування особливо цінний.</p>
+
+    <div class="stats">
+      <div class="stat"><b>39</b><span>освітніх квест-кімнат проаналізували А. Велдкамп і співавтори (2020)</span></div>
+      <div class="stat"><b>&gt;50%</b><span>із них створено для медичних спеціальностей</span></div>
+      <div class="stat"><b>3</b><span>рецензовані дослідження вимірювали саме навчальні результати</span></div>
     </div>
+
+    <p><b>Освітні квест-кімнати (escape rooms).</b> Команда за обмежений час розв’язує ланцюжок задач, кожна з яких відкриває наступну. Огляд А. Велдкамп і співавторів (2020) показав, що понад половину освітніх квест-кімнат створили для підготовки медсестер, лікарів, фармацевтів, фізіотерапевтів. Автори огляду звертають увагу на розрив між тим, скільки учасники, на їхню думку, навчилися, і тим, що вони засвоїли насправді. Тому після квест-кімнати варто провести обговорення та перевірку засвоєного.</p>
+
+    <div class="cards">
+      <div class="card"><div class="ic">🏅</div><h3>Бейджі за освоєні операції</h3><p>Бейджі пов’язують із професійними компетентностями: «первинна обробка овочів», «електродугове зварювання в нижньому положенні», «облік товарів» — і бейдж стає картою освоєних умінь.</p></div>
+      <div class="card"><div class="ic">🏆</div><h3>Змагання й ліги</h3><p>Командні турніри з виконання операцій на час і якість, сезонні «ліги» з виробничого навчання. Оцінюють не лише швидкість, а й дотримання технології та охорони праці.</p></div>
+      <div class="card"><div class="ic">🕹️</div><h3>Симулятори й тренажери</h3><p>Безпечне відпрацювання небезпечних чи дорогих операцій; рівні, рахунок і повторні спроби підтримують мотивацію тренуватися довше.</p></div>
+    </div>
+
+    <p>Українські дослідники також розглядають гейміфікацію як освітню технологію професійної підготовки фахівців (Н. Павлова, Н. Полюхович, Т. Шроль, 2024) та як спосіб симулювати практику організації виробничих процесів (В. Письменний, 2025).</p>
+
+    <div class="case">
+      <div class="box-title"><span class="box-tag">КЕЙС</span> Duolingo: сила і пастки ігрових механік</div>
+      <div class="case-cols">
+        <div class="case-side plus">
+          <h4>＋ Сила</h4>
+          <p>За кожен урок користувач отримує досвід (XP), а за щоденні заняття — серію (streak). За даними компанії (2022), ті, хто досяг серії в 7 днів, у 3,6 раза частіше завершують курс. Таблиці лідерів Duolingo почала тестувати 2018 року, а нині має 10 ліг: щонеділі стартує новий тижневий турнір.</p>
+        </div>
+        <div class="case-side minus">
+          <h4>− Пастки</h4>
+          <p>Це дані самої компанії, а не незалежного дослідження: регулярність може бути не наслідком серії, а ознакою людей, які й так були вмотивовані. Механіки «не втрать серію» спираються на страх утрати й можуть підміняти мету: людина проходить найлегший урок, аби зберегти серію.</p>
+        </div>
+      </div>
+      <div class="box-close"><i>Висновок для педагога:</i> ігрові механіки допомагають сформувати звичку, але оцінювати потрібно навчальні результати, а не бали чи кількість днів поспіль.</div>
+    </div>
+
+    <div class="box test" id="test-2">
+      <div class="box-title"><span class="box-tag">ТЕСТ 2</span> Освітні квест-кімнати<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Яку проблему освітніх квест-кімнат виявив огляд А. Велдкамп і співавторів (2020)?</div>
+      <div class="quiz" data-correct="1">
+        <button class="test-opt" type="button">учасникам квест-кімнати здебільшого не подобаються</button>
+        <button class="test-opt" type="button">відчуття «я багато навчився» не завжди збігається з реальним засвоєнням</button>
+        <button class="test-opt" type="button">квест-кімнати непридатні для медичної освіти</button>
+        <button class="test-opt" type="button">квест-кімнати можна проводити лише офлайн</button>
+        <div class="test-feedback"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6 ============ -->
+  <section class="topic" id="risks">
+    <div class="topic-head"><span class="topic-num">06</span><h2>Ефективність, ризики та етика</h2></div>
+
+    <p>Чи справді гейміфікація покращує навчання? М. Зайлер і Л. Гомнер (2020) у метааналізі досліджень гейміфікації навчання виявили невеликі, але значущі позитивні ефекти. Проте в методологічно найсуворіших дослідженнях стійким лишився лише вплив на когнітивні результати. Отже, гейміфікація — корисний, але не чарівний інструмент: її результат залежить від якості проєктування.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 900 250" role="img" aria-label="Розмір ефекту гейміфікації за метааналізом Зайлера і Гомнер 2020: когнітивні результати g 0,49, мотиваційні 0,36, поведінкові 0,25">
+        <g font-family="Manrope, sans-serif">
+          <text x="210" y="62" text-anchor="end" font-size="16" font-weight="700" class="svg-ink">Когнітивні</text>
+          <rect x="230" y="40" width="539" height="34" rx="6" style="fill:var(--accent)"/>
+          <text x="782" y="64" font-size="17" font-weight="800" class="svg-ink" font-family="JetBrains Mono, monospace">g = 0,49</text>
+          <text x="210" y="127" text-anchor="end" font-size="16" font-weight="700" class="svg-ink">Мотиваційні</text>
+          <rect x="230" y="105" width="396" height="34" rx="6" style="fill:var(--test)"/>
+          <text x="639" y="129" font-size="17" font-weight="800" class="svg-ink" font-family="JetBrains Mono, monospace">g = 0,36</text>
+          <text x="210" y="192" text-anchor="end" font-size="16" font-weight="700" class="svg-ink">Поведінкові</text>
+          <rect x="230" y="170" width="275" height="34" rx="6" style="fill:var(--task)"/>
+          <text x="518" y="194" font-size="17" font-weight="800" class="svg-ink" font-family="JetBrains Mono, monospace">g = 0,25</text>
+        </g>
+        <line x1="230" y1="28" x2="230" y2="218" style="stroke:var(--ink-muted)" stroke-width="2"/>
+      </svg>
+      <figcaption>Розмір ефекту гейміфікації навчання (М. Зайлер, Л. Гомнер, 2020): ефекти позитивні, але невеликі.</figcaption>
+    </figure>
+
+    <h3 class="sub-h">Основні ризики</h3>
+    <ul>
+      <li><b>Витіснення внутрішньої мотивації</b> — нагороди за те, що й так цікаво, знижують інтерес (ефект надмірного обґрунтування).</li>
+      <li><b>Демотивація через рейтинги</b> — публічне порівняння пригнічує тих, хто постійно внизу таблиці; краще використовувати персональний прогрес і командні рейтинги.</li>
+      <li><b>«Гра заради балів»</b> — здобувачі освіти шукають найлегший спосіб набрати бали замість того, щоб учитися.</li>
+      <li><b>Поверхнева гейміфікація</b> — механічне додавання балів і значків без зміни суті діяльності; дослідник ігор Я. Богост (2011) різко критикував такий підхід, називаючи його exploitationware — «інструментом експлуатації».</li>
+      <li><b>Витрати часу</b> — проєктування й супровід гейміфікованого курсу вимагають від педагога значних зусиль.</li>
+      <li><b>Захист персональних даних</b> — цифрові сервіси збирають дані здобувачів освіти, зокрема неповнолітніх, тому реєстрацію, псевдоніми й налаштування приватності варто продумати заздалегідь.</li>
+    </ul>
+
+    <h3 class="sub-h">Принципи відповідальної гейміфікації</h3>
+    <ul class="rules">
+      <li>Починайте з мети навчання, а не з балів і значків.</li>
+      <li>Винагороджуйте зусилля, прогрес і якість, а не лише швидкість.</li>
+      <li>Поєднуйте змагання зі співпрацею й давайте право на повторну спробу.</li>
+      <li>Не замінюйте балами оцінювання за критеріями: бали мотивують, а оцінка засвідчує результат навчання.</li>
+      <li>Збирайте мінімум даних і перевіряйте умови використання сервісів.</li>
+    </ul>
+
+    <div class="box test" id="test-3">
+      <div class="box-title"><span class="box-tag">ТЕСТ 3</span> Ризики гейміфікації<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Здобувачі освіти із задоволенням розв’язували ситуаційні задачі, але після запровадження балів стали розв’язувати лише ті, за які нараховують бали. Як називають це явище?</div>
+      <div class="quiz" data-correct="1">
+        <button class="test-opt" type="button">стан потоку</button>
+        <button class="test-opt" type="button">ефект надмірного обґрунтування</button>
+        <button class="test-opt" type="button">модель MDA</button>
+        <button class="test-opt" type="button">теорія самодетермінації</button>
+        <div class="test-feedback"></div>
+      </div>
+    </div>
+
+    <div class="box task" id="task-2">
+      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 2</span> Вікторина Kahoot! «Гейміфікуємо заняття: ризики й рішення»<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <ol>
+        <li>Відкрийте в <b>Classroom</b> посилання на самостійне проходження вікторини та пройдіть її.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ SUMMARY ============ -->
+  <section class="topic" id="summary">
+    <div class="topic-head"><span class="topic-num">✓</span><h2>Ключові поняття та самоперевірка</h2></div>
 
     <h3 class="sub-h" style="margin-top:0">Ключові поняття</h3>
     <dl class="glossary">
-      <div class="term"><dt>Термін 1</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 2</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 3</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 4</dt><dd class="placeholder">визначення терміна.</dd></div>
+      <div class="term"><dt>Гейміфікація</dt><dd>використання елементів ігрового дизайну в неігрових контекстах.</dd></div>
+      <div class="term"><dt>Ігрове навчання</dt><dd>засвоєння змісту безпосередньо через гру.</dd></div>
+      <div class="term"><dt>Серйозна гра</dt><dd>гра, створена з навчальною або іншою неігровою метою.</dd></div>
+      <div class="term"><dt>Внутрішня мотивація</dt><dd>бажання діяти заради самої діяльності.</dd></div>
+      <div class="term"><dt>Ефект надмірного обґрунтування</dt><dd>зниження внутрішнього інтересу через очікувану зовнішню нагороду.</dd></div>
+      <div class="term"><dt>Стан потоку</dt><dd>повна захопленість діяльністю, коли складність завдання відповідає вмінням людини.</dd></div>
+      <div class="term"><dt>PBL</dt><dd>тріада ігрових компонентів: бали, бейджі та рейтинги.</dd></div>
+      <div class="term"><dt>Бейдж</dt><dd>цифровий значок, що засвідчує конкретне досягнення.</dd></div>
+      <div class="term"><dt>Наратив</dt><dd>сюжет або роль, що надає ігровим діям сенсу.</dd></div>
+      <div class="term"><dt>Освітня квест-кімната</dt><dd>командне завдання, у якому учасники за обмежений час розв’язують ланцюжок задач.</dd></div>
     </dl>
 
     <h3 class="sub-h">Питання для самоперевірки</h3>
     <ol class="questions">
-      <li class="placeholder">Питання для самоперевірки.</li>
-      <li class="placeholder">Питання для самоперевірки.</li>
-      <li class="placeholder">Питання для самоперевірки.</li>
+      <li>Чим гейміфікація відрізняється від ігрового навчання та серйозних ігор? Наведіть приклади з професійної освіти.</li>
+      <li>Які три базові потреби виокремлює теорія самодетермінації і як ігрові елементи можуть їх підтримувати?</li>
+      <li>У чому полягає ефект надмірного обґрунтування і як його уникнути під час гейміфікації?</li>
+      <li>Як умови стану потоку пов’язані з проєктуванням рівнів складності?</li>
+      <li>Які типи гравців виокремив Р. Бартл і як урахувати їх під час планування заняття?</li>
+      <li>Опишіть шість кроків проєктування гейміфікації за К. Вербахом і Д. Гантером.</li>
+      <li>Які результати метааналізу М. Зайлера і Л. Гомнер свідчать про ефективність гейміфікації?</li>
+      <li>Які ризики має використання рейтингів і як їх зменшити?</li>
     </ol>
   </section>
 
-  <!-- ================= ЛІТЕРАТУРА ================= -->
-  <section class="lit end" id="literature">
+  <!-- ============ LITERATURE ============ -->
+  <section class="lit" id="literature">
     <h2>Література <span>до теми</span></h2>
     <ol>
-      <li>Додайте джерело, оформлене за ДСТУ 8302:2015.</li>
-      <li>Для електронних ресурсів укажіть URL та дату звернення.</li>
+      <li>Толочко С. В. Теоретико-методологічний аналіз гейміфікації як сучасного освітнього феномена // Перспективи та інновації науки. 2023. № 1(19). С. 369–383. DOI: 10.52058/2786-4952-2023-1(19)-369-383.</li>
+      <li>Павлова Н., Полюхович Н., Шроль Т. Гейміфікація як освітня технологія професійної підготовки фахівців // Міждисциплінарні дослідження складних систем. 2024. № 24. DOI: 10.31392/iscs.2024.24.146.</li>
+      <li>Письменний В. В. Інтерактивні методи навчання у вищій школі: використання гейміфікації для симулювання практики організації виробничих процесів // Наукові записки. Серія: Педагогічні науки. 2025. Вип. 217. С. 43–48. DOI: 10.36550/2415-7988-2025-1-217-43-48.</li>
+      <li>Bartle R. Hearts, Clubs, Diamonds, Spades: Players Who Suit MUDs // Journal of MUD Research. 1996. Vol. 1, No. 1. URL: <a href="https://mud.co.uk/richard/hcds.htm" target="_blank" rel="noopener">https://mud.co.uk/richard/hcds.htm</a> (дата звернення: 10.11.2026).</li>
+      <li>Bogost I. Gamification is Bullshit : position statement at the Wharton Gamification Symposium. 2011. URL: <a href="https://www.bogost.com/blog/gamification_is_bullshit.shtml" target="_blank" rel="noopener">https://www.bogost.com/blog/gamification_is_bullshit.shtml</a> (дата звернення: 10.11.2026).</li>
+      <li>Chou Y. Actionable Gamification: Beyond Points, Badges, and Leaderboards. Birmingham : Packt Publishing, 2019.</li>
+      <li>Csikszentmihalyi M. Flow: The Psychology of Optimal Experience. New York : Harper &amp; Row, 1990. 303 p.</li>
+      <li>Deterding S., Dixon D., Khaled R., Nacke L. From game design elements to gamefulness: defining “gamification” // Proceedings of the 15th International Academic MindTrek Conference. New York : ACM, 2011. P. 9–15. DOI: 10.1145/2181037.2181040.</li>
+      <li>How do Duolingo Leaderboards work? // Duolingo Blog. 03.05.2023. URL: <a href="https://blog.duolingo.com/duolingo-leagues-leaderboards/" target="_blank" rel="noopener">https://blog.duolingo.com/duolingo-leagues-leaderboards/</a> (дата звернення: 10.11.2026).</li>
+      <li>Hunicke R., LeBlanc M., Zubek R. MDA: A Formal Approach to Game Design and Game Research // Proceedings of the AAAI Workshop on Challenges in Game AI. San Jose, 2004.</li>
+      <li>Lepper M. R., Greene D., Nisbett R. E. Undermining children’s intrinsic interest with extrinsic reward: A test of the “overjustification” hypothesis // Journal of Personality and Social Psychology. 1973. Vol. 28, No. 1. P. 129–137.</li>
+      <li>Mansur O. The habit-building research behind your Duolingo streak // Duolingo Blog. 31.01.2022. URL: <a href="https://blog.duolingo.com/how-duolingo-streak-builds-habit" target="_blank" rel="noopener">https://blog.duolingo.com/how-duolingo-streak-builds-habit</a> (дата звернення: 10.11.2026).</li>
+      <li>Ryan R. M., Deci E. L. Self-determination theory and the facilitation of intrinsic motivation, social development, and well-being // American Psychologist. 2000. Vol. 55, No. 1. P. 68–78.</li>
+      <li>Sailer M., Homner L. The Gamification of Learning: a Meta-analysis // Educational Psychology Review. 2020. Vol. 32. P. 77–112. DOI: 10.1007/s10648-019-09498-w.</li>
+      <li>Veldkamp A., van de Grint L., Knippels M.-C. P. J., van Joolingen W. R. Escape education: A systematic review on escape rooms in education // Educational Research Review. 2020. Vol. 31. Article 100364. DOI: 10.1016/j.edurev.2020.100364.</li>
+      <li>Werbach K., Hunter D. For the Win: How Game Thinking Can Revolutionize Your Business. Philadelphia : Wharton Digital Press, 2012.</li>
     </ol>
   </section>
 
 </main>
 
-<nav class="lecture-nav" id="lectureNav" aria-label="Навігація між лекціями"></nav>
-
 <footer>
   <span>Лекція 9 · Тема 9 · Спеціальність «Професійна освіта»</span>
   <button class="reset-btn" id="resetBtn" type="button">↺ скинути прогрес</button>
-  <span class="mono">оновлено: 08.11.2026</span>
+  <span class="mono">оновлено: 10.11.2026</span>
 </footer>
 
-<script src="assets/js/course.js"></script>
-<script src="assets/js/lecture.js"></script>
+<script>
+(function(){
+  "use strict";
+  var STORE_KEY = 'lecture9-gamification-progress-v1';
+
+  function loadState(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    }catch(e){ return {}; }
+  }
+  function saveState(state){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  var state = loadState(); // { "task-1": [true,false,...], "test-1": 0 (chosen index) }
+
+  /* ---------- task checklists ---------- */
+  var taskBoxes = Array.prototype.slice.call(document.querySelectorAll('.box.task'));
+
+  function renderTaskBox(box){
+    var id = box.id;
+    var items = state[id] || [];
+    var lis = box.querySelectorAll('ol > li');
+    var doneCount = 0;
+    lis.forEach(function(li, i){
+      var checked = !!items[i];
+      if (checked) doneCount++;
+      var chk = li.querySelector('.chk');
+      if (chk){
+        chk.checked = checked;
+        li.querySelector('.step').classList.toggle('checked', checked);
+      }
+    });
+    var pill = box.querySelector('[data-progress]');
+    if (pill) pill.textContent = doneCount + ' / ' + lis.length + ' виконано';
+    box.classList.toggle('done', lis.length > 0 && doneCount === lis.length);
+    return { done: doneCount, total: lis.length };
+  }
+
+  taskBoxes.forEach(function(box){
+    var id = box.id;
+    var lis = Array.prototype.slice.call(box.querySelectorAll('ol > li'));
+    lis.forEach(function(li, i){
+      var step = document.createElement('label');
+      step.className = 'step';
+      var num = document.createElement('span');
+      num.className = 'num';
+      num.textContent = (i + 1);
+      var chk = document.createElement('input');
+      chk.type = 'checkbox';
+      chk.className = 'chk';
+      chk.setAttribute('aria-label', 'Крок ' + (i + 1) + ' виконано');
+      var textSpan = document.createElement('span');
+      textSpan.className = 'step-text';
+      while (li.firstChild) textSpan.appendChild(li.firstChild);
+      step.appendChild(chk);
+      step.appendChild(num);
+      step.appendChild(textSpan);
+      li.appendChild(step);
+      chk.addEventListener('change', function(){
+        if (!state[id]) state[id] = [];
+        state[id][i] = chk.checked;
+        saveState(state);
+        renderTaskBox(box);
+        updateOverall();
+      });
+    });
+    renderTaskBox(box);
+  });
+
+  /* ---------- quiz boxes ---------- */
+  var quizzes = Array.prototype.slice.call(document.querySelectorAll('.quiz'));
+  quizzes.forEach(function(quiz){
+    var box = quiz.closest('.box');
+    var boxId = box.id;
+    var correct = parseInt(quiz.getAttribute('data-correct'), 10);
+    var buttons = Array.prototype.slice.call(quiz.querySelectorAll('.test-opt'));
+    var feedback = quiz.querySelector('.test-feedback');
+
+    function applyAnswer(chosenIdx, silent){
+      buttons.forEach(function(btn, i){
+        btn.disabled = true;
+        if (i === correct) btn.classList.add('is-correct');
+        if (i === chosenIdx && chosenIdx !== correct) btn.classList.add('is-wrong');
+      });
+      feedback.classList.add('show');
+      if (chosenIdx === correct){
+        feedback.textContent = '✓ Правильно!';
+        feedback.classList.add('correct');
+      } else {
+        feedback.textContent = '✗ Неправильно. Правильна відповідь виділена зеленим.';
+        feedback.classList.add('wrong');
+      }
+      var pill = box.querySelector('[data-progress]');
+      if (pill) pill.textContent = 'пройдено';
+      box.classList.add('done');
+    }
+
+    buttons.forEach(function(btn, i){
+      btn.addEventListener('click', function(){
+        state[boxId] = i;
+        saveState(state);
+        applyAnswer(i);
+        updateOverall();
+      });
+    });
+
+    if (typeof state[boxId] === 'number'){
+      applyAnswer(state[boxId], true);
+    }
+  });
+
+  /* ---------- overall progress ---------- */
+  function updateOverall(){
+    var totalSteps = 0, doneSteps = 0;
+    taskBoxes.forEach(function(box){
+      var r = renderTaskBox(box);
+      totalSteps += r.total;
+      doneSteps += r.done;
+    });
+    quizzes.forEach(function(quiz){
+      totalSteps += 1;
+      var box = quiz.closest('.box');
+      if (box.classList.contains('done')) doneSteps += 1;
+    });
+    var pct = totalSteps ? Math.round((doneSteps / totalSteps) * 100) : 0;
+    var fill = document.getElementById('progressFill');
+    var label = document.getElementById('tocProgress');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.innerHTML = 'прогрес: <b>' + pct + '%</b>';
+  }
+  updateOverall();
+
+  /* ---------- reset ---------- */
+  var resetBtn = document.getElementById('resetBtn');
+  if (resetBtn){
+    resetBtn.addEventListener('click', function(){
+      try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+      location.reload();
+    });
+  }
+
+  /* ---------- scrollspy ---------- */
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.topic[id], section.lit[id]'));
+  var tocLinks = {};
+  Array.prototype.slice.call(document.querySelectorAll('.toc-inner a[data-toc]')).forEach(function(a){
+    tocLinks[a.getAttribute('data-toc')] = a;
+  });
+  if ('IntersectionObserver' in window && sections.length){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var link = tocLinks[entry.target.id];
+        if (!link) return;
+        if (entry.isIntersecting){
+          Object.keys(tocLinks).forEach(function(k){ tocLinks[k].classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+    sections.forEach(function(s){ observer.observe(s); });
+  }
+})();
+</script>
+
 </body>
 </html>

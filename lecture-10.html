@@ -3,50 +3,708 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Лекція 10. Віртуальна, доповнена реальність і симулятори</title>
-<meta name="description" content="Лекція 10 електронного посібника «Комп’ютерні технології в освітньому процесі»: Віртуальна, доповнена реальність і симулятори">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23F26B1D'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23fff'%3EКТ%3C/text%3E%3C/svg%3E">
+<title>Мобільне навчання та мікронавчання</title>
+<meta name="description" content="Лекція 10 для спеціальності «Професійна освіта»: мобільне навчання та мікронавчання — поняття, моделі, наукові засади, застосування у професійній освіті, ризики та етика">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
-<script>try{var t=localStorage.getItem('posibnyk-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
-</head>
-<body data-lecture="10">
+<style>
+  :root{
+    --navy:#0E1F4D;
+    --ink:#0E1F4D;
+    --ink-soft:#2B3A63;
+    --ink-muted:#5A6788;
+    --paper:#FFFFFF;
+    --surface:#FFFFFF;
+    --surface-2:#F4F7FF;
+    --line:#DCE3F4;
+    --accent:#1D4ED8;
+    --accent-ink:#163BA6;
+    --accent-tint:#E8EEFF;
+    --task:#1597E5;
+    --task-ink:#0B6AA8;
+    --task-tint:#E4F4FD;
+    --test:#F26B1D;
+    --test-ink:#C2500C;
+    --test-tint:#FFF1E7;
+    --bad:#C0262D;
+    --hero-a:#0E1F4D;
+    --hero-b:#1D4ED8;
+    --shadow:0 1px 2px rgba(14,31,77,.05), 0 14px 32px -18px rgba(14,31,77,.35);
+    --radius:18px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#EEF2FF;
+      --ink-soft:#C9D3F2;
+      --ink-muted:#93A1C8;
+      --paper:#081332;
+      --surface:#0F1D45;
+      --surface-2:#132453;
+      --line:#22346B;
+      --accent:#7C9BFF;
+      --accent-ink:#AFC2FF;
+      --accent-tint:#18295C;
+      --task:#4DB8F7;
+      --task-ink:#8FD3FB;
+      --task-tint:#0F2D4F;
+      --test:#FF8A3D;
+      --test-ink:#FFB27D;
+      --test-tint:#3A2210;
+      --bad:#FF6B6B;
+      --hero-a:#050C24;
+      --hero-b:#1636B0;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 34px -18px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#EEF2FF;
+    --ink-soft:#C9D3F2;
+    --ink-muted:#93A1C8;
+    --paper:#081332;
+    --surface:#0F1D45;
+    --surface-2:#132453;
+    --line:#22346B;
+    --accent:#7C9BFF;
+    --accent-ink:#AFC2FF;
+    --accent-tint:#18295C;
+    --task:#4DB8F7;
+    --task-ink:#8FD3FB;
+    --task-tint:#0F2D4F;
+    --test:#FF8A3D;
+    --test-ink:#FFB27D;
+    --test-tint:#3A2210;
+    --bad:#FF6B6B;
+    --hero-a:#050C24;
+    --hero-b:#1636B0;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 34px -18px rgba(0,0,0,.7);
+  }
 
-<div class="course-bar">
-  <div class="course-bar-inner">
-    <a class="course-home" href="index.html" title="На титульну сторінку">
-      <span class="logo">КТ</span><span class="t">Комп’ютерні технології в освітньому процесі</span>
-    </a>
-    <div class="course-actions">
-      <details class="course-menu">
-        <summary class="bar-btn">☰ <span class="lbl">Лекції</span></summary>
-        <div class="menu-panel"><ol id="courseMenuList"></ol></div>
-      </details>
-      <button class="bar-btn" id="themeToggle" type="button" aria-label="Змінити тему оформлення">◐ <span class="lbl">Тема</span></button>
-    </div>
-  </div>
-</div>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope',system-ui,'Segoe UI',sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Unbounded',system-ui,sans-serif;margin:0;text-wrap:balance;}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+  a{color:var(--accent);}
+  ::selection{background:var(--test);color:#fff;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    color:#fff;
+    background:
+      radial-gradient(circle at 88% 18%, rgba(242,107,29,.55) 0, rgba(242,107,29,0) 26%),
+      linear-gradient(135deg, var(--hero-a) 0%, var(--hero-b) 100%);
+    padding:72px 24px 120px;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    left:-5%; right:-5%; bottom:-1px;
+    height:90px;
+    background:var(--paper);
+    clip-path:polygon(0 70%, 30% 35%, 62% 72%, 100% 20%, 100% 100%, 0 100%);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    left:-5%; right:-5%; bottom:-1px;
+    height:110px;
+    background:var(--test);
+    clip-path:polygon(0 62%, 30% 27%, 62% 64%, 100% 12%, 100% 22%, 62% 74%, 30% 37%, 0 72%);
+    z-index:1;
+  }
+  .hero-net{
+    position:absolute;
+    right:-40px; top:10px;
+    width:min(560px,70vw);
+    height:auto;
+    opacity:.55;
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:2;max-width:1000px;margin:0 auto;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;
+    background:var(--test);
+    color:#fff;
+    padding:6px 14px;
+    border-radius:99px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;}
+  .hero h1{
+    font-size:clamp(32px,5.2vw,58px);
+    line-height:1.08;
+    font-weight:800;
+    max-width:14em;
+  }
+  .hero h1 .hl{
+    color:#FFB27D;
+  }
+  .hero .theme{
+    margin:18px 0 0;
+    font-size:clamp(16px,2vw,19px);
+    color:rgba(255,255,255,.86);
+    max-width:36em;
+    font-weight:500;
+  }
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+  .meta-chip{
+    display:flex;align-items:center;gap:7px;
+    font-size:13.5px;
+    color:#fff;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:12px;
+    padding:7px 13px;
+    backdrop-filter:blur(4px);
+  }
+  .meta-chip b{color:#FFB27D;font-family:'Unbounded',sans-serif;font-size:15px;}
+
+  /* ---------- sticky toc ---------- */
+  .toc-bar{
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .toc-inner{
+    max-width:1000px;margin:0 auto;padding:0 24px;
+    display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
+  }
+  .toc-inner::-webkit-scrollbar{display:none;}
+  .toc-inner a{
+    flex:none;
+    font-size:13px;font-weight:700;
+    color:var(--ink-muted);
+    text-decoration:none;
+    padding:14px 12px 12px;
+    border-bottom:3px solid transparent;
+    white-space:nowrap;
+  }
+  .toc-inner a:hover{color:var(--accent);}
+  .toc-inner a.active{color:var(--accent);border-bottom-color:var(--test);}
+  .toc-progress{
+    flex:none;margin-left:auto;
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--ink-muted);
+    padding:14px 0 12px 14px;white-space:nowrap;
+  }
+  .toc-progress b{color:var(--test);}
+  .progress-track{height:4px;background:var(--surface-2);}
+  .progress-track .fill{
+    height:100%;width:0%;
+    background:linear-gradient(90deg, var(--accent), var(--test));
+    border-radius:0 4px 4px 0;
+    transition:width .35s ease;
+  }
+
+  /* ---------- content ---------- */
+  main{max-width:1000px;margin:0 auto;padding:0 24px 40px;}
+
+  .goal{
+    position:relative;
+    margin:40px 0 0;
+    padding:26px 28px 24px 96px;
+    background:var(--accent-tint);
+    border-radius:var(--radius);
+  }
+  .goal::before{
+    content:"🎯";
+    position:absolute;left:24px;top:24px;
+    width:52px;height:52px;border-radius:16px;
+    background:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;
+    box-shadow:0 8px 18px -8px var(--accent);
+  }
+  .goal h2{font-size:15px;color:var(--accent-ink);margin-bottom:8px;letter-spacing:.02em;}
+  .goal p{margin:0;color:var(--ink-soft);font-size:16px;}
+
+  section.topic{margin-top:80px;scroll-margin-top:70px;}
+  .topic-head{
+    display:flex;align-items:center;gap:18px;
+    margin-bottom:26px;
+  }
+  .topic-num{
+    flex:none;
+    font-family:'Unbounded',sans-serif;
+    font-weight:800;
+    font-size:54px;
+    line-height:1;
+    color:transparent;
+    -webkit-text-stroke:2px var(--test);
+    letter-spacing:-.02em;
+  }
+  .topic h2{
+    font-size:clamp(22px,2.8vw,30px);
+    font-weight:700;
+    color:var(--ink);
+    position:relative;
+    padding-bottom:10px;
+  }
+  .topic h2::after{
+    content:"";position:absolute;left:0;bottom:0;
+    width:64px;height:5px;border-radius:5px;
+    background:linear-gradient(90deg, var(--test), var(--accent));
+  }
+  .topic p{color:var(--ink-soft);font-size:16.5px;margin:0 0 16px;}
+  .topic p b,.topic li b{color:var(--ink);font-weight:800;}
+  .topic ul{margin:0 0 20px;padding-left:0;list-style:none;color:var(--ink-soft);font-size:16px;}
+  .topic ul li{position:relative;padding-left:26px;margin-bottom:10px;}
+  .topic ul li::before{
+    content:"";position:absolute;left:4px;top:.62em;
+    width:9px;height:9px;border-radius:3px;
+    background:var(--test);
+    transform:rotate(45deg);
+  }
+
+  .callout{
+    position:relative;
+    background:var(--surface-2);
+    border-radius:14px;
+    padding:16px 20px 16px 22px;
+    margin:0 0 20px;
+    font-size:15px;
+    color:var(--ink-soft);
+    border-left:5px solid var(--test);
+  }
+  .callout b{color:var(--accent-ink);}
+
+  .sub-h{font-size:19px;font-weight:700;color:var(--ink);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .sub-h::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:5px 0 0 var(--test);margin-right:6px;}
+
+  /* ---------- diagrams ---------- */
+  figure.diagram{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 20px 16px;
+    margin:28px 0 30px;
+    box-shadow:var(--shadow);
+    position:relative;
+  }
+  figure.diagram::before{
+    content:"";position:absolute;left:24px;top:-1px;width:80px;height:4px;border-radius:0 0 4px 4px;
+    background:var(--test);
+  }
+  figure.diagram svg{display:block;width:100%;height:auto;}
+  figure.diagram figcaption{margin-top:14px;font-size:13.5px;color:var(--ink-muted);text-align:center;}
+  .svg-ink{fill:var(--ink);}
+  .svg-muted{fill:var(--ink-muted);}
+
+  /* ---------- tables ---------- */
+  .table-wrap{overflow-x:auto;}
+  .table-cap{font-size:14.5px;color:var(--ink-muted);margin:0 0 8px;}
+  .table-cap b{color:var(--test-ink);}
+  .data-table{
+    width:100%;border-collapse:separate;border-spacing:0;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;
+    font-size:14.5px;margin:6px 0 24px;
+  }
+  .data-table th{
+    text-align:left;
+    font-size:12.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+    color:#fff;background:var(--accent);
+    padding:11px 14px;
+  }
+  .data-table td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink-soft);vertical-align:top;}
+  .data-table tr:nth-child(even) td{background:var(--surface-2);}
+  .data-table tr:last-child td{border-bottom:none;}
+  .data-table td.yr{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--test-ink);white-space:nowrap;}
+  details.more{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:0 0 26px;overflow:hidden;}
+  details.more summary{
+    cursor:pointer;list-style:none;
+    padding:13px 18px;font-weight:800;font-size:15px;color:var(--accent-ink);
+    display:flex;align-items:center;gap:10px;
+  }
+  details.more summary::-webkit-details-marker{display:none;}
+  details.more summary::before{
+    content:"+";flex:none;
+    width:24px;height:24px;border-radius:8px;background:var(--test);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:800;
+  }
+  details.more[open] summary::before{content:"−";}
+  details.more .data-table{margin:0;border:none;border-radius:0;}
+  .risk{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:var(--ink);white-space:nowrap;}
+  .risk::before{content:"";width:11px;height:11px;border-radius:50%;background:var(--dot);flex:none;}
+  .risk.r1{--dot:var(--bad);}
+  .risk.r2{--dot:var(--test);}
+  .risk.r3{--dot:var(--accent);}
+  .risk.r4{--dot:var(--task);}
+
+  /* ---------- boxes ---------- */
+  .box{
+    position:relative;
+    border-radius:var(--radius);
+    padding:26px 26px 22px;
+    margin:28px 0 32px;
+    box-shadow:var(--shadow);
+    background:var(--surface);
+    border:2px solid var(--line);
+  }
+  .box.test{border-color:var(--test);background:linear-gradient(180deg, var(--test-tint), var(--surface) 70%);}
+  .box.task{border-color:var(--accent);background:linear-gradient(180deg, var(--accent-tint), var(--surface) 80%);}
+  .box-title{
+    font-family:'Unbounded',sans-serif;font-weight:700;font-size:16px;
+    margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .box.test .box-title{color:var(--test-ink);}
+  .box.task .box-title{color:var(--accent-ink);}
+  .box-tag{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:.06em;
+    padding:4px 10px;border-radius:8px;color:#fff;
+  }
+  .box.test .box-tag{background:var(--test);}
+  .box.task .box-tag{background:var(--accent);}
+  .box-check{display:none;font-size:13px;}
+  .box.done .box-check{display:inline;}
+  .box-progress{
+    margin-left:auto;
+    font-family:'JetBrains Mono',monospace;font-weight:600;font-size:11.5px;
+    padding:3px 10px;border-radius:99px;
+    background:var(--surface);color:var(--ink-muted);border:1px solid var(--line);
+    white-space:nowrap;
+  }
+  .box-progress:empty{display:none;}
+  .box.done .box-progress{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .box.test.done .box-progress{background:var(--test);border-color:var(--test);}
+  .box-close{
+    margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);
+    font-size:14.5px;color:var(--ink-soft);
+  }
+
+  .box ol{margin:0;padding:0;list-style:none;}
+  .box ol li{margin-bottom:12px;font-size:15.5px;color:var(--ink-soft);}
+  .box ol li:last-child{margin-bottom:0;}
+  .box ol li b{color:var(--ink);}
+  .step{display:flex;gap:12px;align-items:flex-start;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .step .num{
+    flex:none;width:28px;height:28px;border-radius:9px;
+    background:var(--surface);border:2px solid var(--accent);color:var(--accent);
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .15s,color .15s;
+  }
+  .chk{position:absolute;opacity:0;width:1px;height:1px;}
+  .step:has(.chk:checked) .num,.step.checked .num{background:var(--accent);color:#fff;}
+  .step:has(.chk:checked) .step-text,.step.checked .step-text{color:var(--ink-muted);text-decoration:line-through;text-decoration-color:var(--test);}
+  .chk:focus-visible ~ .num{outline:2px solid var(--test);outline-offset:2px;}
+  .step-text{flex:1;padding-top:2px;}
+
+  .test-q{font-weight:700;color:var(--ink);margin-bottom:14px;font-size:16px;}
+  .quiz{display:grid;gap:8px;}
+  .test-opt{
+    display:flex;width:100%;gap:12px;align-items:center;
+    font-size:15px;color:var(--ink-soft);
+    padding:11px 14px;margin:0;
+    border:2px solid var(--line);border-radius:12px;
+    background:var(--surface);
+    font-family:inherit;text-align:left;cursor:pointer;
+    transition:border-color .15s, transform .15s, background .15s;
+  }
+  .test-opt::before{
+    content:"";flex:none;width:18px;height:18px;border-radius:50%;
+    border:2px solid var(--test);background:var(--surface);
+  }
+  .test-opt:hover:not(:disabled){border-color:var(--test);transform:translateX(3px);}
+  .test-opt:disabled{cursor:default;}
+  .test-opt.is-correct{border-color:var(--accent);background:var(--accent-tint);color:var(--accent-ink);font-weight:800;}
+  .test-opt.is-correct::before{background:var(--accent);border-color:var(--accent);box-shadow:inset 0 0 0 3px var(--surface);}
+  .test-opt.is-wrong{border-color:var(--bad);background:color-mix(in srgb, var(--bad) 10%, var(--surface));}
+  .test-opt.is-wrong::before{background:var(--bad);border-color:var(--bad);box-shadow:inset 0 0 0 3px var(--surface);}
+  .test-feedback{margin-top:6px;font-size:14px;font-weight:800;display:none;}
+  .test-feedback.show{display:block;}
+  .test-feedback.correct{color:var(--accent-ink);}
+  .test-feedback.wrong{color:var(--bad);}
+  .box.done{box-shadow:var(--shadow), 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);}
+  .box.test.done{box-shadow:var(--shadow), 0 0 0 4px color-mix(in srgb, var(--test) 25%, transparent);}
+
+  /* ---------- prompt anatomy ---------- */
+  .prompt-demo{
+    background:var(--navy);
+    color:#fff;
+    border-radius:var(--radius);
+    padding:24px 26px 20px;
+    margin:28px 0 32px;
+    box-shadow:var(--shadow);
+  }
+  :root[data-theme="dark"] .prompt-demo{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .prompt-demo{background:var(--surface-2);} }
+  .prompt-demo .box-title{color:#fff;}
+  .prompt-demo .box-tag{background:var(--test);}
+  .prompt-text{font-size:16px;line-height:2.05;color:rgba(255,255,255,.9);font-family:'JetBrains Mono',monospace;font-size:14.5px;}
+  .seg{border-radius:6px;padding:2px 4px;cursor:pointer;box-shadow:inset 0 -2px 0 var(--c);transition:background .15s;}
+  .seg:hover,.seg.on{background:var(--c);color:#fff;}
+  .seg-role{--c:#5B8CFF;}
+  .seg-task{--c:#38BDF8;}
+  .seg-ctx{--c:#F26B1D;}
+  .seg-fmt{--c:#FFB27D;}
+  .seg-fmt.on,.seg-fmt:hover{color:var(--navy);}
+  .seg-lim{--c:#FF5A5F;}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px dashed rgba(255,255,255,.25);}
+  .legend button{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;
+    border:2px solid var(--c);color:#fff;background:transparent;
+    border-radius:99px;padding:5px 13px;cursor:pointer;
+  }
+  .legend button.on{background:var(--c);}
+  .legend button.seg-fmt.on{color:var(--navy);}
+  .legend-hint{font-size:13px;color:rgba(255,255,255,.65);margin:10px 0 0;}
+
+  /* ---------- cards ---------- */
+  .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:8px 0 30px;}
+  .card{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px 20px 18px;
+    box-shadow:var(--shadow);
+    transition:transform .2s, border-color .2s;
+  }
+  .card:hover{transform:translateY(-3px);border-color:var(--test);}
+  .card:nth-child(odd) .ic{background:var(--accent);}
+  .card:nth-child(even) .ic{background:var(--test);}
+  .card .ic{
+    width:44px;height:44px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:21px;margin-bottom:12px;
+  }
+  .card h3{font-family:'Manrope',sans-serif;font-size:16.5px;font-weight:800;margin-bottom:8px;color:var(--ink);}
+  .card p{font-size:14.5px;margin:0;color:var(--ink-soft);}
+
+  /* ---------- case ---------- */
+  .case{
+    background:var(--surface);
+    border:2px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 26px 20px;margin:28px 0 32px;box-shadow:var(--shadow);
+  }
+  .case .box-title{color:var(--ink);}
+  .case .box-tag{background:var(--navy);}
+  :root[data-theme="dark"] .case .box-tag{background:var(--accent);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .case .box-tag{background:var(--accent);} }
+  .case-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .case-side{border-radius:14px;padding:16px 18px;font-size:15px;color:var(--ink-soft);}
+  .case-side h4{margin:0 0 8px;font-size:14px;font-family:'Unbounded',sans-serif;}
+  .case-side.plus{background:var(--accent-tint);border-top:4px solid var(--accent);}
+  .case-side.plus h4{color:var(--accent-ink);}
+  .case-side.minus{background:var(--test-tint);border-top:4px solid var(--test);}
+  .case-side.minus h4{color:var(--test-ink);}
+  .case-side p{margin:0;}
+  .case .box-close i{color:var(--test-ink);font-weight:800;font-style:normal;}
+
+  /* ---------- rules ---------- */
+  .topic ul.rules{counter-reset:r;display:grid;gap:10px;margin-bottom:26px;}
+  .topic ul.rules li{
+    counter-increment:r;
+    margin:0;padding:14px 16px 14px 62px;
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);
+  }
+  .topic ul.rules li::before{
+    content:counter(r);
+    transform:none;
+    left:14px;top:50%;margin-top:-17px;
+    width:34px;height:34px;border-radius:11px;
+    background:var(--accent);
+    color:#fff;font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  .topic ul.rules li:nth-child(even)::before{background:var(--test);}
+
+  /* ---------- glossary & questions ---------- */
+  .glossary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:6px 0 28px;}
+  .term{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:14px 16px;}
+  .term:nth-child(4n+2),.term:nth-child(4n+3){border-left-color:var(--test);}
+  .term dt{font-weight:800;color:var(--ink);font-size:15.5px;margin-bottom:4px;}
+  .term dd{margin:0;font-size:14.5px;color:var(--ink-soft);}
+  .questions{counter-reset:q;list-style:none;padding:0;margin:0 0 10px;}
+  .questions li{
+    counter-increment:q;
+    display:flex;gap:14px;align-items:flex-start;
+    padding:12px 0;border-bottom:1px solid var(--line);
+    color:var(--ink-soft);font-size:16px;
+  }
+  .questions li:last-child{border-bottom:none;}
+  .questions li::before{
+    content:counter(q, decimal-leading-zero);
+    flex:none;font-family:'Unbounded',sans-serif;font-weight:800;font-size:15px;
+    color:var(--test);min-width:30px;
+  }
+
+  /* ---------- literature (end) ---------- */
+  .lit{
+    margin:80px 0 0;
+    background:var(--navy);
+    color:#fff;
+    border-radius:24px;
+    padding:34px 34px 30px;
+    position:relative;overflow:hidden;
+    scroll-margin-top:70px;
+  }
+  :root[data-theme="dark"] .lit{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .lit{background:var(--surface-2);} }
+  .lit::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle, rgba(242,107,29,.55), rgba(242,107,29,0) 70%);
+  }
+  .lit h2{font-size:22px;margin-bottom:20px;position:relative;z-index:1;}
+  .lit h2 span{color:#FFB27D;}
+  .lit ol{counter-reset:l;list-style:none;margin:0;padding:0;position:relative;z-index:1;}
+  .lit li{
+    counter-increment:l;
+    position:relative;
+    padding:0 0 12px 46px;margin-bottom:12px;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    font-size:14.5px;color:rgba(255,255,255,.85);
+  }
+  .lit li:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .lit li::before{
+    content:counter(l);
+    position:absolute;left:0;top:0;
+    width:30px;height:30px;border-radius:9px;
+    background:var(--test);color:#fff;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12.5px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .lit a{color:#9DB7FF;word-break:break-all;}
+  .lit i{color:#fff;}
+
+  footer{
+    max-width:1000px;margin:0 auto;padding:30px 24px 56px;
+    color:var(--ink-muted);font-size:13.5px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .reset-btn{
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--accent);background:var(--surface);
+    border:2px solid var(--accent);border-radius:10px;
+    padding:7px 14px;cursor:pointer;font-weight:700;
+  }
+  .reset-btn:hover{background:var(--accent);color:#fff;}
+
+  @media (max-width:860px){
+    .cards{grid-template-columns:repeat(2,minmax(0,1fr));}
+  }
+  @media (max-width:640px){
+    .hero{padding:52px 16px 100px;}
+    .toc-inner,main,footer{padding-left:16px;padding-right:16px;}
+    .goal{padding:84px 20px 20px;}
+    .goal::before{top:18px;left:20px;}
+    .topic-num{font-size:40px;}
+    .box,.prompt-demo,.case{padding:20px 16px 16px;}
+    .cards,.glossary,.case-cols{grid-template-columns:1fr;}
+    .lit{padding:26px 20px 22px;}
+  }
+
+  /* ---------- lecture 9 additions ---------- */
+  .example{
+    background:var(--navy);color:#fff;border-radius:var(--radius);
+    padding:24px 26px 20px;margin:28px 0 32px;box-shadow:var(--shadow);
+  }
+  :root[data-theme="dark"] .example{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .example{background:var(--surface-2);} }
+  .example .box-title{color:#fff;}
+  .example .box-tag{background:var(--test);}
+  .levels{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 18px;}
+  .levels span{
+    position:relative;flex:1 1 120px;text-align:center;
+    font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;
+    padding:10px 14px;border-radius:10px;
+    background:rgba(255,255,255,.12);color:#fff;
+  }
+  .levels span:nth-child(2){background:rgba(255,255,255,.2);}
+  .levels span:nth-child(3){background:rgba(242,107,29,.55);}
+  .levels span:nth-child(4){background:var(--test);}
+  .topic ul.ex-list{color:rgba(255,255,255,.9);font-size:15.5px;margin:0;}
+  .topic ul.ex-list li b{color:#FFB27D;}
+  .steps6{list-style:none;padding:0;margin:8px 0 26px;counter-reset:s;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+  .steps6 li{
+    counter-increment:s;position:relative;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:52px 18px 16px;box-shadow:var(--shadow);
+  }
+  .steps6 li::before{
+    content:counter(s);position:absolute;left:18px;top:14px;
+    width:30px;height:30px;border-radius:10px;
+    background:var(--accent);color:#fff;
+    font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .steps6 li:nth-child(even)::before{background:var(--test);}
+  .steps6 li b{display:block;color:var(--ink);font-size:16px;margin-bottom:6px;}
+  .steps6 li span{display:block;color:var(--ink-soft);font-size:14.5px;}
+  .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:8px 0 26px;}
+  .stat{background:var(--accent-tint);border-radius:var(--radius);padding:18px 20px;}
+  .stat:nth-child(2){background:var(--test-tint);}
+  .stat b{display:block;font-family:'Unbounded',sans-serif;font-size:36px;line-height:1.1;color:var(--accent);}
+  .stat:nth-child(2) b{color:var(--test-ink);}
+  .stat span{display:block;margin-top:6px;font-size:14.5px;color:var(--ink-soft);}
+  .card .ic{color:#fff;}
+  .quiz-link{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:10px 18px;border-radius:12px;
+    background:var(--test);color:#fff;font-weight:800;text-decoration:none;font-size:15px;box-shadow:0 8px 18px -10px var(--test);}
+  .quiz-link:hover{background:var(--accent);}
+  @media (max-width:860px){ .steps6{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  @media (max-width:640px){ .hero-net{display:none;} .steps6,.stats{grid-template-columns:1fr;} .example{padding:20px 16px 16px;} }
+
+  .levels span:nth-child(5){background:#C2500C;}
+</style>
+
+</head>
+<body>
 
 <header class="hero">
-  <img class="hero-net" src="assets/img/hero-net.svg" alt="" aria-hidden="true">
+  <svg class="hero-net" viewBox="0 0 570 420" aria-hidden="true">
+    <rect x="300" y="40" width="190" height="340" rx="34" fill="#fff" fill-opacity=".12" stroke="#fff" stroke-opacity=".6" stroke-width="3"/>
+    <rect x="320" y="80" width="150" height="250" rx="10" fill="#fff" fill-opacity=".1"/>
+    <rect x="335" y="98" width="120" height="70" rx="8" fill="#F26B1D"/>
+    <polygon points="383,118 383,148 408,133" fill="#fff"/>
+    <rect x="335" y="182" width="120" height="14" rx="7" fill="#fff" fill-opacity=".6"/>
+    <rect x="335" y="204" width="90" height="14" rx="7" fill="#fff" fill-opacity=".4"/>
+    <rect x="335" y="232" width="120" height="26" rx="8" fill="#fff" fill-opacity=".25"/>
+    <rect x="335" y="266" width="120" height="26" rx="8" fill="#FFB27D" fill-opacity=".9"/>
+    <circle cx="395" cy="355" r="10" fill="#fff" fill-opacity=".5"/>
+    <g fill="#fff" fill-opacity=".85">
+      <rect x="110" y="110" width="110" height="60" rx="14"/>
+      <rect x="80" y="200" width="110" height="60" rx="14" fill-opacity=".6"/>
+      <rect x="140" y="290" width="110" height="60" rx="14" fill-opacity=".4"/>
+    </g>
+    <g font-family="JetBrains Mono, monospace" font-size="20" font-weight="700" fill="#0E1F4D">
+      <text x="128" y="148">2 хв</text><text x="98" y="238">3 хв</text><text x="158" y="328">5 хв</text>
+    </g>
+    <g stroke="#FFB27D" stroke-width="3" stroke-dasharray="6 6" fill="none"><path d="M220 140 C260 140 270 150 300 160"/><path d="M190 230 C240 230 260 220 300 215"/><path d="M250 320 C275 320 285 300 300 290"/></g>
+  </svg>
   <div class="hero-inner">
     <span class="eyebrow">Лекція 10 · Тема 10</span>
-    <h1>Віртуальна, доповнена реальність <span class="hl">і симулятори</span></h1>
-    <p class="theme">Імерсивні технології та тренажери для безпечного відпрацювання професійних дій.</p>
-    <div class="meta-row">
-      <span class="meta-chip draft-chip">✎ <b>Заготовка</b> лекція в розробці</span>
-    </div>
+    <h1>Мобільне навчання <span class="hl">та мікронавчання</span></h1>
+    <p class="theme">Як смартфон стає навчальним інструментом у майстерні й на практиці — і чому короткі порції з повторенням працюють краще за довгі пояснення.</p>
   </div>
 </header>
 
 <nav class="toc-bar">
   <div class="toc-inner">
-    <a href="#s1" data-toc="s1">1. VR / AR / MR</a>
-    <a href="#s2" data-toc="s2">2. Симулятори</a>
-    <a href="#s3" data-toc="s3">3. Сервіси</a>
-    <a href="#s4" data-toc="s4">4. Безпека</a>
+    <a href="#mlearn" data-toc="mlearn">1. Мобільне навчання</a>
+    <a href="#models" data-toc="models">2. Моделі й форми</a>
+    <a href="#micro" data-toc="micro">3. Мікронавчання</a>
+    <a href="#science" data-toc="science">4. Наукові засади</a>
+    <a href="#vet" data-toc="vet">5. Професійна освіта</a>
+    <a href="#risks" data-toc="risks">6. Ризики та етика</a>
     <a href="#summary" data-toc="summary">Підсумок</a>
     <a href="#literature" data-toc="literature">Література</a>
     <span class="toc-progress" id="tocProgress">прогрес: <b>0%</b></span>
@@ -58,125 +716,503 @@
 
   <div class="goal">
     <h2>Мета лекції</h2>
-    <p class="placeholder">Сформулюйте мету лекції: які знання, уміння та компетентності сформує тема в здобувачів освіти.</p>
+    <p>Сформувати уявлення про мобільне навчання та мікронавчання, їхні моделі та науково обґрунтовані засади; навчити проєктувати мобільні мікронавчальні матеріали для закладів професійної (професійно-технічної) освіти; розвинути вміння критично оцінювати ефективність і ризики використання мобільних пристроїв в освітньому процесі.</p>
   </div>
 
-  <!-- ================= 1. ПОНЯТТЯ VR, AR І MR ================= -->
-  <section class="topic" id="s1">
-    <div class="topic-head">
-      <span class="topic-num">01</span>
-      <h2>Поняття VR, AR і MR</h2>
+  <!-- ============ 1 ============ -->
+  <section class="topic" id="mlearn">
+    <div class="topic-head"><span class="topic-num">01</span><h2>Поняття мобільного навчання</h2></div>
+
+    <p><b>Мобільне навчання</b> (m-learning) — це навчання в різних контекстах через соціальну взаємодію та взаємодію зі змістом за допомогою персональних електронних пристроїв. Таке визначення запропонувала Г. Кромптон (2013), і воно наголошує не на самому пристрої, а на мобільності того, хто навчається: навчання відбувається не лише в аудиторії, а й у майстерні, на виробничій практиці, у транспорті чи вдома.</p>
+
+    <p>М. Шарплс, Дж. Тейлор і Дж. Вавула (2007) у «теорії навчання для мобільної епохи» підкреслили, що люди навчаються, постійно переміщуючись між місцями, темами й пристроями, а мобільні технології лише підтримують цей природний процес. Тому мобільне навчання — це не «урок на маленькому екрані», а новий спосіб організувати навчання там і тоді, де воно потрібне.</p>
+
+    <div class="stats">
+      <div class="stat"><b>89,6%</b><span>населення України користується інтернетом (DataReportal, жовтень 2025)</span></div>
+      <div class="stat"><b>140%</b><span>мобільних підключень від кількості населення</span></div>
+      <div class="stat"><b>13</b><span>переваг мобільного навчання виокремлює ЮНЕСКО (2013)</span></div>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
-        <p>Підказка: готові блоки (схема, таблиця, картки, кейс, виноска) можна скопіювати з <a href="lecture-08.html">лекції 8</a> — стилі вже підключено до всіх сторінок.</p>
+    <p>ЮНЕСКО в «Настановах з політики мобільного навчання» (2013) серед переваг називає: розширення доступу та рівності, персоналізацію навчання, миттєвий зворотний зв’язок, навчання будь-де й будь-коли, продуктивніше використання аудиторного часу, ситуативне навчання, поєднання формального й неформального навчання, підтримку здобувачів освіти з інвалідністю, мінімізацію втрат навчання в умовах конфліктів і катастроф. Для України останні переваги особливо відчутні: смартфон часто стає головним навчальним пристроєм під час дистанційного чи змішаного навчання.</p>
+
+    <p class="table-cap"><b>Таблиця 1.</b> Мобільне навчання та традиційне електронне навчання</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Ознака</th><th>Традиційне електронне навчання</th><th>Мобільне навчання</th></tr></thead>
+        <tbody>
+          <tr><td><b>Пристрій</b></td><td>Комп’ютер, ноутбук</td><td>Смартфон, планшет — завжди під рукою</td></tr>
+          <tr><td><b>Місце</b></td><td>Аудиторія, комп’ютерний клас, дім</td><td>Будь-де: майстерня, підприємство, транспорт</td></tr>
+          <tr><td><b>Тривалість сесії</b></td><td>Тривалі заняття за розкладом</td><td>Короткі сесії в зручний час</td></tr>
+          <tr><td><b>Контекст</b></td><td>Відокремлений від практики</td><td>Ситуативний: навчання «на робочому місці»</td></tr>
+          <tr><td><b>Можливості пристрою</b></td><td>Клавіатура, великий екран</td><td>Камера, мікрофон, геолокація, сповіщення, QR-коди</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <!-- ================= 2. СИМУЛЯТОРИ ТА ТРЕНАЖЕРИ У ПРОФЕСІЙНІЙ ПІДГОТОВЦІ ================= -->
-  <section class="topic" id="s2">
-    <div class="topic-head">
-      <span class="topic-num">02</span>
-      <h2>Симулятори та тренажери у професійній підготовці</h2>
+  <!-- ============ 2 ============ -->
+  <section class="topic" id="models">
+    <div class="topic-head"><span class="topic-num">02</span><h2>Моделі та форми мобільного навчання</h2></div>
+
+    <p>Однією з найвідоміших моделей є <b>FRAME</b> (Framework for the Rational Analysis of Mobile Education) М. Кул (2009). Модель розглядає мобільне навчання як перетин трьох складників: <b>пристрою</b>, <b>того, хто навчається</b>, і <b>соціального складника</b>. Ефективне мобільне навчання виникає там, де всі три складники узгоджені.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 900 400" role="img" aria-label="Модель FRAME: три кола, що перетинаються, — пристрій, той, хто навчається, соціальний складник; у центрі — мобільне навчання">
+        <circle cx="360" cy="150" r="125" style="fill:var(--accent)" fill-opacity=".22" stroke="var(--accent)" stroke-width="3"/>
+        <circle cx="540" cy="150" r="125" style="fill:var(--test)" fill-opacity=".22" stroke="var(--test)" stroke-width="3"/>
+        <circle cx="450" cy="285" r="125" style="fill:var(--task)" fill-opacity=".22" stroke="var(--task)" stroke-width="3"/>
+        <g font-family="Manrope, sans-serif" text-anchor="middle">
+          <text x="325" y="115" font-size="17" font-weight="800" style="fill:var(--accent-ink)">Пристрій (D)</text>
+          <text x="325" y="137" font-size="13" class="svg-muted">екран, батарея,</text>
+          <text x="325" y="154" font-size="13" class="svg-muted">зручність</text>
+          <text x="578" y="104" font-size="16" font-weight="800" style="fill:var(--test-ink)">Той, хто</text><text x="578" y="122" font-size="16" font-weight="800" style="fill:var(--test-ink)">навчається (L)</text>
+          <text x="578" y="142" font-size="13" class="svg-muted">знання, мотивація,</text>
+          <text x="578" y="159" font-size="13" class="svg-muted">навички</text>
+          <text x="450" y="335" font-size="17" font-weight="800" style="fill:var(--task-ink)">Соціальний складник (S)</text>
+          <text x="450" y="356" font-size="13" class="svg-muted">взаємодія, співпраця, спілкування</text>
+          <circle cx="450" cy="200" r="38" style="fill:var(--navy)"/>
+          <text x="450" y="196" font-size="12" font-weight="800" fill="#fff">мобільне</text>
+          <text x="450" y="212" font-size="12" font-weight="800" fill="#fff">навчання</text>
+        </g>
+      </svg>
+      <figcaption>Модель FRAME М. Кул (2009): відео на смартфоні (пристрій) має відповідати рівню здобувача освіти (той, хто навчається) й обговорюватися з групою (соціальний складник).</figcaption>
+    </figure>
+
+    <h3 class="sub-h">Поширені форми мобільного навчання</h3>
+    <div class="cards">
+      <div class="card"><div class="ic">📱</div><h3>Застосунки й платформи</h3><p>Google Classroom, Moodle, освітня екосистема «Мрія», мовні та тренувальні застосунки.</p></div>
+      <div class="card"><div class="ic">💬</div><h3>Месенджери й чат-боти</h3><p>Канал групи в Telegram чи Viber для коротких завдань, нагадувань, опитувань.</p></div>
+      <div class="card"><div class="ic">🔳</div><h3>QR-коди</h3><p>Швидкий перехід із паперової інструкції чи обладнання до відео, схеми або тесту.</p></div>
+      <div class="card"><div class="ic">❓</div><h3>Мобільні вікторини</h3><p>Kahoot!, Wayground, Google Forms для швидкої перевірки знань.</p></div>
+      <div class="card"><div class="ic">📷</div><h3>Фото- і відеофіксація</h3><p>Етапи виконаної роботи — для щоденника практики чи портфоліо.</p></div>
+      <div class="card"><div class="ic">🕶️</div><h3>Доповнена реальність</h3><p>Підказки й 3D-моделі поверх реального обладнання через камеру смартфона.</p></div>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
-    </div>
+    <div class="callout"><b>BYOD</b> (Bring Your Own Device — «принеси свій пристрій»): здобувачі освіти навчаються на власних смартфонах. Це знижує витрати закладу освіти, але вимагає від педагога врахувати різні моделі пристроїв, обсяг пам’яті й доступ до мобільного інтернету, щоб жоден здобувач освіти не залишився осторонь.</div>
 
-    <!-- ТЕСТ: змініть текст запитання та варіантів.
-         data-correct — номер правильної відповіді, відлік від 0 (0 — перший варіант). -->
     <div class="box test" id="test-1">
-      <div class="box-title"><span class="box-tag">ТЕСТ 1</span> Назва тесту<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
-      <div class="test-q">Сформулюйте запитання тесту.</div>
-      <div class="quiz" data-correct="0">
-        <button class="test-opt" type="button">варіант відповіді 1 (правильний)</button>
-        <button class="test-opt" type="button">варіант відповіді 2</button>
-        <button class="test-opt" type="button">варіант відповіді 3</button>
-        <button class="test-opt" type="button">варіант відповіді 4</button>
+      <div class="box-title"><span class="box-tag">ТЕСТ 1</span> Модель FRAME<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Здобувачі освіти переглядають відео на смартфоні, але не розуміють його, бо матеріал розраховано на старший курс. Який складник моделі FRAME не узгоджено?</div>
+      <div class="quiz" data-correct="1">
+        <button class="test-opt" type="button">пристрій</button>
+        <button class="test-opt" type="button">той, хто навчається</button>
+        <button class="test-opt" type="button">соціальний складник</button>
+        <button class="test-opt" type="button">мобільна мережа</button>
         <div class="test-feedback"></div>
       </div>
     </div>
   </section>
 
-  <!-- ================= 3. СЕРВІСИ ДЛЯ СТВОРЕННЯ ІМЕРСИВНОГО КОНТЕНТУ ================= -->
-  <section class="topic" id="s3">
-    <div class="topic-head">
-      <span class="topic-num">03</span>
-      <h2>Сервіси для створення імерсивного контенту</h2>
-    </div>
+  <!-- ============ 3 ============ -->
+  <section class="topic" id="micro">
+    <div class="topic-head"><span class="topic-num">03</span><h2>Мікронавчання: суть і формати</h2></div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+    <p><b>Мікронавчання</b> (microlearning) — це навчання невеликими, змістовно завершеними порціями, кожна з яких спрямована на одну конкретну мету. Т. Хуг і співавтори в збірнику «Didactics of Microlearning» (2007) розглядали мікронавчання як відповідь на потребу людей навчатися короткими фрагментами в щоденному житті та на робочому місці.</p>
+
+    <div class="callout"><b>Скільки триває мікроурок?</b> Чіткої межі немає, але орієнтиром може слугувати дослідження Ф. Гуо, Дж. Кіма і Р. Рубіна (2014): проаналізувавши 6,9 млн переглядів відео масових відкритих онлайн-курсів, вони з’ясували, що медіанний час залученості глядача — не більше 6 хвилин, і рекомендували ділити відео на фрагменти, коротші за 6 хвилин.</div>
+
+    <h3 class="sub-h">Ознаки мікронавчання</h3>
+    <ol class="steps6">
+      <li><b>Одна мета</b><span>один мікроурок — одне поняття чи одна операція</span></li>
+      <li><b>Стислість</b><span>кілька хвилин, без зайвого вступу</span></li>
+      <li><b>Завершеність</b><span>фрагмент зрозумілий сам по собі</span></li>
+      <li><b>Активність</b><span>після пояснення — запитання, вправа чи дія</span></li>
+      <li><b>Доступність</b><span>зручно відкривається на смартфоні будь-коли</span></li>
+      <li><b>Повторюваність</b><span>до мікроуроку легко повернутися перед практикою</span></li>
+    </ol>
+
+    <p class="table-cap"><b>Таблиця 2.</b> Формати мікронавчання та приклади у професійній освіті</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Формат</th><th>Призначення</th><th>Приклад</th></tr></thead>
+        <tbody>
+          <tr><td><b>Коротке відео (до 6 хв)</b></td><td>Показ операції чи прийому</td><td>Відео «Заточування ножа кухаря» за QR-кодом біля робочого місця</td></tr>
+          <tr><td><b>Картка-підказка</b></td><td>Нагадування правил, послідовності, норм</td><td>Картка «5 кроків безпечного вмикання верстата»</td></tr>
+          <tr><td><b>Мікротест (3–5 питань)</b></td><td>Самоперевірка й повторення</td><td>Щоденний тест у Google Forms чи Kahoot! з охорони праці</td></tr>
+          <tr><td><b>Подкаст / аудіоурок</b></td><td>Навчання в дорозі</td><td>Аудіорозповідь про історію професії чи кейс з виробництва</td></tr>
+          <tr><td><b>Завдання-фото</b></td><td>Практичне застосування</td><td>«Сфотографуйте правильно облаштоване робоче місце»</td></tr>
+          <tr><td><b>Флешкартки</b></td><td>Запам’ятовування термінів</td><td>Терміни технологічних операцій у Quizlet чи Wordwall</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <!-- ================= 4. ОБМЕЖЕННЯ ТА БЕЗПЕКА ВИКОРИСТАННЯ ================= -->
-  <section class="topic" id="s4">
-    <div class="topic-head">
-      <span class="topic-num">04</span>
-      <h2>Обмеження та безпека використання</h2>
+  <!-- ============ 4 ============ -->
+  <section class="topic" id="science">
+    <div class="topic-head"><span class="topic-num">04</span><h2>Наукові засади мікронавчання</h2></div>
+
+    <p>Мікронавчання ефективне не тому, що воно «модне», а тому, що спирається на кілька добре досліджених закономірностей пам’яті й навчання.</p>
+
+    <p><b>Крива забування.</b> Г. Еббінгаус (1885) показав, що без повторення значна частина вивченого забувається вже протягом першої доби. Дж. Мюрре і Й. Дрос (2015) повторили його експеримент і отримали дуже схожу криву. Висновок для педагога: одного пояснення недостатньо — потрібне повторення.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 900 360" role="img" aria-label="Схема: крива забування без повторення швидко спадає; з повтореннями на 1, 3, 7 і 14 день кожен спад повільніший, і рівень збереження лишається високим">
+        <line x1="80" y1="300" x2="860" y2="300" style="stroke:var(--ink-muted)" stroke-width="2"/>
+        <line x1="80" y1="300" x2="80" y2="30" style="stroke:var(--ink-muted)" stroke-width="2"/>
+        <text x="860" y="330" text-anchor="end" font-size="13" font-weight="700" class="svg-muted" font-family="JetBrains Mono, monospace">ДНІ →</text>
+        <text x="90" y="24" font-size="13" font-weight="700" class="svg-muted" font-family="JetBrains Mono, monospace">↑ ПАМ’ЯТАЄМО</text>
+        <path d="M80 50 C120 180 180 230 300 255 C450 275 650 285 860 288" fill="none" style="stroke:var(--ink-muted)" stroke-width="3" stroke-dasharray="7 6"/>
+        <path d="M80 50 C100 110 120 130 140 135 L140 55 C175 100 210 115 240 118 L240 60 C300 95 350 105 400 107 L400 65 C500 90 560 96 640 98 L640 70 C720 82 790 86 860 88" fill="none" style="stroke:var(--test)" stroke-width="4" stroke-linejoin="round"/>
+        <g font-family="JetBrains Mono, monospace" font-size="12" font-weight="700" style="fill:var(--accent-ink)" text-anchor="middle">
+          <text x="140" y="320">1</text><text x="240" y="320">3</text><text x="400" y="320">7</text><text x="640" y="320">14</text>
+        </g>
+        <g style="stroke:var(--line)" stroke-dasharray="3 5"><line x1="140" y1="300" x2="140" y2="55"/><line x1="240" y1="300" x2="240" y2="60"/><line x1="400" y1="300" x2="400" y2="65"/><line x1="640" y1="300" x2="640" y2="70"/></g>
+        <text x="700" y="275" font-size="15" font-weight="700" class="svg-muted" font-family="Manrope, sans-serif">без повторення</text>
+        <text x="680" y="60" font-size="15" font-weight="800" style="fill:var(--test-ink)" font-family="Manrope, sans-serif">з мікроповтореннями</text>
+      </svg>
+      <figcaption>Умовна схема: кожне коротке повторення «піднімає» пам’ять, і наступне забування відбувається повільніше.</figcaption>
+    </figure>
+
+    <p><b>Ефект інтервального повторення.</b> Н. Сепеда і співавтори (2006) узагальнили результати 317 експериментів і підтвердили: розподілене в часі повторення дає кращі результати, ніж «зубріння» за один раз, причому що довше треба пам’ятати матеріал, то довшими мають бути інтервали між повтореннями.</p>
+
+    <p><b>Ефект тестування.</b> Г. Редігер і Дж. Карпіке (2006) з’ясували, що спроба пригадати матеріал зміцнює пам’ять краще, ніж повторне читання: через 5 хвилин краще пам’ятали ті, хто перечитував текст, але через 2 дні й через тиждень — ті, хто проходив тест. Тому мікротест після короткого пояснення — не контроль заради контролю, а спосіб навчання.</p>
+
+    <p><b>Когнітивне навантаження.</b> Згідно з теорією Дж. Свеллера (1988), обсяг робочої пам’яті обмежений, тож перевантажений матеріал заважає навчанню. Р. Маєр сформулював <b>принцип сегментування</b>: люди навчаються краще, коли мультимедійний урок подано частинами, темп переходу між якими контролює сам учень. Мікронавчання — пряме втілення цього принципу.</p>
+
+    <div class="example">
+      <div class="box-title"><span class="box-tag">ПРИКЛАД</span> Мікрокурс «Безпечна робота на заточувальному верстаті»</div>
+      <div class="levels"><span>День 1</span><span>День 2</span><span>День 4</span><span>День 7</span><span>День 14</span></div>
+      <ul class="ex-list">
+        <li><b>День 1:</b> відео 4 хв «Будова верстата та засоби захисту» + 3 питання для самоперевірки.</li>
+        <li><b>День 2:</b> картка-підказка «Порядок вмикання» + завдання сфотографувати засоби індивідуального захисту на робочому місці.</li>
+        <li><b>День 4:</b> мікротест «Знайди порушення на фото» (повторення першого дня).</li>
+        <li><b>День 7:</b> відео 5 хв «Типові помилки під час заточування» + 5 питань.</li>
+        <li><b>День 14:</b> підсумковий мікротест з питань усіх попередніх днів.</li>
+        <li><b>Після курсу:</b> практичне заняття в майстерні під наглядом майстра виробничого навчання.</li>
+      </ul>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
-    </div>
-
-    <!-- ЗАВДАННЯ: кожен пункт списку — окремий крок, який здобувач освіти позначає галочкою. -->
     <div class="box task" id="task-1">
-      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 1</span> Назва практичного завдання<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 1</span> Вікторина Kahoot! «Мобільне навчання і мікронавчання»<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
       <ol>
-        <li>Опишіть перший крок завдання.</li>
-        <li>Опишіть другий крок завдання.</li>
-        <li>Опишіть, де та як здобувач освіти здає результат (наприклад, у <b>Classroom</b>).</li>
+        <li>Відкрийте в <b>Classroom</b> посилання на самостійне проходження вікторини та пройдіть її.</li>
       </ol>
+      <a class="quiz-link" href="https://create.kahoot.it/details/1d2eb009-7c05-4861-9450-5816616468a9" target="_blank" rel="noopener">▶ Відкрити вікторину в Kahoot!</a>
     </div>
   </section>
 
-  <!-- ================= ПІДСУМОК ================= -->
-  <section class="topic" id="summary">
-    <div class="topic-head">
-      <span class="topic-num">✓</span>
-      <h2>Ключові поняття та самоперевірка</h2>
+  <!-- ============ 5 ============ -->
+  <section class="topic" id="vet">
+    <div class="topic-head"><span class="topic-num">05</span><h2>Мобільне та мікронавчання у професійній освіті</h2></div>
+
+    <p>Професійна освіта особливо виграє від мобільного й мікронавчання, бо навчання тут тісно пов’язане з робочим місцем. Здобувач освіти не може тримати під рукою підручник біля верстата чи плити, але може за кілька секунд відсканувати QR-код і переглянути коротке відео саме тієї операції, яку зараз виконує.</p>
+
+    <div class="cards">
+      <div class="card"><div class="ic">🔳</div><h3>Навчання на робочому місці</h3><p>QR-коди на обладнанні, інструкційно-технологічних картах і плакатах з охорони праці ведуть до відео, схем і мікротестів.</p></div>
+      <div class="card"><div class="ic">📒</div><h3>Виробнича практика</h3><p>Смартфон як щоденник: фото етапів роботи, короткі звіти, зворотний зв’язок від майстра виробничого навчання.</p></div>
+      <div class="card"><div class="ic">🎯</div><h3>Підготовка до атестації</h3><p>Щоденні мікротести й флешкартки з нормами та послідовністю операцій замість «вчити все за ніч».</p></div>
     </div>
 
+    <p><b>Державні цифрові ресурси.</b> В Україні розвивається освітня екосистема «Мрія», створена Мінцифри та МОН: після пілотування з вересня 2024 року у квітні 2025 року до неї змогли приєднатися всі школи, а станом на 1 вересня 2025 року до «Мрії» долучилися понад 2000 шкіл. Платформа «Дія.Освіта» пропонує освітні серіали — короткі відеоуроки з цифрових навичок, які зручно переглядати зі смартфона.</p>
+
+    <p>Українські дослідники вивчають мікронавчання і в професійній підготовці: Т. Япринець і В. Оніпко (2025) описують адаптивне мікронавчання як інноваційну технологію підготовки майбутніх фахівців аграрної галузі.</p>
+
+    <div class="case">
+      <div class="box-title"><span class="box-tag">КЕЙС</span> Смартфон на занятті: інструмент чи перешкода?</div>
+      <div class="case-cols">
+        <div class="case-side plus">
+          <h4>＋ Інструмент</h4>
+          <p>ЮНЕСКО (2013) розглядає мобільні пристрої як спосіб розширити доступ до освіти, персоналізувати навчання й підтримати здобувачів освіти з інвалідністю. Українські заклади освіти дедалі ширше використовують смартфони: у «Мрії», Classroom, вікторинах, під час дистанційного навчання.</p>
+        </div>
+        <div class="case-side minus">
+          <h4>− Перешкода</h4>
+          <p>Звіт ЮНЕСКО «Технології в освіті: інструмент на чиїх умовах?» (2023) наголошує, що технології мають підтримувати навчання, а не відволікати; менш ніж кожна четверта країна заборонила смартфони в школах. В Україні 2026 року зареєстрували законопроєкт № 15105 про заборону телефонів на уроках; профільний комітет рекомендував повернути його на доопрацювання.</p>
+        </div>
+      </div>
+      <div class="box-close"><i>Висновок для педагога:</i> проблема не в смартфоні, а в правилах його використання: на занятті педагог визначає, коли смартфон — навчальний інструмент, а коли його відкладають.</div>
+    </div>
+
+    <div class="box test" id="test-2">
+      <div class="box-title"><span class="box-tag">ТЕСТ 2</span> Наукові засади<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Здобувачі освіти після короткого відео одразу проходять 3 питання на пригадування. Який ефект використано?</div>
+      <div class="quiz" data-correct="0">
+        <button class="test-opt" type="button">ефект тестування</button>
+        <button class="test-opt" type="button">ефект надмірного обґрунтування</button>
+        <button class="test-opt" type="button">крива забування</button>
+        <button class="test-opt" type="button">перенавчання</button>
+        <div class="test-feedback"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6 ============ -->
+  <section class="topic" id="risks">
+    <div class="topic-head"><span class="topic-num">06</span><h2>Ефективність, ризики та етика</h2></div>
+
+    <div class="stats">
+      <div class="stat"><b>110</b><span>досліджень (1993–2013) у метааналізі Ю.-Т. Сунга, К.-Е. Чанга і Т.-Ч. Лю (2016)</span></div>
+      <div class="stat"><b>0,523</b><span>середній розмір ефекту: помірний позитивний вплив мобільних пристроїв на навчальні результати</span></div>
+      <div class="stat"><b>40</b><span>досліджень мікронавчання в огляді В. Моніба та співавторів (2024): переважно позитивні результати</span></div>
+    </div>
+
+    <p>Систематичні огляди мікронавчання (А. Тейлор і В. Гунг, 2022; В. Моніб і співавтори, 2024) повідомляють переважно позитивні когнітивні, поведінкові та емоційні результати. Водночас ефект залежить від того, як саме педагог спроєктував навчання: смартфон сам по собі нікого не навчить.</p>
+
+    <h3 class="sub-h">Основні ризики</h3>
+    <ul>
+      <li><b>Відволікання</b> — сповіщення соцмереж і месенджерів розсіюють увагу; потрібні чіткі правила використання смартфона на занятті.</li>
+      <li><b>Цифрова нерівність</b> — не всі здобувачі освіти мають сучасний смартфон, достатньо пам’яті чи стабільний мобільний інтернет; варто передбачити альтернативу.</li>
+      <li><b>Фрагментація знань</b> — мікронавчання добре для фактів, правил і окремих операцій, але складні вміння потребують цілісного навчання та практики під керівництвом майстра.</li>
+      <li><b>Здоров’я</b> — тривалий час перед екраном, навантаження на зір і поставу; мікросесії мають бути справді короткими.</li>
+      <li><b>Безпека та персональні дані</b> — застосунки збирають дані, а в групових чатах можливий кібербулінг; особливо уважно — щодо неповнолітніх.</li>
+      <li><b>«Цифрова зайнятість» замість навчання</b> — повідомлення й нагадування без змістовного зворотного зв’язку створюють ілюзію активності.</li>
+    </ul>
+
+    <h3 class="sub-h">Принципи відповідального мобільного та мікронавчання</h3>
+    <ul class="rules">
+      <li>Одна порція — одна мета: не перевантажуйте мікроурок.</li>
+      <li>Плануйте інтервальне повторення й мікротести, а не лише перегляд.</li>
+      <li>Поєднуйте мікронавчання з практикою в майстерні та живим спілкуванням.</li>
+      <li>Забезпечте альтернативу тим, хто не має пристрою чи інтернету.</li>
+      <li>Узгодьте правила використання смартфона на занятті та захищайте персональні дані здобувачів освіти.</li>
+    </ul>
+
+    <div class="box test" id="test-3">
+      <div class="box-title"><span class="box-tag">ТЕСТ 3</span> Межі мікронавчання<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Для якого навчального результату мікронавчання саме по собі найменш придатне?</div>
+      <div class="quiz" data-correct="2">
+        <button class="test-opt" type="button">запам’ятати терміни технологічних операцій</button>
+        <button class="test-opt" type="button">повторити правила охорони праці</button>
+        <button class="test-opt" type="button">опанувати складну професійну навичку без практики</button>
+        <button class="test-opt" type="button">нагадати послідовність дій перед роботою</button>
+        <div class="test-feedback"></div>
+      </div>
+    </div>
+
+    <div class="box task" id="task-2">
+      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 2</span> Вікторина Kahoot! «Проєктуємо мікроурок»<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <ol>
+        <li>Відкрийте в <b>Classroom</b> посилання на самостійне проходження вікторини та пройдіть її.</li>
+      </ol>
+      <a class="quiz-link" href="https://create.kahoot.it/details/54a8f9fb-0dd8-4312-8b08-58636c697dc0" target="_blank" rel="noopener">▶ Відкрити вікторину в Kahoot!</a>
+    </div>
+  </section>
+
+  <!-- ============ SUMMARY ============ -->
+  <section class="topic" id="summary">
+    <div class="topic-head"><span class="topic-num">✓</span><h2>Ключові поняття та самоперевірка</h2></div>
     <h3 class="sub-h" style="margin-top:0">Ключові поняття</h3>
     <dl class="glossary">
-      <div class="term"><dt>Термін 1</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 2</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 3</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 4</dt><dd class="placeholder">визначення терміна.</dd></div>
+      <div class="term"><dt>Мобільне навчання</dt><dd>навчання в різних контекстах через соціальну взаємодію та взаємодію зі змістом за допомогою персональних електронних пристроїв.</dd></div>
+      <div class="term"><dt>Мікронавчання</dt><dd>навчання невеликими, змістовно завершеними порціями, кожна з яких спрямована на одну мету.</dd></div>
+      <div class="term"><dt>FRAME</dt><dd>модель мобільного навчання М. Кул, що поєднує пристрій, того, хто навчається, і соціальний складник.</dd></div>
+      <div class="term"><dt>BYOD</dt><dd>підхід, за якого здобувачі освіти навчаються на власних пристроях.</dd></div>
+      <div class="term"><dt>Крива забування</dt><dd>залежність збереження вивченого від часу, що минув без повторення.</dd></div>
+      <div class="term"><dt>Інтервальне повторення</dt><dd>повторення матеріалу через поступово зростаючі проміжки часу.</dd></div>
+      <div class="term"><dt>Ефект тестування</dt><dd>зміцнення пам’яті завдяки спробам пригадати матеріал.</dd></div>
+      <div class="term"><dt>Когнітивне навантаження</dt><dd>навантаження на обмежену робочу пам’ять під час навчання.</dd></div>
+      <div class="term"><dt>Принцип сегментування</dt><dd>подання навчального матеріалу частинами, темп переходу між якими контролює той, хто навчається.</dd></div>
+      <div class="term"><dt>Ситуативне навчання</dt><dd>навчання в реальному контексті діяльності, наприклад на робочому місці.</dd></div>
     </dl>
-
     <h3 class="sub-h">Питання для самоперевірки</h3>
     <ol class="questions">
-      <li class="placeholder">Питання для самоперевірки.</li>
-      <li class="placeholder">Питання для самоперевірки.</li>
-      <li class="placeholder">Питання для самоперевірки.</li>
+      <li>Як визначає мобільне навчання Г. Кромптон і чим воно відрізняється від традиційного електронного навчання?</li>
+      <li>Які переваги мобільного навчання виокремлює ЮНЕСКО? Які з них найважливіші для професійної освіти?</li>
+      <li>Які три складники поєднує модель FRAME? Наведіть приклад їх узгодження.</li>
+      <li>Які ознаки має мікронавчання і які його формати доцільні у вашій професії?</li>
+      <li>Як крива забування та ефект інтервального повторення пояснюють користь мікронавчання?</li>
+      <li>У чому полягає ефект тестування і як його використати на занятті?</li>
+      <li>Які ризики має використання смартфонів в освітньому процесі і як їх зменшити?</li>
+      <li>Для яких навчальних результатів мікронавчання недостатньо?</li>
     </ol>
   </section>
 
-  <!-- ================= ЛІТЕРАТУРА ================= -->
-  <section class="lit end" id="literature">
+  <section class="lit" id="literature">
     <h2>Література <span>до теми</span></h2>
     <ol>
-      <li>Додайте джерело, оформлене за ДСТУ 8302:2015.</li>
-      <li>Для електронних ресурсів укажіть URL та дату звернення.</li>
+      <li>Понад 2 000 шкіл з усієї України розпочали новий навчальний рік із освітньою екосистемою «Мрія» / Урядовий портал. 01.09.2025. URL: <a href="https://www.kmu.gov.ua/news/ponad-2-000-shkil-z-usiiei-ukrainy-rozpochaly-novyi-navchalnyi-rik-iz-osvitnoiu-ekosystemoiu-mriia" target="_blank" rel="noopener">https://www.kmu.gov.ua/news/ponad-2-000-shkil-z-usiiei-ukrainy-rozpochaly-novyi-navchalnyi-rik-iz-osvitnoiu-ekosystemoiu-mriia</a> (дата звернення: 10.11.2026).</li>
+      <li>Япринець Т. С., Оніпко В. В. Адаптивне мікронавчання як інноваційна технологія професійної підготовки майбутніх фахівців аграрної галузі // Вісник Глухівського НПУ ім. О. Довженка. Педагогічні науки. 2025. № 58. С. 48–57. DOI: 10.31376/2410-0897-2025-2-58-48-57.</li>
+      <li>Cepeda N. J., Pashler H., Vul E., Wixted J. T., Rohrer D. Distributed practice in verbal recall tasks: A review and quantitative synthesis // Psychological Bulletin. 2006. Vol. 132, No. 3. P. 354–380. DOI: 10.1037/0033-2909.132.3.354.</li>
+      <li>Crompton H. A historical overview of mobile learning: Toward learner-centered education // Handbook of mobile learning / ed. by Z. L. Berge, L. Y. Muilenburg. New York : Routledge, 2013. P. 3–14.</li>
+      <li>Ebbinghaus H. Über das Gedächtnis. Untersuchungen zur experimentellen Psychologie. Leipzig : Duncker &amp; Humblot, 1885.</li>
+      <li>Guo P. J., Kim J., Rubin R. How video production affects student engagement: An empirical study of MOOC videos // Proceedings of the First ACM Conference on Learning @ Scale. 2014. P. 41–50. DOI: 10.1145/2556325.2566239.</li>
+      <li>Hug T. (ed.). Didactics of Microlearning: Concepts, Discourses and Examples. Münster : Waxmann, 2007. 424 p.</li>
+      <li>Kemp S. Digital 2026: Ukraine / DataReportal. 08.11.2025. URL: <a href="https://datareportal.com/reports/digital-2026-ukraine" target="_blank" rel="noopener">https://datareportal.com/reports/digital-2026-ukraine</a> (дата звернення: 10.11.2026).</li>
+      <li>Koole M. L. A model for framing mobile learning // Mobile Learning: Transforming the Delivery of Education and Training / ed. by M. Ally. Edmonton : AU Press, 2009. P. 25–47.</li>
+      <li>Mayer R. E. Multimedia Learning. 3rd ed. Cambridge : Cambridge University Press, 2020. DOI: 10.1017/9781316941355.</li>
+      <li>Monib W. K., Qazi A., Apong R. A. Microlearning beyond boundaries: A systematic review and a novel framework for improving learning outcomes // Heliyon. 2025. Vol. 11, No. 2. e41413. DOI: 10.1016/j.heliyon.2024.e41413.</li>
+      <li>Murre J. M. J., Dros J. Replication and Analysis of Ebbinghaus’ Forgetting Curve // PLOS ONE. 2015. Vol. 10, No. 7. e0120644. DOI: 10.1371/journal.pone.0120644.</li>
+      <li>Roediger H. L., Karpicke J. D. Test-enhanced learning: Taking memory tests improves long-term retention // Psychological Science. 2006. Vol. 17, No. 3. P. 249–255. DOI: 10.1111/j.1467-9280.2006.01693.x.</li>
+      <li>Sharples M., Taylor J., Vavoula G. A theory of learning for the mobile age // The Sage Handbook of E-learning Research / ed. by R. Andrews, C. Haythornthwaite. London : Sage, 2007. P. 221–247.</li>
+      <li>Sung Y.-T., Chang K.-E., Liu T.-C. The effects of integrating mobile devices with teaching and learning on students’ learning performance: A meta-analysis and research synthesis // Computers &amp; Education. 2016. Vol. 94. P. 252–275. DOI: 10.1016/j.compedu.2015.11.008.</li>
+      <li>Sweller J. Cognitive load during problem solving: Effects on learning // Cognitive Science. 1988. Vol. 12, No. 2. P. 257–285. DOI: 10.1016/0364-0213(88)90023-7.</li>
+      <li>Taylor A. D., Hung W. The effects of microlearning: A scoping review // Educational Technology Research and Development. 2022. Vol. 70, No. 2. P. 363–395. DOI: 10.1007/s11423-022-10084-1.</li>
+      <li>UNESCO. Global Education Monitoring Report 2023: Technology in education: A tool on whose terms? Paris : UNESCO, 2023. URL: <a href="https://unesdoc.unesco.org/ark:/48223/pf0000385723" target="_blank" rel="noopener">https://unesdoc.unesco.org/ark:/48223/pf0000385723</a> (дата звернення: 10.11.2026).</li>
+      <li>West M., Vosloo S. UNESCO policy guidelines for mobile learning. Paris : UNESCO, 2013. 41 p. URL: <a href="https://unesdoc.unesco.org/ark:/48223/pf0000219641" target="_blank" rel="noopener">https://unesdoc.unesco.org/ark:/48223/pf0000219641</a> (дата звернення: 10.11.2026).</li>
     </ol>
   </section>
 
 </main>
 
-<nav class="lecture-nav" id="lectureNav" aria-label="Навігація між лекціями"></nav>
-
 <footer>
   <span>Лекція 10 · Тема 10 · Спеціальність «Професійна освіта»</span>
   <button class="reset-btn" id="resetBtn" type="button">↺ скинути прогрес</button>
-  <span class="mono">оновлено: 08.11.2026</span>
+  <span class="mono">оновлено: 10.11.2026</span>
 </footer>
 
-<script src="assets/js/course.js"></script>
-<script src="assets/js/lecture.js"></script>
+<script>
+(function(){
+  "use strict";
+  var STORE_KEY = 'lecture10-mobile-progress-v1';
+
+  function loadState(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    }catch(e){ return {}; }
+  }
+  function saveState(state){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  var state = loadState(); // { "task-1": [true,false,...], "test-1": 0 (chosen index) }
+
+  /* ---------- task checklists ---------- */
+  var taskBoxes = Array.prototype.slice.call(document.querySelectorAll('.box.task'));
+
+  function renderTaskBox(box){
+    var id = box.id;
+    var items = state[id] || [];
+    var lis = box.querySelectorAll('ol > li');
+    var doneCount = 0;
+    lis.forEach(function(li, i){
+      var checked = !!items[i];
+      if (checked) doneCount++;
+      var chk = li.querySelector('.chk');
+      if (chk){
+        chk.checked = checked;
+        li.querySelector('.step').classList.toggle('checked', checked);
+      }
+    });
+    var pill = box.querySelector('[data-progress]');
+    if (pill) pill.textContent = doneCount + ' / ' + lis.length + ' виконано';
+    box.classList.toggle('done', lis.length > 0 && doneCount === lis.length);
+    return { done: doneCount, total: lis.length };
+  }
+
+  taskBoxes.forEach(function(box){
+    var id = box.id;
+    var lis = Array.prototype.slice.call(box.querySelectorAll('ol > li'));
+    lis.forEach(function(li, i){
+      var step = document.createElement('label');
+      step.className = 'step';
+      var num = document.createElement('span');
+      num.className = 'num';
+      num.textContent = (i + 1);
+      var chk = document.createElement('input');
+      chk.type = 'checkbox';
+      chk.className = 'chk';
+      chk.setAttribute('aria-label', 'Крок ' + (i + 1) + ' виконано');
+      var textSpan = document.createElement('span');
+      textSpan.className = 'step-text';
+      while (li.firstChild) textSpan.appendChild(li.firstChild);
+      step.appendChild(chk);
+      step.appendChild(num);
+      step.appendChild(textSpan);
+      li.appendChild(step);
+      chk.addEventListener('change', function(){
+        if (!state[id]) state[id] = [];
+        state[id][i] = chk.checked;
+        saveState(state);
+        renderTaskBox(box);
+        updateOverall();
+      });
+    });
+    renderTaskBox(box);
+  });
+
+  /* ---------- quiz boxes ---------- */
+  var quizzes = Array.prototype.slice.call(document.querySelectorAll('.quiz'));
+  quizzes.forEach(function(quiz){
+    var box = quiz.closest('.box');
+    var boxId = box.id;
+    var correct = parseInt(quiz.getAttribute('data-correct'), 10);
+    var buttons = Array.prototype.slice.call(quiz.querySelectorAll('.test-opt'));
+    var feedback = quiz.querySelector('.test-feedback');
+
+    function applyAnswer(chosenIdx, silent){
+      buttons.forEach(function(btn, i){
+        btn.disabled = true;
+        if (i === correct) btn.classList.add('is-correct');
+        if (i === chosenIdx && chosenIdx !== correct) btn.classList.add('is-wrong');
+      });
+      feedback.classList.add('show');
+      if (chosenIdx === correct){
+        feedback.textContent = '✓ Правильно!';
+        feedback.classList.add('correct');
+      } else {
+        feedback.textContent = '✗ Неправильно. Правильна відповідь виділена зеленим.';
+        feedback.classList.add('wrong');
+      }
+      var pill = box.querySelector('[data-progress]');
+      if (pill) pill.textContent = 'пройдено';
+      box.classList.add('done');
+    }
+
+    buttons.forEach(function(btn, i){
+      btn.addEventListener('click', function(){
+        state[boxId] = i;
+        saveState(state);
+        applyAnswer(i);
+        updateOverall();
+      });
+    });
+
+    if (typeof state[boxId] === 'number'){
+      applyAnswer(state[boxId], true);
+    }
+  });
+
+  /* ---------- overall progress ---------- */
+  function updateOverall(){
+    var totalSteps = 0, doneSteps = 0;
+    taskBoxes.forEach(function(box){
+      var r = renderTaskBox(box);
+      totalSteps += r.total;
+      doneSteps += r.done;
+    });
+    quizzes.forEach(function(quiz){
+      totalSteps += 1;
+      var box = quiz.closest('.box');
+      if (box.classList.contains('done')) doneSteps += 1;
+    });
+    var pct = totalSteps ? Math.round((doneSteps / totalSteps) * 100) : 0;
+    var fill = document.getElementById('progressFill');
+    var label = document.getElementById('tocProgress');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.innerHTML = 'прогрес: <b>' + pct + '%</b>';
+  }
+  updateOverall();
+
+  /* ---------- reset ---------- */
+  var resetBtn = document.getElementById('resetBtn');
+  if (resetBtn){
+    resetBtn.addEventListener('click', function(){
+      try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+      location.reload();
+    });
+  }
+
+  /* ---------- scrollspy ---------- */
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.topic[id], section.lit[id]'));
+  var tocLinks = {};
+  Array.prototype.slice.call(document.querySelectorAll('.toc-inner a[data-toc]')).forEach(function(a){
+    tocLinks[a.getAttribute('data-toc')] = a;
+  });
+  if ('IntersectionObserver' in window && sections.length){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var link = tocLinks[entry.target.id];
+        if (!link) return;
+        if (entry.isIntersecting){
+          Object.keys(tocLinks).forEach(function(k){ tocLinks[k].classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+    sections.forEach(function(s){ observer.observe(s); });
+  }
+})();
+</script>
+
 </body>
 </html>

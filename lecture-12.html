@@ -3,50 +3,706 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Лекція 12. Гейміфікація та ігрові технології</title>
-<meta name="description" content="Лекція 12 електронного посібника «Комп’ютерні технології в освітньому процесі»: Гейміфікація та ігрові технології">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23F26B1D'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23fff'%3EКТ%3C/text%3E%3C/svg%3E">
+<title>Інклюзивна освіта та цифрова доступність</title>
+<meta name="description" content="Лекція 12 для спеціальності «Професійна освіта»: інклюзивна освіта та цифрова доступність — поняття, нормативна база, універсальний дизайн для навчання, WCAG, асистивні технології, інклюзія у професійній освіті">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
-<script>try{var t=localStorage.getItem('posibnyk-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<style>
+  :root{
+    --navy:#0E1F4D;
+    --ink:#0E1F4D;
+    --ink-soft:#2B3A63;
+    --ink-muted:#5A6788;
+    --paper:#FFFFFF;
+    --surface:#FFFFFF;
+    --surface-2:#F4F7FF;
+    --line:#DCE3F4;
+    --accent:#1D4ED8;
+    --accent-ink:#163BA6;
+    --accent-tint:#E8EEFF;
+    --task:#1597E5;
+    --task-ink:#0B6AA8;
+    --task-tint:#E4F4FD;
+    --test:#F26B1D;
+    --test-ink:#C2500C;
+    --test-tint:#FFF1E7;
+    --bad:#C0262D;
+    --hero-a:#0E1F4D;
+    --hero-b:#1D4ED8;
+    --shadow:0 1px 2px rgba(14,31,77,.05), 0 14px 32px -18px rgba(14,31,77,.35);
+    --radius:18px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#EEF2FF;
+      --ink-soft:#C9D3F2;
+      --ink-muted:#93A1C8;
+      --paper:#081332;
+      --surface:#0F1D45;
+      --surface-2:#132453;
+      --line:#22346B;
+      --accent:#7C9BFF;
+      --accent-ink:#AFC2FF;
+      --accent-tint:#18295C;
+      --task:#4DB8F7;
+      --task-ink:#8FD3FB;
+      --task-tint:#0F2D4F;
+      --test:#FF8A3D;
+      --test-ink:#FFB27D;
+      --test-tint:#3A2210;
+      --bad:#FF6B6B;
+      --hero-a:#050C24;
+      --hero-b:#1636B0;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 34px -18px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#EEF2FF;
+    --ink-soft:#C9D3F2;
+    --ink-muted:#93A1C8;
+    --paper:#081332;
+    --surface:#0F1D45;
+    --surface-2:#132453;
+    --line:#22346B;
+    --accent:#7C9BFF;
+    --accent-ink:#AFC2FF;
+    --accent-tint:#18295C;
+    --task:#4DB8F7;
+    --task-ink:#8FD3FB;
+    --task-tint:#0F2D4F;
+    --test:#FF8A3D;
+    --test-ink:#FFB27D;
+    --test-tint:#3A2210;
+    --bad:#FF6B6B;
+    --hero-a:#050C24;
+    --hero-b:#1636B0;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 34px -18px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope',system-ui,'Segoe UI',sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Unbounded',system-ui,sans-serif;margin:0;text-wrap:balance;}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+  a{color:var(--accent);}
+  ::selection{background:var(--test);color:#fff;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    color:#fff;
+    background:
+      radial-gradient(circle at 88% 18%, rgba(242,107,29,.55) 0, rgba(242,107,29,0) 26%),
+      linear-gradient(135deg, var(--hero-a) 0%, var(--hero-b) 100%);
+    padding:72px 24px 120px;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    left:-5%; right:-5%; bottom:-1px;
+    height:90px;
+    background:var(--paper);
+    clip-path:polygon(0 70%, 30% 35%, 62% 72%, 100% 20%, 100% 100%, 0 100%);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    left:-5%; right:-5%; bottom:-1px;
+    height:110px;
+    background:var(--test);
+    clip-path:polygon(0 62%, 30% 27%, 62% 64%, 100% 12%, 100% 22%, 62% 74%, 30% 37%, 0 72%);
+    z-index:1;
+  }
+  .hero-net{
+    position:absolute;
+    right:-40px; top:10px;
+    width:min(560px,70vw);
+    height:auto;
+    opacity:.55;
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:2;max-width:1000px;margin:0 auto;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;
+    background:var(--test);
+    color:#fff;
+    padding:6px 14px;
+    border-radius:99px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;}
+  .hero h1{
+    font-size:clamp(32px,5.2vw,58px);
+    line-height:1.08;
+    font-weight:800;
+    max-width:14em;
+  }
+  .hero h1 .hl{
+    color:#FFB27D;
+  }
+  .hero .theme{
+    margin:18px 0 0;
+    font-size:clamp(16px,2vw,19px);
+    color:rgba(255,255,255,.86);
+    max-width:36em;
+    font-weight:500;
+  }
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+  .meta-chip{
+    display:flex;align-items:center;gap:7px;
+    font-size:13.5px;
+    color:#fff;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:12px;
+    padding:7px 13px;
+    backdrop-filter:blur(4px);
+  }
+  .meta-chip b{color:#FFB27D;font-family:'Unbounded',sans-serif;font-size:15px;}
+
+  /* ---------- sticky toc ---------- */
+  .toc-bar{
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .toc-inner{
+    max-width:1000px;margin:0 auto;padding:0 24px;
+    display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
+  }
+  .toc-inner::-webkit-scrollbar{display:none;}
+  .toc-inner a{
+    flex:none;
+    font-size:13px;font-weight:700;
+    color:var(--ink-muted);
+    text-decoration:none;
+    padding:14px 12px 12px;
+    border-bottom:3px solid transparent;
+    white-space:nowrap;
+  }
+  .toc-inner a:hover{color:var(--accent);}
+  .toc-inner a.active{color:var(--accent);border-bottom-color:var(--test);}
+  .toc-progress{
+    flex:none;margin-left:auto;
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--ink-muted);
+    padding:14px 0 12px 14px;white-space:nowrap;
+  }
+  .toc-progress b{color:var(--test);}
+  .progress-track{height:4px;background:var(--surface-2);}
+  .progress-track .fill{
+    height:100%;width:0%;
+    background:linear-gradient(90deg, var(--accent), var(--test));
+    border-radius:0 4px 4px 0;
+    transition:width .35s ease;
+  }
+
+  /* ---------- content ---------- */
+  main{max-width:1000px;margin:0 auto;padding:0 24px 40px;}
+
+  .goal{
+    position:relative;
+    margin:40px 0 0;
+    padding:26px 28px 24px 96px;
+    background:var(--accent-tint);
+    border-radius:var(--radius);
+  }
+  .goal::before{
+    content:"🎯";
+    position:absolute;left:24px;top:24px;
+    width:52px;height:52px;border-radius:16px;
+    background:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;
+    box-shadow:0 8px 18px -8px var(--accent);
+  }
+  .goal h2{font-size:15px;color:var(--accent-ink);margin-bottom:8px;letter-spacing:.02em;}
+  .goal p{margin:0;color:var(--ink-soft);font-size:16px;}
+
+  section.topic{margin-top:80px;scroll-margin-top:70px;}
+  .topic-head{
+    display:flex;align-items:center;gap:18px;
+    margin-bottom:26px;
+  }
+  .topic-num{
+    flex:none;
+    font-family:'Unbounded',sans-serif;
+    font-weight:800;
+    font-size:54px;
+    line-height:1;
+    color:transparent;
+    -webkit-text-stroke:2px var(--test);
+    letter-spacing:-.02em;
+  }
+  .topic h2{
+    font-size:clamp(22px,2.8vw,30px);
+    font-weight:700;
+    color:var(--ink);
+    position:relative;
+    padding-bottom:10px;
+  }
+  .topic h2::after{
+    content:"";position:absolute;left:0;bottom:0;
+    width:64px;height:5px;border-radius:5px;
+    background:linear-gradient(90deg, var(--test), var(--accent));
+  }
+  .topic p{color:var(--ink-soft);font-size:16.5px;margin:0 0 16px;}
+  .topic p b,.topic li b{color:var(--ink);font-weight:800;}
+  .topic ul{margin:0 0 20px;padding-left:0;list-style:none;color:var(--ink-soft);font-size:16px;}
+  .topic ul li{position:relative;padding-left:26px;margin-bottom:10px;}
+  .topic ul li::before{
+    content:"";position:absolute;left:4px;top:.62em;
+    width:9px;height:9px;border-radius:3px;
+    background:var(--test);
+    transform:rotate(45deg);
+  }
+
+  .callout{
+    position:relative;
+    background:var(--surface-2);
+    border-radius:14px;
+    padding:16px 20px 16px 22px;
+    margin:0 0 20px;
+    font-size:15px;
+    color:var(--ink-soft);
+    border-left:5px solid var(--test);
+  }
+  .callout b{color:var(--accent-ink);}
+
+  .sub-h{font-size:19px;font-weight:700;color:var(--ink);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .sub-h::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:5px 0 0 var(--test);margin-right:6px;}
+
+  /* ---------- diagrams ---------- */
+  figure.diagram{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 20px 16px;
+    margin:28px 0 30px;
+    box-shadow:var(--shadow);
+    position:relative;
+  }
+  figure.diagram::before{
+    content:"";position:absolute;left:24px;top:-1px;width:80px;height:4px;border-radius:0 0 4px 4px;
+    background:var(--test);
+  }
+  figure.diagram svg{display:block;width:100%;height:auto;}
+  figure.diagram figcaption{margin-top:14px;font-size:13.5px;color:var(--ink-muted);text-align:center;}
+  .svg-ink{fill:var(--ink);}
+  .svg-muted{fill:var(--ink-muted);}
+
+  /* ---------- tables ---------- */
+  .table-wrap{overflow-x:auto;}
+  .table-cap{font-size:14.5px;color:var(--ink-muted);margin:0 0 8px;}
+  .table-cap b{color:var(--test-ink);}
+  .data-table{
+    width:100%;border-collapse:separate;border-spacing:0;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;
+    font-size:14.5px;margin:6px 0 24px;
+  }
+  .data-table th{
+    text-align:left;
+    font-size:12.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+    color:#fff;background:var(--accent);
+    padding:11px 14px;
+  }
+  .data-table td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink-soft);vertical-align:top;}
+  .data-table tr:nth-child(even) td{background:var(--surface-2);}
+  .data-table tr:last-child td{border-bottom:none;}
+  .data-table td.yr{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--test-ink);white-space:nowrap;}
+  details.more{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:0 0 26px;overflow:hidden;}
+  details.more summary{
+    cursor:pointer;list-style:none;
+    padding:13px 18px;font-weight:800;font-size:15px;color:var(--accent-ink);
+    display:flex;align-items:center;gap:10px;
+  }
+  details.more summary::-webkit-details-marker{display:none;}
+  details.more summary::before{
+    content:"+";flex:none;
+    width:24px;height:24px;border-radius:8px;background:var(--test);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:800;
+  }
+  details.more[open] summary::before{content:"−";}
+  details.more .data-table{margin:0;border:none;border-radius:0;}
+  .risk{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:var(--ink);white-space:nowrap;}
+  .risk::before{content:"";width:11px;height:11px;border-radius:50%;background:var(--dot);flex:none;}
+  .risk.r1{--dot:var(--bad);}
+  .risk.r2{--dot:var(--test);}
+  .risk.r3{--dot:var(--accent);}
+  .risk.r4{--dot:var(--task);}
+
+  /* ---------- boxes ---------- */
+  .box{
+    position:relative;
+    border-radius:var(--radius);
+    padding:26px 26px 22px;
+    margin:28px 0 32px;
+    box-shadow:var(--shadow);
+    background:var(--surface);
+    border:2px solid var(--line);
+  }
+  .box.test{border-color:var(--test);background:linear-gradient(180deg, var(--test-tint), var(--surface) 70%);}
+  .box.task{border-color:var(--accent);background:linear-gradient(180deg, var(--accent-tint), var(--surface) 80%);}
+  .box-title{
+    font-family:'Unbounded',sans-serif;font-weight:700;font-size:16px;
+    margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .box.test .box-title{color:var(--test-ink);}
+  .box.task .box-title{color:var(--accent-ink);}
+  .box-tag{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:.06em;
+    padding:4px 10px;border-radius:8px;color:#fff;
+  }
+  .box.test .box-tag{background:var(--test);}
+  .box.task .box-tag{background:var(--accent);}
+  .box-check{display:none;font-size:13px;}
+  .box.done .box-check{display:inline;}
+  .box-progress{
+    margin-left:auto;
+    font-family:'JetBrains Mono',monospace;font-weight:600;font-size:11.5px;
+    padding:3px 10px;border-radius:99px;
+    background:var(--surface);color:var(--ink-muted);border:1px solid var(--line);
+    white-space:nowrap;
+  }
+  .box-progress:empty{display:none;}
+  .box.done .box-progress{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .box.test.done .box-progress{background:var(--test);border-color:var(--test);}
+  .box-close{
+    margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);
+    font-size:14.5px;color:var(--ink-soft);
+  }
+
+  .box ol{margin:0;padding:0;list-style:none;}
+  .box ol li{margin-bottom:12px;font-size:15.5px;color:var(--ink-soft);}
+  .box ol li:last-child{margin-bottom:0;}
+  .box ol li b{color:var(--ink);}
+  .step{display:flex;gap:12px;align-items:flex-start;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .step .num{
+    flex:none;width:28px;height:28px;border-radius:9px;
+    background:var(--surface);border:2px solid var(--accent);color:var(--accent);
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .15s,color .15s;
+  }
+  .chk{position:absolute;opacity:0;width:1px;height:1px;}
+  .step:has(.chk:checked) .num,.step.checked .num{background:var(--accent);color:#fff;}
+  .step:has(.chk:checked) .step-text,.step.checked .step-text{color:var(--ink-muted);text-decoration:line-through;text-decoration-color:var(--test);}
+  .chk:focus-visible ~ .num{outline:2px solid var(--test);outline-offset:2px;}
+  .step-text{flex:1;padding-top:2px;}
+
+  .test-q{font-weight:700;color:var(--ink);margin-bottom:14px;font-size:16px;}
+  .quiz{display:grid;gap:8px;}
+  .test-opt{
+    display:flex;width:100%;gap:12px;align-items:center;
+    font-size:15px;color:var(--ink-soft);
+    padding:11px 14px;margin:0;
+    border:2px solid var(--line);border-radius:12px;
+    background:var(--surface);
+    font-family:inherit;text-align:left;cursor:pointer;
+    transition:border-color .15s, transform .15s, background .15s;
+  }
+  .test-opt::before{
+    content:"";flex:none;width:18px;height:18px;border-radius:50%;
+    border:2px solid var(--test);background:var(--surface);
+  }
+  .test-opt:hover:not(:disabled){border-color:var(--test);transform:translateX(3px);}
+  .test-opt:disabled{cursor:default;}
+  .test-opt.is-correct{border-color:var(--accent);background:var(--accent-tint);color:var(--accent-ink);font-weight:800;}
+  .test-opt.is-correct::before{background:var(--accent);border-color:var(--accent);box-shadow:inset 0 0 0 3px var(--surface);}
+  .test-opt.is-wrong{border-color:var(--bad);background:color-mix(in srgb, var(--bad) 10%, var(--surface));}
+  .test-opt.is-wrong::before{background:var(--bad);border-color:var(--bad);box-shadow:inset 0 0 0 3px var(--surface);}
+  .test-feedback{margin-top:6px;font-size:14px;font-weight:800;display:none;}
+  .test-feedback.show{display:block;}
+  .test-feedback.correct{color:var(--accent-ink);}
+  .test-feedback.wrong{color:var(--bad);}
+  .box.done{box-shadow:var(--shadow), 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);}
+  .box.test.done{box-shadow:var(--shadow), 0 0 0 4px color-mix(in srgb, var(--test) 25%, transparent);}
+
+  /* ---------- prompt anatomy ---------- */
+  .prompt-demo{
+    background:var(--navy);
+    color:#fff;
+    border-radius:var(--radius);
+    padding:24px 26px 20px;
+    margin:28px 0 32px;
+    box-shadow:var(--shadow);
+  }
+  :root[data-theme="dark"] .prompt-demo{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .prompt-demo{background:var(--surface-2);} }
+  .prompt-demo .box-title{color:#fff;}
+  .prompt-demo .box-tag{background:var(--test);}
+  .prompt-text{font-size:16px;line-height:2.05;color:rgba(255,255,255,.9);font-family:'JetBrains Mono',monospace;font-size:14.5px;}
+  .seg{border-radius:6px;padding:2px 4px;cursor:pointer;box-shadow:inset 0 -2px 0 var(--c);transition:background .15s;}
+  .seg:hover,.seg.on{background:var(--c);color:#fff;}
+  .seg-role{--c:#5B8CFF;}
+  .seg-task{--c:#38BDF8;}
+  .seg-ctx{--c:#F26B1D;}
+  .seg-fmt{--c:#FFB27D;}
+  .seg-fmt.on,.seg-fmt:hover{color:var(--navy);}
+  .seg-lim{--c:#FF5A5F;}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px dashed rgba(255,255,255,.25);}
+  .legend button{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;
+    border:2px solid var(--c);color:#fff;background:transparent;
+    border-radius:99px;padding:5px 13px;cursor:pointer;
+  }
+  .legend button.on{background:var(--c);}
+  .legend button.seg-fmt.on{color:var(--navy);}
+  .legend-hint{font-size:13px;color:rgba(255,255,255,.65);margin:10px 0 0;}
+
+  /* ---------- cards ---------- */
+  .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:8px 0 30px;}
+  .card{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px 20px 18px;
+    box-shadow:var(--shadow);
+    transition:transform .2s, border-color .2s;
+  }
+  .card:hover{transform:translateY(-3px);border-color:var(--test);}
+  .card:nth-child(odd) .ic{background:var(--accent);}
+  .card:nth-child(even) .ic{background:var(--test);}
+  .card .ic{
+    width:44px;height:44px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:21px;margin-bottom:12px;
+  }
+  .card h3{font-family:'Manrope',sans-serif;font-size:16.5px;font-weight:800;margin-bottom:8px;color:var(--ink);}
+  .card p{font-size:14.5px;margin:0;color:var(--ink-soft);}
+
+  /* ---------- case ---------- */
+  .case{
+    background:var(--surface);
+    border:2px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 26px 20px;margin:28px 0 32px;box-shadow:var(--shadow);
+  }
+  .case .box-title{color:var(--ink);}
+  .case .box-tag{background:var(--navy);}
+  :root[data-theme="dark"] .case .box-tag{background:var(--accent);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .case .box-tag{background:var(--accent);} }
+  .case-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .case-side{border-radius:14px;padding:16px 18px;font-size:15px;color:var(--ink-soft);}
+  .case-side h4{margin:0 0 8px;font-size:14px;font-family:'Unbounded',sans-serif;}
+  .case-side.plus{background:var(--accent-tint);border-top:4px solid var(--accent);}
+  .case-side.plus h4{color:var(--accent-ink);}
+  .case-side.minus{background:var(--test-tint);border-top:4px solid var(--test);}
+  .case-side.minus h4{color:var(--test-ink);}
+  .case-side p{margin:0;}
+  .case .box-close i{color:var(--test-ink);font-weight:800;font-style:normal;}
+
+  /* ---------- rules ---------- */
+  .topic ul.rules{counter-reset:r;display:grid;gap:10px;margin-bottom:26px;}
+  .topic ul.rules li{
+    counter-increment:r;
+    margin:0;padding:14px 16px 14px 62px;
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);
+  }
+  .topic ul.rules li::before{
+    content:counter(r);
+    transform:none;
+    left:14px;top:50%;margin-top:-17px;
+    width:34px;height:34px;border-radius:11px;
+    background:var(--accent);
+    color:#fff;font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  .topic ul.rules li:nth-child(even)::before{background:var(--test);}
+
+  /* ---------- glossary & questions ---------- */
+  .glossary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:6px 0 28px;}
+  .term{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:14px 16px;}
+  .term:nth-child(4n+2),.term:nth-child(4n+3){border-left-color:var(--test);}
+  .term dt{font-weight:800;color:var(--ink);font-size:15.5px;margin-bottom:4px;}
+  .term dd{margin:0;font-size:14.5px;color:var(--ink-soft);}
+  .questions{counter-reset:q;list-style:none;padding:0;margin:0 0 10px;}
+  .questions li{
+    counter-increment:q;
+    display:flex;gap:14px;align-items:flex-start;
+    padding:12px 0;border-bottom:1px solid var(--line);
+    color:var(--ink-soft);font-size:16px;
+  }
+  .questions li:last-child{border-bottom:none;}
+  .questions li::before{
+    content:counter(q, decimal-leading-zero);
+    flex:none;font-family:'Unbounded',sans-serif;font-weight:800;font-size:15px;
+    color:var(--test);min-width:30px;
+  }
+
+  /* ---------- literature (end) ---------- */
+  .lit{
+    margin:80px 0 0;
+    background:var(--navy);
+    color:#fff;
+    border-radius:24px;
+    padding:34px 34px 30px;
+    position:relative;overflow:hidden;
+    scroll-margin-top:70px;
+  }
+  :root[data-theme="dark"] .lit{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .lit{background:var(--surface-2);} }
+  .lit::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle, rgba(242,107,29,.55), rgba(242,107,29,0) 70%);
+  }
+  .lit h2{font-size:22px;margin-bottom:20px;position:relative;z-index:1;}
+  .lit h2 span{color:#FFB27D;}
+  .lit ol{counter-reset:l;list-style:none;margin:0;padding:0;position:relative;z-index:1;}
+  .lit li{
+    counter-increment:l;
+    position:relative;
+    padding:0 0 12px 46px;margin-bottom:12px;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    font-size:14.5px;color:rgba(255,255,255,.85);
+  }
+  .lit li:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .lit li::before{
+    content:counter(l);
+    position:absolute;left:0;top:0;
+    width:30px;height:30px;border-radius:9px;
+    background:var(--test);color:#fff;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12.5px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .lit a{color:#9DB7FF;word-break:break-all;}
+  .lit i{color:#fff;}
+
+  footer{
+    max-width:1000px;margin:0 auto;padding:30px 24px 56px;
+    color:var(--ink-muted);font-size:13.5px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .reset-btn{
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--accent);background:var(--surface);
+    border:2px solid var(--accent);border-radius:10px;
+    padding:7px 14px;cursor:pointer;font-weight:700;
+  }
+  .reset-btn:hover{background:var(--accent);color:#fff;}
+
+  @media (max-width:860px){
+    .cards{grid-template-columns:repeat(2,minmax(0,1fr));}
+  }
+  @media (max-width:640px){
+    .hero{padding:52px 16px 100px;}
+    .toc-inner,main,footer{padding-left:16px;padding-right:16px;}
+    .goal{padding:84px 20px 20px;}
+    .goal::before{top:18px;left:20px;}
+    .topic-num{font-size:40px;}
+    .box,.prompt-demo,.case{padding:20px 16px 16px;}
+    .cards,.glossary,.case-cols{grid-template-columns:1fr;}
+    .lit{padding:26px 20px 22px;}
+  }
+
+  /* ---------- lecture 9 additions ---------- */
+  .example{
+    background:var(--navy);color:#fff;border-radius:var(--radius);
+    padding:24px 26px 20px;margin:28px 0 32px;box-shadow:var(--shadow);
+  }
+  :root[data-theme="dark"] .example{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .example{background:var(--surface-2);} }
+  .example .box-title{color:#fff;}
+  .example .box-tag{background:var(--test);}
+  .levels{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 18px;}
+  .levels span{
+    position:relative;flex:1 1 120px;text-align:center;
+    font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;
+    padding:10px 14px;border-radius:10px;
+    background:rgba(255,255,255,.12);color:#fff;
+  }
+  .levels span:nth-child(2){background:rgba(255,255,255,.2);}
+  .levels span:nth-child(3){background:rgba(242,107,29,.55);}
+  .levels span:nth-child(4){background:var(--test);}
+  .topic ul.ex-list{color:rgba(255,255,255,.9);font-size:15.5px;margin:0;}
+  .topic ul.ex-list li b{color:#FFB27D;}
+  .steps6{list-style:none;padding:0;margin:8px 0 26px;counter-reset:s;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+  .steps6 li{
+    counter-increment:s;position:relative;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:52px 18px 16px;box-shadow:var(--shadow);
+  }
+  .steps6 li::before{
+    content:counter(s);position:absolute;left:18px;top:14px;
+    width:30px;height:30px;border-radius:10px;
+    background:var(--accent);color:#fff;
+    font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .steps6 li:nth-child(even)::before{background:var(--test);}
+  .steps6 li b{display:block;color:var(--ink);font-size:16px;margin-bottom:6px;}
+  .steps6 li span{display:block;color:var(--ink-soft);font-size:14.5px;}
+  .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:8px 0 26px;}
+  .stat{background:var(--accent-tint);border-radius:var(--radius);padding:18px 20px;}
+  .stat:nth-child(2){background:var(--test-tint);}
+  .stat b{display:block;font-family:'Unbounded',sans-serif;font-size:36px;line-height:1.1;color:var(--accent);}
+  .stat:nth-child(2) b{color:var(--test-ink);}
+  .stat span{display:block;margin-top:6px;font-size:14.5px;color:var(--ink-soft);}
+  .card .ic{color:#fff;}
+  .quiz-link{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:10px 18px;border-radius:12px;
+    background:var(--test);color:#fff;font-weight:800;text-decoration:none;font-size:15px;box-shadow:0 8px 18px -10px var(--test);}
+  .quiz-link:hover{background:var(--accent);}
+  @media (max-width:860px){ .steps6{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  @media (max-width:640px){ .hero-net{display:none;} .steps6,.stats{grid-template-columns:1fr;} .example{padding:20px 16px 16px;} }
+
+  .levels span:nth-child(5){background:#C2500C;}
+  .cards.two{grid-template-columns:repeat(2,minmax(0,1fr));}
+  @media (max-width:640px){ .cards.two{grid-template-columns:1fr;} }
+</style>
+
 </head>
-<body data-lecture="12">
-
-<div class="course-bar">
-  <div class="course-bar-inner">
-    <a class="course-home" href="index.html" title="На титульну сторінку">
-      <span class="logo">КТ</span><span class="t">Комп’ютерні технології в освітньому процесі</span>
-    </a>
-    <div class="course-actions">
-      <details class="course-menu">
-        <summary class="bar-btn">☰ <span class="lbl">Лекції</span></summary>
-        <div class="menu-panel"><ol id="courseMenuList"></ol></div>
-      </details>
-      <button class="bar-btn" id="themeToggle" type="button" aria-label="Змінити тему оформлення">◐ <span class="lbl">Тема</span></button>
-    </div>
-  </div>
-</div>
-
+<body>
 <header class="hero">
-  <img class="hero-net" src="assets/img/hero-net.svg" alt="" aria-hidden="true">
+  <svg class="hero-net" viewBox="0 0 570 420" aria-hidden="true">
+    <!-- accessibility person -->
+    <circle cx="400" cy="200" r="120" fill="#fff" fill-opacity=".12" stroke="#fff" stroke-opacity=".7" stroke-width="4"/>
+    <circle cx="400" cy="135" r="20" fill="#fff"/>
+    <path d="M330 170 h140" stroke="#fff" stroke-width="16" stroke-linecap="round"/>
+    <path d="M400 170 v60 M400 230 l-35 70 M400 230 l35 70" stroke="#fff" stroke-width="16" stroke-linecap="round" fill="none"/>
+    <!-- CC captions -->
+    <rect x="80" y="90" width="150" height="100" rx="18" fill="#F26B1D"/>
+    <text x="155" y="155" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="44" font-weight="800" fill="#fff">CC</text>
+    <!-- contrast -->
+    <g transform="translate(150 300)">
+      <circle r="54" fill="#fff" fill-opacity=".85"/>
+      <path d="M0 -54 A54 54 0 0 1 0 54 Z" fill="#0E1F4D"/>
+      <text x="0" y="90" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="18" font-weight="700" fill="#fff">4,5 : 1</text>
+    </g>
+    <g stroke="#FFB27D" stroke-width="3" stroke-dasharray="6 6" fill="none"><path d="M230 140 C260 140 270 150 285 160"/><path d="M205 300 C240 300 270 290 290 270"/></g>
+  </svg>
   <div class="hero-inner">
     <span class="eyebrow">Лекція 12 · Тема 12</span>
-    <h1>Гейміфікація та <span class="hl">ігрові технології</span></h1>
-    <p class="theme">Ігрові механіки, квести та освітні ігри як засіб підвищення мотивації здобувачів освіти.</p>
-    <div class="meta-row">
-      <span class="meta-chip draft-chip">✎ <b>Заготовка</b> лекція в розробці</span>
-    </div>
+    <h1>Інклюзивна освіта <span class="hl">та цифрова доступність</span></h1>
+    <p class="theme">Як зробити освітній процес, майстерню й цифрові матеріали доступними для кожного — і чому від цього виграє вся група.</p>
   </div>
 </header>
 
 <nav class="toc-bar">
   <div class="toc-inner">
-    <a href="#s1" data-toc="s1">1. Поняття</a>
-    <a href="#s2" data-toc="s2">2. Механіки</a>
-    <a href="#s3" data-toc="s3">3. Квести</a>
-    <a href="#s4" data-toc="s4">4. Ризики</a>
+    <a href="#concept" data-toc="concept">1. Поняття</a>
+    <a href="#law" data-toc="law">2. Нормативна база</a>
+    <a href="#udl" data-toc="udl">3. UDL</a>
+    <a href="#digital" data-toc="digital">4. Цифрова доступність</a>
+    <a href="#assistive" data-toc="assistive">5. Асистивні технології</a>
+    <a href="#vet" data-toc="vet">6. Професійна освіта</a>
     <a href="#summary" data-toc="summary">Підсумок</a>
     <a href="#literature" data-toc="literature">Література</a>
     <span class="toc-progress" id="tocProgress">прогрес: <b>0%</b></span>
@@ -58,125 +714,519 @@
 
   <div class="goal">
     <h2>Мета лекції</h2>
-    <p class="placeholder">Сформулюйте мету лекції: які знання, уміння та компетентності сформує тема в здобувачів освіти.</p>
+    <p>Сформувати уявлення про сутність інклюзивної освіти, її нормативне підґрунтя в Україні та принципи універсального дизайну для навчання; ознайомити з вимогами цифрової доступності та асистивними технологіями; навчити створювати доступні навчальні матеріали й адаптувати освітній процес у закладах професійної (професійно-технічної) освіти.</p>
   </div>
 
-  <!-- ================= 1. ПОНЯТТЯ ГЕЙМІФІКАЦІЇ ================= -->
-  <section class="topic" id="s1">
-    <div class="topic-head">
-      <span class="topic-num">01</span>
-      <h2>Поняття гейміфікації</h2>
+  <!-- ============ 1 ============ -->
+  <section class="topic" id="concept">
+    <div class="topic-head"><span class="topic-num">01</span><h2>Поняття інклюзивної освіти</h2></div>
+
+    <div class="stats">
+      <div class="stat"><b>1,3 млрд</b><span>людей у світі мають значну інвалідність (ВООЗ, 2022)</span></div>
+      <div class="stat"><b>16%</b><span>населення світу — кожна шоста людина</span></div>
+      <div class="stat"><b>2006</b><span>ухвалено Конвенцію ООН про права осіб з інвалідністю; Україна ратифікувала її 2009 року</span></div>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
-        <p>Підказка: готові блоки (схема, таблиця, картки, кейс, виноска) можна скопіювати з <a href="lecture-08.html">лекції 8</a> — стилі вже підключено до всіх сторінок.</p>
-    </div>
-  </section>
+    <p>Крім того, особливих освітніх потреб набуває значно більше людей: через тимчасову травму, труднощі в навчанні, мовний бар’єр, наслідки війни. Тому інклюзія — не «окремий випадок», а звичайна частина освітнього процесу.</p>
 
-  <!-- ================= 2. ІГРОВІ МЕХАНІКИ ТА ЕЛЕМЕНТИ ================= -->
-  <section class="topic" id="s2">
-    <div class="topic-head">
-      <span class="topic-num">02</span>
-      <h2>Ігрові механіки та елементи</h2>
+    <h3 class="sub-h">Ключові поняття Закону України «Про освіту» (ст. 1)</h3>
+    <div class="cards two">
+      <div class="card"><div class="ic">🤝</div><h3>Інклюзивне навчання</h3><p>Система освітніх послуг, гарантованих державою, що базується на принципах недискримінації, врахування багатоманітності людини, ефективного залучення та включення до освітнього процесу всіх його учасників.</p></div>
+      <div class="card"><div class="ic">🧭</div><h3>Особа з особливими освітніми потребами</h3><p>Особа, яка потребує додаткової постійної чи тимчасової підтримки в освітньому процесі з метою забезпечення її права на освіту.</p></div>
+      <div class="card"><div class="ic">🔧</div><h3>Розумне пристосування</h3><p>Запровадження, якщо це потрібно в конкретному випадку, необхідних модифікацій і адаптацій з метою забезпечення реалізації особами з особливими освітніми потребами права на освіту нарівні з іншими.</p></div>
+      <div class="card"><div class="ic">🌐</div><h3>Універсальний дизайн у сфері освіти</h3><p>Дизайн предметів, середовища, освітніх програм і послуг, що забезпечує їх максимальну придатність для використання всіма особами без необхідності адаптації чи спеціального дизайну.</p></div>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+    <div class="callout"><b>Медична чи соціальна модель?</b> Медична модель бачить проблему в людині: її треба «вилікувати» або навчати окремо. Соціальна модель, на якій ґрунтується Конвенція ООН, бачить проблему в бар’єрах середовища: сходах без пандуса, відео без субтитрів, сайті, який не читає програма екранного доступу. Прибрати бар’єри — завдання закладу освіти й педагога.</div>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 900 290" role="img" aria-label="Схема трьох підходів: сегрегація — окреме коло поза групою; інтеграція — коло всередині групи, але окремо; інклюзія — усі кольорові кола разом у спільному середовищі">
+        <g font-family="Manrope, sans-serif" text-anchor="middle">
+          <circle cx="150" cy="125" r="95" fill="none" style="stroke:var(--line)" stroke-width="4"/>
+          <g style="fill:var(--accent)"><circle cx="120" cy="100" r="13"/><circle cx="165" cy="90" r="13"/><circle cx="185" cy="135" r="13"/><circle cx="135" cy="150" r="13"/><circle cx="105" cy="135" r="13"/></g>
+          <g style="fill:var(--test)"><circle cx="275" cy="60" r="13"/><circle cx="290" cy="200" r="13"/></g>
+          <text x="170" y="262" font-size="18" font-weight="800" style="fill:var(--ink)">Сегрегація</text>
+          <circle cx="450" cy="125" r="95" fill="none" style="stroke:var(--line)" stroke-width="4"/>
+          <g style="fill:var(--accent)"><circle cx="420" cy="95" r="13"/><circle cx="465" cy="85" r="13"/><circle cx="490" cy="125" r="13"/><circle cx="420" cy="140" r="13"/></g>
+          <circle cx="470" cy="170" r="30" fill="none" style="stroke:var(--test)" stroke-width="3" stroke-dasharray="5 4"/>
+          <circle cx="470" cy="170" r="12" style="fill:var(--test)"/>
+          <text x="450" y="262" font-size="18" font-weight="800" style="fill:var(--ink)">Інтеграція</text>
+          <circle cx="750" cy="125" r="95" style="fill:var(--accent-tint);stroke:var(--accent)" stroke-width="4"/>
+          <circle cx="720" cy="95" r="13" style="fill:var(--accent)"/><circle cx="765" cy="85" r="13" style="fill:var(--test)"/><circle cx="790" cy="130" r="13" style="fill:var(--task)"/>
+          <circle cx="715" cy="140" r="13" style="fill:var(--test)"/><circle cx="755" cy="165" r="13" style="fill:var(--accent)"/><circle cx="745" cy="122" r="13" style="fill:var(--navy)"/>
+          <text x="750" y="262" font-size="18" font-weight="800" style="fill:var(--accent-ink)">Інклюзія</text>
+        </g>
+      </svg>
+      <figcaption>Інтеграція — «бути поруч», інклюзія — «бути разом»: середовище змінюється під потреби кожного.</figcaption>
+    </figure>
+
+    <p class="table-cap"><b>Таблиця 1.</b> Від сегрегації до інклюзії</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Підхід</th><th>Суть</th><th>Приклад</th></tr></thead>
+        <tbody>
+          <tr><td><b>Сегрегація</b></td><td>Навчання окремо від однолітків</td><td>Спеціальний заклад без контакту з іншими здобувачами освіти</td></tr>
+          <tr><td><b>Інтеграція</b></td><td>Навчання разом, але без змін середовища</td><td>Здобувач освіти з порушенням слуху сидить на лекції без субтитрів і перекладача</td></tr>
+          <tr><td><b>Інклюзія</b></td><td>Середовище й навчання змінюються під потреби всіх</td><td>Відео із субтитрами, письмові інструкції, асистент, гнучкі форми оцінювання</td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <!-- ТЕСТ: змініть текст запитання та варіантів.
-         data-correct — номер правильної відповіді, відлік від 0 (0 — перший варіант). -->
     <div class="box test" id="test-1">
-      <div class="box-title"><span class="box-tag">ТЕСТ 1</span> Назва тесту<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
-      <div class="test-q">Сформулюйте запитання тесту.</div>
-      <div class="quiz" data-correct="0">
-        <button class="test-opt" type="button">варіант відповіді 1 (правильний)</button>
-        <button class="test-opt" type="button">варіант відповіді 2</button>
-        <button class="test-opt" type="button">варіант відповіді 3</button>
-        <button class="test-opt" type="button">варіант відповіді 4</button>
+      <div class="box-title"><span class="box-tag">ТЕСТ 1</span> Розумне пристосування<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Здобувачеві освіти з порушенням зору збільшили шрифт інструкційних карт і дали додатковий час на тест. Як це називається?</div>
+      <div class="quiz" data-correct="1">
+        <button class="test-opt" type="button">інтеграція</button>
+        <button class="test-opt" type="button">розумне пристосування</button>
+        <button class="test-opt" type="button">сегрегація</button>
+        <button class="test-opt" type="button">медична модель</button>
         <div class="test-feedback"></div>
       </div>
     </div>
   </section>
 
-  <!-- ================= 3. ОСВІТНІ КВЕСТИ ТА КВЕСТ-КІМНАТИ ================= -->
-  <section class="topic" id="s3">
-    <div class="topic-head">
-      <span class="topic-num">03</span>
-      <h2>Освітні квести та квест-кімнати</h2>
+  <!-- ============ 2 ============ -->
+  <section class="topic" id="law">
+    <div class="topic-head"><span class="topic-num">02</span><h2>Нормативна база інклюзії в Україні</h2></div>
+
+    <p>Міжнародною основою є <b>Конвенція ООН про права осіб з інвалідністю</b> (2006), яку Україна ратифікувала 2009 року. Стаття 24 Конвенції гарантує право на інклюзивну освіту на всіх рівнях, а стаття 9 — доступність, зокрема інформації та комунікацій.</p>
+
+    <ol class="steps6">
+      <li><b>2009 · Конвенція ООН</b><span>ратифікація Законом України від 16.12.2009 № 1767-VI</span></li>
+      <li><b>2017 · Закон «Про освіту»</b><span>інклюзивне навчання, розумне пристосування, універсальний дизайн</span></li>
+      <li><b>2019 · постанова КМУ № 636</b><span>Порядок організації інклюзивного навчання у закладах професійної (професійно-технічної) освіти</span></li>
+      <li><b>2021 · № 366-р</b><span>Національна стратегія із створення безбар’єрного простору до 2030 року</span></li>
+      <li><b>2023 · постанова КМУ № 757</b><span>цифрова доступність сайтів і документів органів влади: ДСТУ EN 301 549:2022</span></li>
+      <li><b>2024 · № 527-р</b><span>Національна стратегія розвитку інклюзивного навчання до 2029 року</span></li>
+    </ol>
+
+    <div class="callout"><b>Інклюзивна група в закладі професійної освіти.</b> Її утворює керівник закладу на підставі заяви здобувача освіти (батьків), документів, що підтверджують особливі освітні потреби, та висновку інклюзивно-ресурсного центру (за наявності). Для супроводу створюється команда психолого-педагогічного супроводу.</div>
+
+    <p>Інклюзія неможлива без підготовленого педагога. О. Полетай (2024) розглядає готовність майбутніх педагогів професійного навчання до роботи в інклюзивному освітньому середовищі як поєднання когнітивного, мотиваційного, практичного й емоційно-вольового складників і наголошує на важливості практики в інклюзивних закладах.</p>
+  </section>
+
+  <!-- ============ 3 ============ -->
+  <section class="topic" id="udl">
+    <div class="topic-head"><span class="topic-num">03</span><h2>Універсальний дизайн для навчання</h2></div>
+
+    <p><b>Універсальний дизайн для навчання</b> (Universal Design for Learning, UDL) — підхід, розроблений американською організацією CAST: навчання від початку проєктують так, щоб воно підходило різним здобувачам освіти, а не адаптують його згодом «для одного». Оновлені настанови UDL 3.0 CAST оприлюднила в липні 2024 року; вони містять 9 настанов і 35 рекомендацій.</p>
+
+    <div class="cards">
+      <div class="card"><div class="ic">💡</div><h3>Множинні способи залучення</h3><p><b>Чому</b> навчаємося: вибір завдань, зв’язок із професією, підтримка зусиль.</p></div>
+      <div class="card"><div class="ic">👁️</div><h3>Множинні способи подання</h3><p><b>Що</b> навчаємося: текст, відео із субтитрами, схема, демонстрація в майстерні.</p></div>
+      <div class="card"><div class="ic">✋</div><h3>Множинні способи дії та вираження</h3><p><b>Як</b> показуємо результат: усна відповідь, письмовий звіт, відео, практична демонстрація.</p></div>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+    <p class="table-cap"><b>Таблиця 2.</b> Універсальний дизайн і розумне пристосування</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Ознака</th><th>Універсальний дизайн</th><th>Розумне пристосування</th></tr></thead>
+        <tbody>
+          <tr><td><b>Коли</b></td><td>Закладається заздалегідь, для всіх</td><td>Запроваджується за потреби, для конкретної особи</td></tr>
+          <tr><td><b>Для кого</b></td><td>Для всієї групи</td><td>Для здобувача освіти з особливими потребами</td></tr>
+          <tr><td><b>Приклад</b></td><td>Усі відео заняття — із субтитрами</td><td>Сурдопереклад для конкретного здобувача освіти</td></tr>
+          <tr><td><b>Приклад</b></td><td>Інструкції — текстом, схемою та відео</td><td>Збільшений шрифт і додатковий час на тест</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout"><b>Ефект заниженого бордюру.</b> Пандус, створений для візків, зручний і батькам із дитячими візочками, і кур’єрам. Так само субтитри допомагають не лише людям із порушенням слуху, а й тим, хто дивиться відео в галасливій майстерні, вивчає складну термінологію або погано чує через навушники.</div>
+
+    <div class="box test" id="test-2">
+      <div class="box-title"><span class="box-tag">ТЕСТ 2</span> Принципи UDL<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Майстер виробничого навчання дозволяє здобувачам освіти показати результат практичної роботи усно, письмовим звітом або коротким відео. Який принцип UDL реалізовано?</div>
+      <div class="quiz" data-correct="2">
+        <button class="test-opt" type="button">множинні способи залучення</button>
+        <button class="test-opt" type="button">множинні способи подання</button>
+        <button class="test-opt" type="button">множинні способи дії та вираження</button>
+        <button class="test-opt" type="button">розумне пристосування</button>
+        <div class="test-feedback"></div>
+      </div>
     </div>
   </section>
 
-  <!-- ================= 4. РИЗИКИ ТА ОБМЕЖЕННЯ ГЕЙМІФІКАЦІЇ ================= -->
-  <section class="topic" id="s4">
-    <div class="topic-head">
-      <span class="topic-num">04</span>
-      <h2>Ризики та обмеження гейміфікації</h2>
+  <!-- ============ 4 ============ -->
+  <section class="topic" id="digital">
+    <div class="topic-head"><span class="topic-num">04</span><h2>Цифрова доступність: стандарти та вимоги</h2></div>
+
+    <p><b>Цифрова доступність</b> — властивість сайтів, документів, застосунків і електронних курсів, що дає змогу користуватися ними всім людям, зокрема з порушеннями зору, слуху, моторики чи когнітивних функцій, у тому числі за допомогою асистивних технологій.</p>
+
+    <p>Міжнародний стандарт — <b>Настанови з доступності вебвмісту WCAG</b> консорціуму W3C. Версію WCAG 2.2 опубліковано 5 жовтня 2023 року (оновлення — 12 грудня 2024 року); вона також затверджена як стандарт ISO/IEC 40500:2025. Критерії мають три рівні — A, AA та AAA; на практиці орієнтиром зазвичай є рівень AA.</p>
+
+    <div class="cards two">
+      <div class="card"><div class="ic">👀</div><h3>Сприйнятність</h3><p>Інформацію можна сприйняти різними органами чуття: текст заміщення, субтитри, достатній контраст.</p></div>
+      <div class="card"><div class="ic">⌨️</div><h3>Керованість</h3><p>Інтерфейсом можна користуватися різними способами: усе працює з клавіатури, достатньо часу.</p></div>
+      <div class="card"><div class="ic">🧩</div><h3>Зрозумілість</h3><p>Вміст і інтерфейс зрозумілі й передбачувані: підписи полів і кнопок, підказки щодо помилок.</p></div>
+      <div class="card"><div class="ic">🛡️</div><h3>Надійність</h3><p>Вміст коректно працює з різними програмами, зокрема з програмами екранного доступу.</p></div>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+    <figure class="diagram">
+      <svg viewBox="0 0 900 220" role="img" aria-label="Приклади контрасту: темно-синій текст на білому — 4,5 до 1 і більше, достатньо; світло-сірий текст на білому — недостатньо">
+        <g font-family="Manrope, sans-serif">
+          <rect x="40" y="30" width="390" height="150" rx="18" fill="#FFFFFF" stroke="#DCE3F4" stroke-width="3"/>
+          <text x="70" y="95" font-size="30" font-weight="800" fill="#0E1F4D">Інструктаж</text>
+          <text x="70" y="140" font-size="18" font-weight="700" fill="#1F7A3F">✓ контраст ≥ 4,5 : 1 — достатньо</text>
+          <rect x="470" y="30" width="390" height="150" rx="18" fill="#FFFFFF" stroke="#DCE3F4" stroke-width="3"/>
+          <text x="500" y="95" font-size="30" font-weight="800" fill="#C9CED8">Інструктаж</text>
+          <text x="500" y="140" font-size="18" font-weight="700" fill="#C0262D">✗ світло-сірий на білому — замало</text>
+        </g>
+      </svg>
+      <figcaption>Рівень AA WCAG: контраст щонайменше 4,5 : 1 для звичайного тексту і 3 : 1 для великого.</figcaption>
+    </figure>
+
+    <p>В Україні <b>постанова КМУ від 21.07.2023 № 757</b> зобов’язала міністерства, інші центральні органи виконавчої влади й обласні державні адміністрації забезпечувати відповідність своїх сайтів, систем і електронних документів національному стандарту <b>ДСТУ EN 301 549:2022</b> «Інформаційні технології. Вимоги щодо доступності продуктів та послуг ІКТ»; органам місцевого самоврядування це рекомендовано. Урядовий законопроєкт № 14278 «Про цифрову доступність в Україні», зареєстрований у грудні 2025 року, у липні 2026 року відкликано; альтернативний законопроєкт № 14278-1 опрацьовується в комітеті.</p>
+
+    <div class="stats">
+      <div class="stat"><b>94,8%</b><span>з мільйона популярних головних сторінок мають порушення WCAG (WebAIM Million 2025)</span></div>
+      <div class="stat"><b>79,1%</b><span>сторінок мають низький контраст тексту — найпоширеніша помилка</span></div>
+      <div class="stat"><b>55,5%</b><span>сторінок мають зображення без альтернативного тексту</span></div>
     </div>
 
-    <!-- ЗАВДАННЯ: кожен пункт списку — окремий крок, який здобувач освіти позначає галочкою. -->
+    <p>У середньому на сторінку припадає 51 помилка; поширені також поля форм без підписів (48,2 %) і порожні посилання (45,4 %). Ці самі помилки педагоги часто роблять у власних презентаціях і документах.</p>
+  </section>
+
+  <!-- ============ 5 ============ -->
+  <section class="topic" id="assistive">
+    <div class="topic-head"><span class="topic-num">05</span><h2>Асистивні технології та доступні матеріали</h2></div>
+
+    <p><b>Асистивні технології</b> — пристрої та програми, що допомагають людям з інвалідністю виконувати дії, які інакше були б складними або неможливими.</p>
+
+    <p class="table-cap"><b>Таблиця 3.</b> Асистивні технології в освітньому процесі</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Потреба</th><th>Технологія</th><th>Приклади</th></tr></thead>
+        <tbody>
+          <tr><td><b>Порушення зору</b></td><td>Програми екранного доступу, екранна лупа, шрифт Брайля</td><td>NVDA (безкоштовна), JAWS, TalkBack (Android), VoiceOver (iOS)</td></tr>
+          <tr><td><b>Порушення слуху</b></td><td>Субтитри, транскрипція мовлення, сурдопереклад</td><td>Автоматичні субтитри в Google Meet, Teams, PowerPoint</td></tr>
+          <tr><td><b>Порушення моторики</b></td><td>Голосове керування, адаптовані клавіатури й миші</td><td>Голосовий набір, керування поглядом, великі кнопки</td></tr>
+          <tr><td><b>Труднощі читання</b></td><td>Озвучення тексту, спрощене подання</td><td>Засіб Immersive Reader у Microsoft 365, озвучення в браузері</td></tr>
+          <tr><td><b>Увага й організація</b></td><td>Покрокові інструкції, нагадування, таймери</td><td>Картки-алгоритми, чек-листи, календарі в смартфоні</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-h">Як створити доступний навчальний матеріал</h3>
+    <ul class="rules">
+      <li>Використовуйте вбудовані стилі заголовків, списки та прості таблиці із заголовками стовпців.</li>
+      <li>Додавайте до інформативних зображень текст заміщення (1–2 речення), декоративні позначайте як декоративні.</li>
+      <li>Забезпечуйте контраст тексту щонайменше 4,5 : 1 і не передавайте інформацію лише кольором.</li>
+      <li>Пишіть змістовні посилання («Порядок інклюзивного навчання», а не «натисніть тут»).</li>
+      <li>Додавайте до відео субтитри й текстову розшифровку; PDF створюйте експортом з текстового файла, а не скануванням.</li>
+      <li>Перевіряйте файл вбудованим засобом перевірки доступності у Word і PowerPoint.</li>
+    </ul>
+
     <div class="box task" id="task-1">
-      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 1</span> Назва практичного завдання<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 1</span> Перевірка доступності власного документа<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
       <ol>
-        <li>Опишіть перший крок завдання.</li>
-        <li>Опишіть другий крок завдання.</li>
-        <li>Опишіть, де та як здобувач освіти здає результат (наприклад, у <b>Classroom</b>).</li>
+        <li>Відкрийте у Word або PowerPoint будь-який свій навчальний матеріал.</li>
+        <li>Запустіть перевірку доступності (вкладка «Рецензування», англ. Check Accessibility).</li>
+        <li>Виправте щонайменше три помилки: текст заміщення, контраст, заголовки, підписи таблиць.</li>
+        <li>Запишіть у Classroom, що саме виправили. Час — 10 хвилин.</li>
       </ol>
     </div>
   </section>
 
-  <!-- ================= ПІДСУМОК ================= -->
-  <section class="topic" id="summary">
-    <div class="topic-head">
-      <span class="topic-num">✓</span>
-      <h2>Ключові поняття та самоперевірка</h2>
+  <!-- ============ 6 ============ -->
+  <section class="topic" id="vet">
+    <div class="topic-head"><span class="topic-num">06</span><h2>Інклюзія у професійній освіті</h2></div>
+
+    <p>У закладах професійної (професійно-технічної) освіти інклюзія має свою специфіку: навчання відбувається не лише в аудиторії, а й у майстерні та на підприємстві, де головне — безпека праці й реальні професійні навички. Тому адаптувати треба не тільки лекційний матеріал, а й інструктажі з охорони праці, робоче місце, практичні завдання та кваліфікаційну атестацію.</p>
+
+    <p class="table-cap"><b>Таблиця 4.</b> Приклади адаптації практичного навчання</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Особливі потреби</th><th>Адаптація в майстерні та на практиці</th><th>Що це дає всій групі</th></tr></thead>
+        <tbody>
+          <tr><td><b>Порушення слуху</b></td><td>Письмові та візуальні інструкції, світлові сигнали тривоги, відео інструктажу із субтитрами, викладач стоїть обличчям до здобувача освіти</td><td>Субтитри й письмові інструкції зрозумілі в галасливій майстерні</td></tr>
+          <tr><td><b>Порушення зору</b></td><td>Тактильне маркування обладнання й небезпечних зон, аудіоінструкції, документи, сумісні з програмами екранного доступу, достатнє освітлення</td><td>Чітке маркування й освітлення підвищують безпеку всіх</td></tr>
+          <tr><td><b>Порушення опорно-рухового апарату</b></td><td>Доступ до робочого місця, регульовані столи, адаптовані інструменти, безбар’єрний маршрут до майстерні</td><td>Вільні проходи й зручні робочі місця зменшують травматизм</td></tr>
+          <tr><td><b>Труднощі в навчанні</b></td><td>Покрокові картки-алгоритми з малюнками, поділ операції на етапи, додатковий час, повторна демонстрація</td><td>Картки-алгоритми допомагають кожному новачкові</td></tr>
+          <tr><td><b>Розлади аутистичного спектра</b></td><td>Передбачуваний розклад, попередження про зміни, тихе місце для відпочинку, чіткі правила</td><td>Чіткі правила й розклад знижують тривожність у групі</td></tr>
+        </tbody>
+      </table>
     </div>
 
+    <div class="example">
+      <div class="box-title"><span class="box-tag">ПРИКЛАД</span> Доступний інструктаж з охорони праці в майстерні</div>
+      <div class="levels"><span>Текст</span><span>Схема</span><span>Відео + CC</span><span>Показ</span><span>Вибір форми</span></div>
+      <ul class="ex-list">
+        <li><b>До заняття:</b> інструкцію подано текстом (зі стилями заголовків), схемою з підписами та відео 4 хв із субтитрами; усе доступне в Classroom.</li>
+        <li><b>Під час заняття:</b> майстер показує кожну операцію, стоячи обличчям до групи; небезпечні зони мають кольорове й тактильне маркування.</li>
+        <li><b>Перевірка:</b> здобувачі освіти обирають форму — усна відповідь, тест у Google Формах або демонстрація безпечних дій на робочому місці.</li>
+        <li><b>Розумне пристосування:</b> для здобувача освіти з порушенням слуху — сурдопереклад або письмова розшифровка та світловий сигнал зупинки обладнання.</li>
+        <li><b>Результат:</b> універсальний дизайн допомагає всій групі, а розумне пристосування — конкретній людині.</li>
+      </ul>
+    </div>
+
+    <div class="case">
+      <div class="box-title"><span class="box-tag">КЕЙС</span> Відеоінструкція без субтитрів</div>
+      <div class="case-cols">
+        <div class="case-side plus">
+          <h4>🎬 Погляд викладача</h4>
+          <p>Викладач записав на смартфон 10-хвилинне відео «Налаштування зварювального апарата» й опублікував його в Classroom. Йому здається, що все гаразд: відео наочне, а перегляд займає мало часу. Додавати субтитри й текстову версію — «зайва робота, адже в групі немає здобувачів освіти з порушенням слуху».</p>
+        </div>
+        <div class="case-side minus">
+          <h4>⚠️ Реальність групи</h4>
+          <p>Проте в групі є здобувач освіти, який погано чує після контузії, а інший вивчає українську мову як другу. Ще кілька переглядають відео в галасливій майстерні. Без субтитрів і тексту інструкцію зрозуміють не всі, а неправильне налаштування апарата — це ризик для безпеки.</p>
+        </div>
+      </div>
+      <div class="box-close"><i>Висновок для педагога:</i> доступність закладають від початку, а не «на запит»: субтитри й текстова версія коштують кілька хвилин, а допомагають усій групі. Автоматичні субтитри варто перевірити й виправити терміни.</div>
+    </div>
+
+    <div class="box test" id="test-3">
+      <div class="box-title"><span class="box-tag">ТЕСТ 3</span> Цифрова доступність<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Ви додаєте до відео субтитри, а до схем — текстовий опис. Який принцип WCAG ви реалізуєте?</div>
+      <div class="quiz" data-correct="1">
+        <button class="test-opt" type="button">керованість</button>
+        <button class="test-opt" type="button">сприйнятність</button>
+        <button class="test-opt" type="button">надійність</button>
+        <button class="test-opt" type="button">зрозумілість</button>
+        <div class="test-feedback"></div>
+      </div>
+    </div>
+
+    <h3 class="sub-h">Принципи інклюзивного й доступного освітнього процесу</h3>
+    <ul class="rules">
+      <li>Бачте бар’єр у середовищі, а не в людині.</li>
+      <li>Проєктуйте заняття за принципами універсального дизайну для навчання.</li>
+      <li>Створюйте доступні матеріали: заголовки, текст заміщення, контраст, субтитри.</li>
+      <li>Працюйте в команді: психолог, асистент, батьки, майстер виробничого навчання.</li>
+      <li>Питайте самого здобувача освіти, що йому допомагає: «Нічого для нас без нас».</li>
+    </ul>
+
+    <div class="box task" id="task-2">
+      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 2</span> Тест у Google Формах «Інклюзивна освіта та цифрова доступність»<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <ol>
+        <li>Відкрийте в <b>Classroom</b> посилання на тест (20 питань, орієнтовно 15 хвилин).</li>
+        <li>Типи питань: один чи кілька правильних варіантів, «правда чи неправда», вибір зі списку, встановлення відповідності.</li>
+        <li>Після надсилання перегляньте результат і пояснення до відповідей.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ SUMMARY ============ -->
+  <section class="topic" id="summary">
+    <div class="topic-head"><span class="topic-num">✓</span><h2>Ключові поняття та самоперевірка</h2></div>
     <h3 class="sub-h" style="margin-top:0">Ключові поняття</h3>
     <dl class="glossary">
-      <div class="term"><dt>Термін 1</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 2</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 3</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 4</dt><dd class="placeholder">визначення терміна.</dd></div>
+      <div class="term"><dt>Інклюзивне навчання</dt><dd>система освітніх послуг, гарантованих державою, що базується на принципах недискримінації, врахування багатоманітності людини та включення до освітнього процесу всіх його учасників.</dd></div>
+      <div class="term"><dt>Особа з особливими освітніми потребами</dt><dd>особа, яка потребує додаткової постійної чи тимчасової підтримки в освітньому процесі.</dd></div>
+      <div class="term"><dt>Розумне пристосування</dt><dd>необхідні модифікації й адаптації в конкретному випадку, щоб особа могла реалізувати право на освіту нарівні з іншими.</dd></div>
+      <div class="term"><dt>Універсальний дизайн</dt><dd>дизайн середовища, програм і послуг, придатний для всіх без потреби в спеціальній адаптації.</dd></div>
+      <div class="term"><dt>UDL</dt><dd>універсальний дизайн для навчання: множинні способи залучення, подання, дії та вираження.</dd></div>
+      <div class="term"><dt>Соціальна модель інвалідності</dt><dd>підхід, за яким перешкоди створює середовище, а не особливості людини.</dd></div>
+      <div class="term"><dt>Цифрова доступність</dt><dd>придатність сайтів, документів і застосунків для використання всіма людьми, зокрема з асистивними технологіями.</dd></div>
+      <div class="term"><dt>WCAG</dt><dd>міжнародні настанови з доступності вебвмісту з принципами сприйнятності, керованості, зрозумілості та надійності.</dd></div>
+      <div class="term"><dt>Асистивні технології</dt><dd>пристрої й програми, що допомагають людям з інвалідністю виконувати дії.</dd></div>
+      <div class="term"><dt>Текст заміщення</dt><dd>короткий текстовий опис зображення, який зачитує програма екранного доступу.</dd></div>
     </dl>
-
     <h3 class="sub-h">Питання для самоперевірки</h3>
     <ol class="questions">
-      <li class="placeholder">Питання для самоперевірки.</li>
-      <li class="placeholder">Питання для самоперевірки.</li>
-      <li class="placeholder">Питання для самоперевірки.</li>
+      <li>Чим інклюзія відрізняється від інтеграції та сегрегації?</li>
+      <li>Як Закон України «Про освіту» визначає розумне пристосування та універсальний дизайн у сфері освіти?</li>
+      <li>Чим соціальна модель інвалідності відрізняється від медичної?</li>
+      <li>Як організовують інклюзивне навчання в закладах професійної (професійно-технічної) освіти?</li>
+      <li>Назвіть три принципи універсального дизайну для навчання й наведіть приклади з практичного заняття.</li>
+      <li>Які чотири принципи має WCAG? Який мінімальний контраст тексту вимагає рівень AA?</li>
+      <li>Які асистивні технології ви знаєте і як вони допомагають у навчанні?</li>
+      <li>Як адаптувати інструктаж з охорони праці для здобувача освіти з порушенням слуху або зору?</li>
     </ol>
   </section>
 
-  <!-- ================= ЛІТЕРАТУРА ================= -->
-  <section class="lit end" id="literature">
+  <section class="lit" id="literature">
     <h2>Література <span>до теми</span></h2>
     <ol>
-      <li>Додайте джерело, оформлене за ДСТУ 8302:2015.</li>
-      <li>Для електронних ресурсів укажіть URL та дату звернення.</li>
+      <li>Деякі питання доступності інформаційно-комунікаційних систем та документів в електронній формі : постанова Кабінету Міністрів України від 21.07.2023 № 757. URL: <a href="https://www.kmu.gov.ua/npas/deiaki-pytannia-dostupnosti-informatsiino-komunikatsiinykh-system-ta-dokumentiv-v-elektronnii-formi-i210723-757" target="_blank" rel="noopener">https://www.kmu.gov.ua/npas/deiaki-pytannia-dostupnosti-informatsiino-komunikatsiinykh-system-ta-dokumentiv-v-elektronnii-formi-i210723-757</a> (дата звернення: 17.11.2026).</li>
+      <li>Ключові вимоги цифрової доступності / Центр компетенцій з цифрової доступності. URL: <a href="https://accessibility.diia.gov.ua/requirements.html" target="_blank" rel="noopener">https://accessibility.diia.gov.ua/requirements.html</a> (дата звернення: 17.11.2026).</li>
+      <li>Полетай О. Формування у майбутніх педагогів професійного навчання готовності до роботи в інклюзивному освітньому середовищі // Вісник. Серія: Педагогічні науки. 2024. Вип. 29–30 (185–186). С. 135–139. DOI: 10.58407/visnik.242925.</li>
+      <li>Попов Д. Короткий посібник з цифрової доступності. Київ : ПРООН в Україні, 2023. URL: <a href="https://www.undp.org/sites/g/files/zskgke326/files/2023-06/korotkiy_posibnik_z_cifrovoi_dostupnosti_-_ukr.pdf" target="_blank" rel="noopener">https://www.undp.org/sites/g/files/zskgke326/files/2023-06/korotkiy_posibnik_z_cifrovoi_dostupnosti_-_ukr.pdf</a> (дата звернення: 17.11.2026).</li>
+      <li>Про затвердження Порядку організації інклюзивного навчання у закладах професійної (професійно-технічної) освіти : постанова Кабінету Міністрів України від 10.07.2019 № 636. URL: <a href="https://www.kmu.gov.ua/npas/pro-zatverdzhennya-poryadku-organizaciyi-inklyuzivnogo-navchannya-u-zakladah-profesijnoyi-profesijno-tehnichnoyi-osviti-s-636-100719" target="_blank" rel="noopener">https://www.kmu.gov.ua/npas/pro-zatverdzhennya-poryadku-organizaciyi-inklyuzivnogo-navchannya-u-zakladah-profesijnoyi-profesijno-tehnichnoyi-osviti-s-636-100719</a> (дата звернення: 17.11.2026).</li>
+      <li>Про освіту : Закон України від 05.09.2017 № 2145-VIII.</li>
+      <li>Про ратифікацію Конвенції про права осіб з інвалідністю і Факультативного протоколу до неї : Закон України від 16.12.2009 № 1767-VI.</li>
+      <li>Про схвалення Національної стратегії із створення безбар’єрного простору в Україні на період до 2030 року : розпорядження Кабінету Міністрів України від 14.04.2021 № 366-р.</li>
+      <li>Про схвалення Національної стратегії розвитку інклюзивного навчання на період до 2029 року та затвердження операційного плану заходів з її реалізації на 2024–2026 роки : розпорядження Кабінету Міністрів України від 07.06.2024 № 527-р. URL: <a href="https://osvita.ua/legislation/Ser_osv/92321/" target="_blank" rel="noopener">https://osvita.ua/legislation/Ser_osv/92321/</a> (дата звернення: 17.11.2026).</li>
+      <li>Проєкт Закону про цифрову доступність в Україні № 14278 : картка законопроєкту / Верховна Рада України. URL: <a href="https://itd.rada.gov.ua/billinfo/Bills/Card/59255" target="_blank" rel="noopener">https://itd.rada.gov.ua/billinfo/Bills/Card/59255</a> (дата звернення: 17.11.2026).</li>
+      <li>CAST. Universal Design for Learning Guidelines version 3.0. 2024. URL: <a href="https://udlguidelines.cast.org" target="_blank" rel="noopener">https://udlguidelines.cast.org</a> (дата звернення: 17.11.2026).</li>
+      <li>Meyer A., Rose D. H., Gordon D. Universal Design for Learning: Theory and Practice. Wakefield : CAST Professional Publishing, 2014.</li>
+      <li>United Nations. Convention on the Rights of Persons with Disabilities. New York, 2006.</li>
+      <li>W3C. Web Content Accessibility Guidelines (WCAG) 2.2. W3C Recommendation. 2023. URL: <a href="https://www.w3.org/TR/WCAG22/" target="_blank" rel="noopener">https://www.w3.org/TR/WCAG22/</a> (дата звернення: 17.11.2026).</li>
+      <li>WebAIM. The WebAIM Million: The 2025 report on the accessibility of the top 1,000,000 home pages. URL: <a href="https://webaim.org/projects/million/2025" target="_blank" rel="noopener">https://webaim.org/projects/million/2025</a> (дата звернення: 17.11.2026).</li>
+      <li>World Health Organization. Global report on health equity for persons with disabilities. Geneva : WHO, 2022. URL: <a href="https://www.who.int/publications/i/item/9789240063600" target="_blank" rel="noopener">https://www.who.int/publications/i/item/9789240063600</a> (дата звернення: 17.11.2026).</li>
     </ol>
   </section>
 
 </main>
 
-<nav class="lecture-nav" id="lectureNav" aria-label="Навігація між лекціями"></nav>
-
 <footer>
   <span>Лекція 12 · Тема 12 · Спеціальність «Професійна освіта»</span>
   <button class="reset-btn" id="resetBtn" type="button">↺ скинути прогрес</button>
-  <span class="mono">оновлено: 08.11.2026</span>
+  <span class="mono">оновлено: 17.11.2026</span>
 </footer>
 
-<script src="assets/js/course.js"></script>
-<script src="assets/js/lecture.js"></script>
+<script>
+(function(){
+  "use strict";
+  var STORE_KEY = 'lecture12-inclusion-progress-v1';
+
+  function loadState(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    }catch(e){ return {}; }
+  }
+  function saveState(state){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  var state = loadState(); // { "task-1": [true,false,...], "test-1": 0 (chosen index) }
+
+  /* ---------- task checklists ---------- */
+  var taskBoxes = Array.prototype.slice.call(document.querySelectorAll('.box.task'));
+
+  function renderTaskBox(box){
+    var id = box.id;
+    var items = state[id] || [];
+    var lis = box.querySelectorAll('ol > li');
+    var doneCount = 0;
+    lis.forEach(function(li, i){
+      var checked = !!items[i];
+      if (checked) doneCount++;
+      var chk = li.querySelector('.chk');
+      if (chk){
+        chk.checked = checked;
+        li.querySelector('.step').classList.toggle('checked', checked);
+      }
+    });
+    var pill = box.querySelector('[data-progress]');
+    if (pill) pill.textContent = doneCount + ' / ' + lis.length + ' виконано';
+    box.classList.toggle('done', lis.length > 0 && doneCount === lis.length);
+    return { done: doneCount, total: lis.length };
+  }
+
+  taskBoxes.forEach(function(box){
+    var id = box.id;
+    var lis = Array.prototype.slice.call(box.querySelectorAll('ol > li'));
+    lis.forEach(function(li, i){
+      var step = document.createElement('label');
+      step.className = 'step';
+      var num = document.createElement('span');
+      num.className = 'num';
+      num.textContent = (i + 1);
+      var chk = document.createElement('input');
+      chk.type = 'checkbox';
+      chk.className = 'chk';
+      chk.setAttribute('aria-label', 'Крок ' + (i + 1) + ' виконано');
+      var textSpan = document.createElement('span');
+      textSpan.className = 'step-text';
+      while (li.firstChild) textSpan.appendChild(li.firstChild);
+      step.appendChild(chk);
+      step.appendChild(num);
+      step.appendChild(textSpan);
+      li.appendChild(step);
+      chk.addEventListener('change', function(){
+        if (!state[id]) state[id] = [];
+        state[id][i] = chk.checked;
+        saveState(state);
+        renderTaskBox(box);
+        updateOverall();
+      });
+    });
+    renderTaskBox(box);
+  });
+
+  /* ---------- quiz boxes ---------- */
+  var quizzes = Array.prototype.slice.call(document.querySelectorAll('.quiz'));
+  quizzes.forEach(function(quiz){
+    var box = quiz.closest('.box');
+    var boxId = box.id;
+    var correct = parseInt(quiz.getAttribute('data-correct'), 10);
+    var buttons = Array.prototype.slice.call(quiz.querySelectorAll('.test-opt'));
+    var feedback = quiz.querySelector('.test-feedback');
+
+    function applyAnswer(chosenIdx, silent){
+      buttons.forEach(function(btn, i){
+        btn.disabled = true;
+        if (i === correct) btn.classList.add('is-correct');
+        if (i === chosenIdx && chosenIdx !== correct) btn.classList.add('is-wrong');
+      });
+      feedback.classList.add('show');
+      if (chosenIdx === correct){
+        feedback.textContent = '✓ Правильно!';
+        feedback.classList.add('correct');
+      } else {
+        feedback.textContent = '✗ Неправильно. Правильна відповідь виділена зеленим.';
+        feedback.classList.add('wrong');
+      }
+      var pill = box.querySelector('[data-progress]');
+      if (pill) pill.textContent = 'пройдено';
+      box.classList.add('done');
+    }
+
+    buttons.forEach(function(btn, i){
+      btn.addEventListener('click', function(){
+        state[boxId] = i;
+        saveState(state);
+        applyAnswer(i);
+        updateOverall();
+      });
+    });
+
+    if (typeof state[boxId] === 'number'){
+      applyAnswer(state[boxId], true);
+    }
+  });
+
+  /* ---------- overall progress ---------- */
+  function updateOverall(){
+    var totalSteps = 0, doneSteps = 0;
+    taskBoxes.forEach(function(box){
+      var r = renderTaskBox(box);
+      totalSteps += r.total;
+      doneSteps += r.done;
+    });
+    quizzes.forEach(function(quiz){
+      totalSteps += 1;
+      var box = quiz.closest('.box');
+      if (box.classList.contains('done')) doneSteps += 1;
+    });
+    var pct = totalSteps ? Math.round((doneSteps / totalSteps) * 100) : 0;
+    var fill = document.getElementById('progressFill');
+    var label = document.getElementById('tocProgress');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.innerHTML = 'прогрес: <b>' + pct + '%</b>';
+  }
+  updateOverall();
+
+  /* ---------- reset ---------- */
+  var resetBtn = document.getElementById('resetBtn');
+  if (resetBtn){
+    resetBtn.addEventListener('click', function(){
+      try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+      location.reload();
+    });
+  }
+
+  /* ---------- scrollspy ---------- */
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.topic[id], section.lit[id]'));
+  var tocLinks = {};
+  Array.prototype.slice.call(document.querySelectorAll('.toc-inner a[data-toc]')).forEach(function(a){
+    tocLinks[a.getAttribute('data-toc')] = a;
+  });
+  if ('IntersectionObserver' in window && sections.length){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var link = tocLinks[entry.target.id];
+        if (!link) return;
+        if (entry.isIntersecting){
+          Object.keys(tocLinks).forEach(function(k){ tocLinks[k].classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+    sections.forEach(function(s){ observer.observe(s); });
+  }
+})();
+</script>
+
 </body>
 </html>

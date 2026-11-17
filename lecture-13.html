@@ -1,189 +1,1214 @@
-/**
- * Тест «Лекція 13. Освітня аналітика та персоналізація навчання» — 20 питань.
- * Скрипт створює Google Форму в режимі «Тест» з автоматичним оцінюванням
- * і поясненнями до відповідей.
- *
- * СПОСІБ 1 (найпростіший) — запуск у редакторі, без розгортання:
- * 1. https://script.google.com → «Новий проєкт».
- * 2. Видаліть увесь текст у редакторі (зокрема function myFunction) і вставте цей файл повністю.
- * 3. Натисніть «Зберегти» (значок дискети або Ctrl+S).
- * 4. Угорі у списку функцій виберіть createAnalyticsQuiz → натисніть «▶ Виконати».
- * 5. Дозвольте доступ (один раз): «Переглянути дозволи» → ваш акаунт →
- *    «Додатково» → «Перейти до проєкту (небезпечно)» → «Дозволити».
- * 6. Унизу відкриється «Журнал виконання» з посиланнями на форму.
- *
- * СПОСІБ 2 — через «Розгортання → Вебзастосунок» (посилання …/exec):
- * після вставлення цього файлу оновіть розгортання:
- * «Розгорнути» → «Керування розгортаннями» → олівець → «Версія: Нова версія» → «Розгорнути».
- * Відкрийте посилання …/exec — форма створиться один раз, а сторінка покаже посилання.
- * Розгортати НЕ обов’язково: досить способу 1.
- */
-
-function createAnalyticsQuiz() {
-  var form = FormApp.create('Лекція 13. Освітня аналітика та персоналізація навчання — тест');
-
-  try {
-    form.setIsQuiz(true);
-    form.setDescription('Тест до лекції 13 «Освітня аналітика та персоналізація навчання» (спеціальність «Професійна освіта»). ' +
-                        '20 питань різних типів, 1 бал за кожне. Результат і пояснення ви побачите одразу після надсилання. Орієнтовний час — 15 хвилин.');
-    form.setProgressBar(true);
-    form.setConfirmationMessage('Дякуємо! Перегляньте свій результат і пояснення до відповідей.');
-
-    form.addTextItem().setTitle('Прізвище, ім’я та група').setRequired(true);
-
-    // ---------- Частина 1 ----------
-    form.addSectionHeaderItem().setTitle('Частина 1. Поняття та рівні освітньої аналітики');
-
-    single_(form, '1. Освітня аналітика — це…',
-      ['виставлення оцінок у журнал', 'вимірювання, збирання, аналіз і подання даних про тих, хто навчається, для розуміння й оптимізації навчання', 'рейтинг закладів освіти', 'контроль відвідування занять'], 1,
-      'Визначення LAK 2011 / SoLAR: мета аналітики — зрозуміти й покращити навчання та середовище, у якому воно відбувається.');
-
-    list_(form, '2. Аналітика для адміністрації закладу та органів управління освітою (набір, випуск, фінансування) — це…',
-      ['освітня аналітика', 'академічна аналітика', 'описова статистика', 'адаптивне навчання'], 1,
-      'Дж. Сіменс і Ф. Лонг (2011): освітня аналітика — рівень курсу й групи, академічна — рівень закладу та системи.');
-
-    form.addSectionHeaderItem().setTitle('Питання 3–6: встановіть відповідність між запитанням і рівнем аналітики');
-    var lv = ['описова', 'діагностична', 'прогностична', 'наказова (рекомендаційна)'];
-    list_(form, '3. «Що сталося?» — 38 % групи правильно відповіли на питання про заземлення.', lv, 0, 'Описова аналітика фіксує, що сталося.');
-    list_(form, '4. «Чому це сталося?» — відео про заземлення тривало 25 хвилин і не мало субтитрів.', lv, 1, 'Діагностична аналітика шукає причини.');
-    list_(form, '5. «Що, ймовірно, станеться?» — здобувач освіти три тижні не відкриває курс.', lv, 2, 'Прогностична аналітика оцінює ризик у майбутньому.');
-    list_(form, '6. «Що варто зробити?» — запропонувати відео, повторний мікротест і консультацію.', lv, 3, 'Наказова аналітика рекомендує дії.');
-
-    multi_(form, '7. Які з цих джерел дають педагогу освітні дані?',
-      ['статистика тесту в Google Формах', 'звіт Kahoot! після гри', 'щоденник виробничої практики', 'прогноз погоди', 'журнал оцінок у Classroom'], [0, 1, 2, 4],
-      'Освітні дані — результати тестів, активність у курсі, оцінки, щоденник практики, опитування.');
-
-    trueFalse_(form, 8, 'Moodle з версії 3.4 має вбудовану модель прогнозування «Здобувачі освіти під ризиком вибуття».', true,
-      'Модель аналізує залученість і надсилає викладачу сповіщення.');
-
-    single_(form, '9. Чому результати системи Course Signals (Університет Пердью) щодо утримуваності студентів згодом критикували?',
-      ['система була платною', 'частина ефекту могла бути статистичним артефактом: ті, хто довше навчався, проходили більше курсів із системою', 'вона не показувала оцінок', 'нею не користувалися викладачі'], 1,
-      'Кореляція — не причина: дані — це сигнал, а не доказ.');
-
-    // ---------- Частина 2 ----------
-    form.addSectionHeaderItem().setTitle('Частина 2. Зворотний зв’язок');
-
-    multi_(form, '10. На які три запитання має відповідати ефективний зворотний зв’язок за Дж. Гетті та Г. Тімперлі?',
-      ['«Куди я йду?»', '«Хто найкращий у групі?»', '«Як я просуваюся?»', '«Що далі?»', '«Скільки балів у сусіда?»'], [0, 2, 3],
-      'Feed up — feed back — feed forward.');
-
-    single_(form, '11. Який рівень зворотного зв’язку найменш дієвий?',
-      ['щодо завдання', 'щодо процесу', 'щодо саморегуляції', 'щодо особистості («молодець, ти розумний»)'], 3,
-      'Похвала особистості не підказує, що робити далі.');
-
-    single_(form, '12. Який коментар майстра відповідає на запитання «Що далі?»',
-      ['«Оцінка — 7 балів»', '«Шов нерівний»', '«Молодець»', '«Зменш швидкість ведення електрода і перевір кут нахилу перед наступним швом»'], 3,
-      'Feed forward — конкретна дія для покращення.');
-
-    trueFalse_(form, 13, 'Формувальне оцінювання — це оцінювання для навчання, яке дає зворотний зв’язок і допомагає скоригувати освітній процес.', true,
-      'П. Блек і Д. Вільям (1998) показали, що формувальне оцінювання суттєво покращує результати.');
-
-    // ---------- Частина 3 ----------
-    form.addSectionHeaderItem().setTitle('Частина 3. Персоналізація навчання');
-
-    var ap = ['диференціація', 'індивідуалізація', 'персоналізація', 'адаптивне навчання'];
-    list_(form, '14. Три варіанти практичної роботи — базовий, середній і підвищений — для груп різного рівня. Це…', ap, 0, 'Диференціація — завдання для груп різного рівня.');
-    list_(form, '15. Платформа сама пропонує простіше чи складніше завдання залежно від відповіді. Це…', ap, 3, 'Адаптивне навчання — наступний крок підбирає алгоритм.');
-    list_(form, '16. Здобувач освіти разом із педагогом обирає тему Проєкту зі своєї спеціалізації та форму звіту. Це…', ap, 2, 'Персоналізація — здобувач освіти впливає на мету, зміст і шлях.');
-
-    single_(form, '17. «Проблема двох сигм» Б. Блума (1984) полягає в тому, що…',
-      ['групове навчання завжди краще за індивідуальне', 'учні з індивідуальним тьютором значно випереджали однолітків зі звичайних занять', 'тести не можуть виміряти знання', 'два стандартні відхилення — норма для будь-якої групи'], 1,
-      'Середній «тьюторований» учень перевершував 98 % контрольної групи; тому шукають способи наблизитися до цього в групі.');
-
-    single_(form, '18. За результатами мікротесту здобувач освіти набрав 60 %. Який крок персоналізованого маршруту найдоречніший?',
-      ['завдання підвищеного рівня', 'коротке відео про типові помилки й повторний мікротест через 2 дні', 'жодних дій', 'відрахування з групи'], 1,
-      '50–79 % — повторення з поясненням типових помилок; менше 50 % — консультація з майстром.');
-
-    // ---------- Частина 4 ----------
-    form.addSectionHeaderItem().setTitle('Частина 4. Етика освітньої аналітики');
-
-    multi_(form, '19. Які з цих дій відповідають етиці освітньої аналітики?',
-      ['пояснювати здобувачам освіти, які дані збирають і навіщо', 'збирати «все про всіх» про всяк випадок', 'перевіряти сигнал системи розмовою зі здобувачем освіти', 'публікувати рейтинг найменш активних', 'захищати й знеособлювати персональні дані'], [0, 2, 4],
-      'Прозорість, мінімум даних, захист і підтримка замість покарання (Ш. Слейд і П. Прінслоо; DELICATE).');
-
-    single_(form, '20. Система позначила здобувача освіти «червоним», бо він три тижні не заходив у курс. Що зробити насамперед?',
-      ['одразу знизити оцінку', 'повідомити всій групі', 'поговорити зі здобувачем освіти й з’ясувати причини', 'нічого не робити'], 2,
-      'Дані — привід для розмови, а не вирок: цифри не знають обставин життя.');
-
-  } catch (e) {
-    Logger.log('ПОМИЛКА після елемента № ' + form.getItems().length + ': ' + e.message);
-    Logger.log('Недороблену форму можна видалити з Диска: ' + form.getEditUrl());
-    throw e;
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Освітня аналітика та персоналізація</title>
+<meta name="description" content="Лекція 13 для спеціальності «Професійна освіта»: освітня аналітика та персоналізація навчання — рівні аналітики, інструменти, зворотний зв’язок, індивідуальні освітні траєкторії, етика даних">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0E1F4D;
+    --ink:#0E1F4D;
+    --ink-soft:#2B3A63;
+    --ink-muted:#5A6788;
+    --paper:#FFFFFF;
+    --surface:#FFFFFF;
+    --surface-2:#F4F7FF;
+    --line:#DCE3F4;
+    --accent:#1D4ED8;
+    --accent-ink:#163BA6;
+    --accent-tint:#E8EEFF;
+    --task:#1597E5;
+    --task-ink:#0B6AA8;
+    --task-tint:#E4F4FD;
+    --test:#F26B1D;
+    --test-ink:#C2500C;
+    --test-tint:#FFF1E7;
+    --bad:#C0262D;
+    --hero-a:#0E1F4D;
+    --hero-b:#1D4ED8;
+    --shadow:0 1px 2px rgba(14,31,77,.05), 0 14px 32px -18px rgba(14,31,77,.35);
+    --radius:18px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#EEF2FF;
+      --ink-soft:#C9D3F2;
+      --ink-muted:#93A1C8;
+      --paper:#081332;
+      --surface:#0F1D45;
+      --surface-2:#132453;
+      --line:#22346B;
+      --accent:#7C9BFF;
+      --accent-ink:#AFC2FF;
+      --accent-tint:#18295C;
+      --task:#4DB8F7;
+      --task-ink:#8FD3FB;
+      --task-tint:#0F2D4F;
+      --test:#FF8A3D;
+      --test-ink:#FFB27D;
+      --test-tint:#3A2210;
+      --bad:#FF6B6B;
+      --hero-a:#050C24;
+      --hero-b:#1636B0;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 34px -18px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#EEF2FF;
+    --ink-soft:#C9D3F2;
+    --ink-muted:#93A1C8;
+    --paper:#081332;
+    --surface:#0F1D45;
+    --surface-2:#132453;
+    --line:#22346B;
+    --accent:#7C9BFF;
+    --accent-ink:#AFC2FF;
+    --accent-tint:#18295C;
+    --task:#4DB8F7;
+    --task-ink:#8FD3FB;
+    --task-tint:#0F2D4F;
+    --test:#FF8A3D;
+    --test-ink:#FFB27D;
+    --test-tint:#3A2210;
+    --bad:#FF6B6B;
+    --hero-a:#050C24;
+    --hero-b:#1636B0;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 34px -18px rgba(0,0,0,.7);
   }
 
-  Logger.log('Готово! Створено елементів: ' + form.getItems().length);
-  Logger.log('Посилання для здобувачів освіти: ' + form.getPublishedUrl());
-  try { Logger.log('Коротке посилання: ' + form.shortenFormUrl(form.getPublishedUrl())); } catch (e) {}
-  Logger.log('Посилання для редагування: ' + form.getEditUrl());
-  return form;
-}
-
-/* ===== Відкриття через посилання вебзастосунку (…/exec) ===== */
-function doGet() {
-  var props = PropertiesService.getScriptProperties();
-  var form = null;
-  var id = props.getProperty('FORM_ID');
-  if (id) {
-    try { form = FormApp.openById(id); } catch (e) { form = null; }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope',system-ui,'Segoe UI',sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
   }
-  if (!form) {
-    form = createAnalyticsQuiz();
-    props.setProperty('FORM_ID', form.getId());
+  h1,h2,h3{font-family:'Unbounded',system-ui,sans-serif;margin:0;text-wrap:balance;}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+  a{color:var(--accent);}
+  ::selection{background:var(--test);color:#fff;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    color:#fff;
+    background:
+      radial-gradient(circle at 88% 18%, rgba(242,107,29,.55) 0, rgba(242,107,29,0) 26%),
+      linear-gradient(135deg, var(--hero-a) 0%, var(--hero-b) 100%);
+    padding:72px 24px 120px;
   }
-  var pub = form.getPublishedUrl(), edit = form.getEditUrl();
-  var html = '<div style="font-family:Arial,sans-serif;max-width:720px;margin:32px auto;line-height:1.6">' +
-    '<h2 style="color:#08338F">Тест готовий ✓</h2>' +
-    '<p><b>' + form.getTitle() + '</b></p>' +
-    '<p>Посилання для здобувачів освіти (надіслати в Classroom):<br><a href="' + pub + '" target="_blank">' + pub + '</a></p>' +
-    '<p>Посилання для редагування:<br><a href="' + edit + '" target="_blank">' + edit + '</a></p>' +
-    '<p style="color:#5A6378">Форму також збережено на вашому Google Диску. Повторне відкриття цієї сторінки нову форму не створює.</p></div>';
-  return HtmlService.createHtmlOutput(html).setTitle('Тест створено');
-}
+  .hero::after{
+    content:"";
+    position:absolute;
+    left:-5%; right:-5%; bottom:-1px;
+    height:90px;
+    background:var(--paper);
+    clip-path:polygon(0 70%, 30% 35%, 62% 72%, 100% 20%, 100% 100%, 0 100%);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    left:-5%; right:-5%; bottom:-1px;
+    height:110px;
+    background:var(--test);
+    clip-path:polygon(0 62%, 30% 27%, 62% 64%, 100% 12%, 100% 22%, 62% 74%, 30% 37%, 0 72%);
+    z-index:1;
+  }
+  .hero-net{
+    position:absolute;
+    right:-40px; top:10px;
+    width:min(560px,70vw);
+    height:auto;
+    opacity:.55;
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:2;max-width:1000px;margin:0 auto;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;
+    background:var(--test);
+    color:#fff;
+    padding:6px 14px;
+    border-radius:99px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;}
+  .hero h1{
+    font-size:clamp(32px,5.2vw,58px);
+    line-height:1.08;
+    font-weight:800;
+    max-width:14em;
+  }
+  .hero h1 .hl{
+    color:#FFB27D;
+  }
+  .hero .theme{
+    margin:18px 0 0;
+    font-size:clamp(16px,2vw,19px);
+    color:rgba(255,255,255,.86);
+    max-width:36em;
+    font-weight:500;
+  }
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+  .meta-chip{
+    display:flex;align-items:center;gap:7px;
+    font-size:13.5px;
+    color:#fff;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:12px;
+    padding:7px 13px;
+    backdrop-filter:blur(4px);
+  }
+  .meta-chip b{color:#FFB27D;font-family:'Unbounded',sans-serif;font-size:15px;}
 
-/* ===== Допоміжні функції. Знак _ у кінці назви ховає їх зі списку «Виконати». ===== */
+  /* ---------- sticky toc ---------- */
+  .toc-bar{
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .toc-inner{
+    max-width:1000px;margin:0 auto;padding:0 24px;
+    display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
+  }
+  .toc-inner::-webkit-scrollbar{display:none;}
+  .toc-inner a{
+    flex:none;
+    font-size:13px;font-weight:700;
+    color:var(--ink-muted);
+    text-decoration:none;
+    padding:14px 12px 12px;
+    border-bottom:3px solid transparent;
+    white-space:nowrap;
+  }
+  .toc-inner a:hover{color:var(--accent);}
+  .toc-inner a.active{color:var(--accent);border-bottom-color:var(--test);}
+  .toc-progress{
+    flex:none;margin-left:auto;
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--ink-muted);
+    padding:14px 0 12px 14px;white-space:nowrap;
+  }
+  .toc-progress b{color:var(--test);}
+  .progress-track{height:4px;background:var(--surface-2);}
+  .progress-track .fill{
+    height:100%;width:0%;
+    background:linear-gradient(90deg, var(--accent), var(--test));
+    border-radius:0 4px 4px 0;
+    transition:width .35s ease;
+  }
 
-function fb_(text) {
-  return FormApp.createFeedback().setText(text).build();
-}
+  /* ---------- content ---------- */
+  main{max-width:1000px;margin:0 auto;padding:0 24px 40px;}
 
-/** Питання з одним правильним варіантом. correct — номер правильної відповіді (з 0). */
-function single_(form, title, options, correct, why) {
-  var it = form.addMultipleChoiceItem();
-  it.setTitle(title);
-  it.setChoices(options.map(function (o, i) { return it.createChoice(o, i === correct); }));
-  it.setPoints(1);
-  it.setRequired(true);
-  it.setFeedbackForCorrect(fb_('Правильно! ' + why));
-  it.setFeedbackForIncorrect(fb_('Зверніть увагу: ' + why));
-  return it;
-}
+  .goal{
+    position:relative;
+    margin:40px 0 0;
+    padding:26px 28px 24px 96px;
+    background:var(--accent-tint);
+    border-radius:var(--radius);
+  }
+  .goal::before{
+    content:"🎯";
+    position:absolute;left:24px;top:24px;
+    width:52px;height:52px;border-radius:16px;
+    background:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;
+    box-shadow:0 8px 18px -8px var(--accent);
+  }
+  .goal h2{font-size:15px;color:var(--accent-ink);margin-bottom:8px;letter-spacing:.02em;}
+  .goal p{margin:0;color:var(--ink-soft);font-size:16px;}
 
-/** Питання з кількома правильними варіантами. correct — масив номерів (з 0). */
-function multi_(form, title, options, correct, why) {
-  var it = form.addCheckboxItem();
-  it.setTitle(title);
-  it.setHelpText('Оберіть усі правильні варіанти.');
-  it.setChoices(options.map(function (o, i) { return it.createChoice(o, correct.indexOf(i) >= 0); }));
-  it.setPoints(1);
-  it.setRequired(true);
-  it.setFeedbackForCorrect(fb_('Правильно! ' + why));
-  it.setFeedbackForIncorrect(fb_('Зверніть увагу: ' + why));
-  return it;
-}
+  section.topic{margin-top:80px;scroll-margin-top:70px;}
+  .topic-head{
+    display:flex;align-items:center;gap:18px;
+    margin-bottom:26px;
+  }
+  .topic-num{
+    flex:none;
+    font-family:'Unbounded',sans-serif;
+    font-weight:800;
+    font-size:54px;
+    line-height:1;
+    color:transparent;
+    -webkit-text-stroke:2px var(--test);
+    letter-spacing:-.02em;
+  }
+  .topic h2{
+    font-size:clamp(22px,2.8vw,30px);
+    font-weight:700;
+    color:var(--ink);
+    position:relative;
+    padding-bottom:10px;
+  }
+  .topic h2::after{
+    content:"";position:absolute;left:0;bottom:0;
+    width:64px;height:5px;border-radius:5px;
+    background:linear-gradient(90deg, var(--test), var(--accent));
+  }
+  .topic p{color:var(--ink-soft);font-size:16.5px;margin:0 0 16px;}
+  .topic p b,.topic li b{color:var(--ink);font-weight:800;}
+  .topic ul{margin:0 0 20px;padding-left:0;list-style:none;color:var(--ink-soft);font-size:16px;}
+  .topic ul li{position:relative;padding-left:26px;margin-bottom:10px;}
+  .topic ul li::before{
+    content:"";position:absolute;left:4px;top:.62em;
+    width:9px;height:9px;border-radius:3px;
+    background:var(--test);
+    transform:rotate(45deg);
+  }
 
-/** Вибір зі спадного списку. */
-function list_(form, title, options, correct, why) {
-  var it = form.addListItem();
-  it.setTitle(title);
-  it.setChoices(options.map(function (o, i) { return it.createChoice(o, i === correct); }));
-  it.setPoints(1);
-  it.setRequired(true);
-  it.setFeedbackForCorrect(fb_('Правильно! ' + why));
-  it.setFeedbackForIncorrect(fb_('Зверніть увагу: ' + why));
-  return it;
-}
+  .callout{
+    position:relative;
+    background:var(--surface-2);
+    border-radius:14px;
+    padding:16px 20px 16px 22px;
+    margin:0 0 20px;
+    font-size:15px;
+    color:var(--ink-soft);
+    border-left:5px solid var(--test);
+  }
+  .callout b{color:var(--accent-ink);}
 
-/** Правда / неправда. */
-function trueFalse_(form, num, title, isTrue, why) {
-  return single_(form, num + '. Правда чи неправда? ' + title, ['Правда', 'Неправда'], isTrue ? 0 : 1, why);
-}
+  .sub-h{font-size:19px;font-weight:700;color:var(--ink);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .sub-h::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:5px 0 0 var(--test);margin-right:6px;}
+
+  /* ---------- diagrams ---------- */
+  figure.diagram{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 20px 16px;
+    margin:28px 0 30px;
+    box-shadow:var(--shadow);
+    position:relative;
+  }
+  figure.diagram::before{
+    content:"";position:absolute;left:24px;top:-1px;width:80px;height:4px;border-radius:0 0 4px 4px;
+    background:var(--test);
+  }
+  figure.diagram svg{display:block;width:100%;height:auto;}
+  figure.diagram figcaption{margin-top:14px;font-size:13.5px;color:var(--ink-muted);text-align:center;}
+  .svg-ink{fill:var(--ink);}
+  .svg-muted{fill:var(--ink-muted);}
+
+  /* ---------- tables ---------- */
+  .table-wrap{overflow-x:auto;}
+  .table-cap{font-size:14.5px;color:var(--ink-muted);margin:0 0 8px;}
+  .table-cap b{color:var(--test-ink);}
+  .data-table{
+    width:100%;border-collapse:separate;border-spacing:0;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;
+    font-size:14.5px;margin:6px 0 24px;
+  }
+  .data-table th{
+    text-align:left;
+    font-size:12.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+    color:#fff;background:var(--accent);
+    padding:11px 14px;
+  }
+  .data-table td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink-soft);vertical-align:top;}
+  .data-table tr:nth-child(even) td{background:var(--surface-2);}
+  .data-table tr:last-child td{border-bottom:none;}
+  .data-table td.yr{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--test-ink);white-space:nowrap;}
+  details.more{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:0 0 26px;overflow:hidden;}
+  details.more summary{
+    cursor:pointer;list-style:none;
+    padding:13px 18px;font-weight:800;font-size:15px;color:var(--accent-ink);
+    display:flex;align-items:center;gap:10px;
+  }
+  details.more summary::-webkit-details-marker{display:none;}
+  details.more summary::before{
+    content:"+";flex:none;
+    width:24px;height:24px;border-radius:8px;background:var(--test);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:800;
+  }
+  details.more[open] summary::before{content:"−";}
+  details.more .data-table{margin:0;border:none;border-radius:0;}
+  .risk{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:var(--ink);white-space:nowrap;}
+  .risk::before{content:"";width:11px;height:11px;border-radius:50%;background:var(--dot);flex:none;}
+  .risk.r1{--dot:var(--bad);}
+  .risk.r2{--dot:var(--test);}
+  .risk.r3{--dot:var(--accent);}
+  .risk.r4{--dot:var(--task);}
+
+  /* ---------- boxes ---------- */
+  .box{
+    position:relative;
+    border-radius:var(--radius);
+    padding:26px 26px 22px;
+    margin:28px 0 32px;
+    box-shadow:var(--shadow);
+    background:var(--surface);
+    border:2px solid var(--line);
+  }
+  .box.test{border-color:var(--test);background:linear-gradient(180deg, var(--test-tint), var(--surface) 70%);}
+  .box.task{border-color:var(--accent);background:linear-gradient(180deg, var(--accent-tint), var(--surface) 80%);}
+  .box-title{
+    font-family:'Unbounded',sans-serif;font-weight:700;font-size:16px;
+    margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .box.test .box-title{color:var(--test-ink);}
+  .box.task .box-title{color:var(--accent-ink);}
+  .box-tag{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:.06em;
+    padding:4px 10px;border-radius:8px;color:#fff;
+  }
+  .box.test .box-tag{background:var(--test);}
+  .box.task .box-tag{background:var(--accent);}
+  .box-check{display:none;font-size:13px;}
+  .box.done .box-check{display:inline;}
+  .box-progress{
+    margin-left:auto;
+    font-family:'JetBrains Mono',monospace;font-weight:600;font-size:11.5px;
+    padding:3px 10px;border-radius:99px;
+    background:var(--surface);color:var(--ink-muted);border:1px solid var(--line);
+    white-space:nowrap;
+  }
+  .box-progress:empty{display:none;}
+  .box.done .box-progress{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .box.test.done .box-progress{background:var(--test);border-color:var(--test);}
+  .box-close{
+    margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);
+    font-size:14.5px;color:var(--ink-soft);
+  }
+
+  .box ol{margin:0;padding:0;list-style:none;}
+  .box ol li{margin-bottom:12px;font-size:15.5px;color:var(--ink-soft);}
+  .box ol li:last-child{margin-bottom:0;}
+  .box ol li b{color:var(--ink);}
+  .step{display:flex;gap:12px;align-items:flex-start;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .step .num{
+    flex:none;width:28px;height:28px;border-radius:9px;
+    background:var(--surface);border:2px solid var(--accent);color:var(--accent);
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .15s,color .15s;
+  }
+  .chk{position:absolute;opacity:0;width:1px;height:1px;}
+  .step:has(.chk:checked) .num,.step.checked .num{background:var(--accent);color:#fff;}
+  .step:has(.chk:checked) .step-text,.step.checked .step-text{color:var(--ink-muted);text-decoration:line-through;text-decoration-color:var(--test);}
+  .chk:focus-visible ~ .num{outline:2px solid var(--test);outline-offset:2px;}
+  .step-text{flex:1;padding-top:2px;}
+
+  .test-q{font-weight:700;color:var(--ink);margin-bottom:14px;font-size:16px;}
+  .quiz{display:grid;gap:8px;}
+  .test-opt{
+    display:flex;width:100%;gap:12px;align-items:center;
+    font-size:15px;color:var(--ink-soft);
+    padding:11px 14px;margin:0;
+    border:2px solid var(--line);border-radius:12px;
+    background:var(--surface);
+    font-family:inherit;text-align:left;cursor:pointer;
+    transition:border-color .15s, transform .15s, background .15s;
+  }
+  .test-opt::before{
+    content:"";flex:none;width:18px;height:18px;border-radius:50%;
+    border:2px solid var(--test);background:var(--surface);
+  }
+  .test-opt:hover:not(:disabled){border-color:var(--test);transform:translateX(3px);}
+  .test-opt:disabled{cursor:default;}
+  .test-opt.is-correct{border-color:var(--accent);background:var(--accent-tint);color:var(--accent-ink);font-weight:800;}
+  .test-opt.is-correct::before{background:var(--accent);border-color:var(--accent);box-shadow:inset 0 0 0 3px var(--surface);}
+  .test-opt.is-wrong{border-color:var(--bad);background:color-mix(in srgb, var(--bad) 10%, var(--surface));}
+  .test-opt.is-wrong::before{background:var(--bad);border-color:var(--bad);box-shadow:inset 0 0 0 3px var(--surface);}
+  .test-feedback{margin-top:6px;font-size:14px;font-weight:800;display:none;}
+  .test-feedback.show{display:block;}
+  .test-feedback.correct{color:var(--accent-ink);}
+  .test-feedback.wrong{color:var(--bad);}
+  .box.done{box-shadow:var(--shadow), 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);}
+  .box.test.done{box-shadow:var(--shadow), 0 0 0 4px color-mix(in srgb, var(--test) 25%, transparent);}
+
+  /* ---------- prompt anatomy ---------- */
+  .prompt-demo{
+    background:var(--navy);
+    color:#fff;
+    border-radius:var(--radius);
+    padding:24px 26px 20px;
+    margin:28px 0 32px;
+    box-shadow:var(--shadow);
+  }
+  :root[data-theme="dark"] .prompt-demo{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .prompt-demo{background:var(--surface-2);} }
+  .prompt-demo .box-title{color:#fff;}
+  .prompt-demo .box-tag{background:var(--test);}
+  .prompt-text{font-size:16px;line-height:2.05;color:rgba(255,255,255,.9);font-family:'JetBrains Mono',monospace;font-size:14.5px;}
+  .seg{border-radius:6px;padding:2px 4px;cursor:pointer;box-shadow:inset 0 -2px 0 var(--c);transition:background .15s;}
+  .seg:hover,.seg.on{background:var(--c);color:#fff;}
+  .seg-role{--c:#5B8CFF;}
+  .seg-task{--c:#38BDF8;}
+  .seg-ctx{--c:#F26B1D;}
+  .seg-fmt{--c:#FFB27D;}
+  .seg-fmt.on,.seg-fmt:hover{color:var(--navy);}
+  .seg-lim{--c:#FF5A5F;}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px dashed rgba(255,255,255,.25);}
+  .legend button{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;
+    border:2px solid var(--c);color:#fff;background:transparent;
+    border-radius:99px;padding:5px 13px;cursor:pointer;
+  }
+  .legend button.on{background:var(--c);}
+  .legend button.seg-fmt.on{color:var(--navy);}
+  .legend-hint{font-size:13px;color:rgba(255,255,255,.65);margin:10px 0 0;}
+
+  /* ---------- cards ---------- */
+  .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:8px 0 30px;}
+  .card{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px 20px 18px;
+    box-shadow:var(--shadow);
+    transition:transform .2s, border-color .2s;
+  }
+  .card:hover{transform:translateY(-3px);border-color:var(--test);}
+  .card:nth-child(odd) .ic{background:var(--accent);}
+  .card:nth-child(even) .ic{background:var(--test);}
+  .card .ic{
+    width:44px;height:44px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:21px;margin-bottom:12px;
+  }
+  .card h3{font-family:'Manrope',sans-serif;font-size:16.5px;font-weight:800;margin-bottom:8px;color:var(--ink);}
+  .card p{font-size:14.5px;margin:0;color:var(--ink-soft);}
+
+  /* ---------- case ---------- */
+  .case{
+    background:var(--surface);
+    border:2px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 26px 20px;margin:28px 0 32px;box-shadow:var(--shadow);
+  }
+  .case .box-title{color:var(--ink);}
+  .case .box-tag{background:var(--navy);}
+  :root[data-theme="dark"] .case .box-tag{background:var(--accent);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .case .box-tag{background:var(--accent);} }
+  .case-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .case-side{border-radius:14px;padding:16px 18px;font-size:15px;color:var(--ink-soft);}
+  .case-side h4{margin:0 0 8px;font-size:14px;font-family:'Unbounded',sans-serif;}
+  .case-side.plus{background:var(--accent-tint);border-top:4px solid var(--accent);}
+  .case-side.plus h4{color:var(--accent-ink);}
+  .case-side.minus{background:var(--test-tint);border-top:4px solid var(--test);}
+  .case-side.minus h4{color:var(--test-ink);}
+  .case-side p{margin:0;}
+  .case .box-close i{color:var(--test-ink);font-weight:800;font-style:normal;}
+
+  /* ---------- rules ---------- */
+  .topic ul.rules{counter-reset:r;display:grid;gap:10px;margin-bottom:26px;}
+  .topic ul.rules li{
+    counter-increment:r;
+    margin:0;padding:14px 16px 14px 62px;
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);
+  }
+  .topic ul.rules li::before{
+    content:counter(r);
+    transform:none;
+    left:14px;top:50%;margin-top:-17px;
+    width:34px;height:34px;border-radius:11px;
+    background:var(--accent);
+    color:#fff;font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  .topic ul.rules li:nth-child(even)::before{background:var(--test);}
+
+  /* ---------- glossary & questions ---------- */
+  .glossary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:6px 0 28px;}
+  .term{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:14px 16px;}
+  .term:nth-child(4n+2),.term:nth-child(4n+3){border-left-color:var(--test);}
+  .term dt{font-weight:800;color:var(--ink);font-size:15.5px;margin-bottom:4px;}
+  .term dd{margin:0;font-size:14.5px;color:var(--ink-soft);}
+  .questions{counter-reset:q;list-style:none;padding:0;margin:0 0 10px;}
+  .questions li{
+    counter-increment:q;
+    display:flex;gap:14px;align-items:flex-start;
+    padding:12px 0;border-bottom:1px solid var(--line);
+    color:var(--ink-soft);font-size:16px;
+  }
+  .questions li:last-child{border-bottom:none;}
+  .questions li::before{
+    content:counter(q, decimal-leading-zero);
+    flex:none;font-family:'Unbounded',sans-serif;font-weight:800;font-size:15px;
+    color:var(--test);min-width:30px;
+  }
+
+  /* ---------- literature (end) ---------- */
+  .lit{
+    margin:80px 0 0;
+    background:var(--navy);
+    color:#fff;
+    border-radius:24px;
+    padding:34px 34px 30px;
+    position:relative;overflow:hidden;
+    scroll-margin-top:70px;
+  }
+  :root[data-theme="dark"] .lit{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .lit{background:var(--surface-2);} }
+  .lit::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle, rgba(242,107,29,.55), rgba(242,107,29,0) 70%);
+  }
+  .lit h2{font-size:22px;margin-bottom:20px;position:relative;z-index:1;}
+  .lit h2 span{color:#FFB27D;}
+  .lit ol{counter-reset:l;list-style:none;margin:0;padding:0;position:relative;z-index:1;}
+  .lit li{
+    counter-increment:l;
+    position:relative;
+    padding:0 0 12px 46px;margin-bottom:12px;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    font-size:14.5px;color:rgba(255,255,255,.85);
+  }
+  .lit li:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .lit li::before{
+    content:counter(l);
+    position:absolute;left:0;top:0;
+    width:30px;height:30px;border-radius:9px;
+    background:var(--test);color:#fff;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12.5px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .lit a{color:#9DB7FF;word-break:break-all;}
+  .lit i{color:#fff;}
+
+  footer{
+    max-width:1000px;margin:0 auto;padding:30px 24px 56px;
+    color:var(--ink-muted);font-size:13.5px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .reset-btn{
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--accent);background:var(--surface);
+    border:2px solid var(--accent);border-radius:10px;
+    padding:7px 14px;cursor:pointer;font-weight:700;
+  }
+  .reset-btn:hover{background:var(--accent);color:#fff;}
+
+  @media (max-width:860px){
+    .cards{grid-template-columns:repeat(2,minmax(0,1fr));}
+  }
+  @media (max-width:640px){
+    .hero{padding:52px 16px 100px;}
+    .toc-inner,main,footer{padding-left:16px;padding-right:16px;}
+    .goal{padding:84px 20px 20px;}
+    .goal::before{top:18px;left:20px;}
+    .topic-num{font-size:40px;}
+    .box,.prompt-demo,.case{padding:20px 16px 16px;}
+    .cards,.glossary,.case-cols{grid-template-columns:1fr;}
+    .lit{padding:26px 20px 22px;}
+  }
+
+  /* ---------- lecture 9 additions ---------- */
+  .example{
+    background:var(--navy);color:#fff;border-radius:var(--radius);
+    padding:24px 26px 20px;margin:28px 0 32px;box-shadow:var(--shadow);
+  }
+  :root[data-theme="dark"] .example{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .example{background:var(--surface-2);} }
+  .example .box-title{color:#fff;}
+  .example .box-tag{background:var(--test);}
+  .levels{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 18px;}
+  .levels span{
+    position:relative;flex:1 1 120px;text-align:center;
+    font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;
+    padding:10px 14px;border-radius:10px;
+    background:rgba(255,255,255,.12);color:#fff;
+  }
+  .levels span:nth-child(2){background:rgba(255,255,255,.2);}
+  .levels span:nth-child(3){background:rgba(242,107,29,.55);}
+  .levels span:nth-child(4){background:var(--test);}
+  .topic ul.ex-list{color:rgba(255,255,255,.9);font-size:15.5px;margin:0;}
+  .topic ul.ex-list li b{color:#FFB27D;}
+  .steps6{list-style:none;padding:0;margin:8px 0 26px;counter-reset:s;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+  .steps6 li{
+    counter-increment:s;position:relative;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:52px 18px 16px;box-shadow:var(--shadow);
+  }
+  .steps6 li::before{
+    content:counter(s);position:absolute;left:18px;top:14px;
+    width:30px;height:30px;border-radius:10px;
+    background:var(--accent);color:#fff;
+    font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .steps6 li:nth-child(even)::before{background:var(--test);}
+  .steps6 li b{display:block;color:var(--ink);font-size:16px;margin-bottom:6px;}
+  .steps6 li span{display:block;color:var(--ink-soft);font-size:14.5px;}
+  .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:8px 0 26px;}
+  .stat{background:var(--accent-tint);border-radius:var(--radius);padding:18px 20px;}
+  .stat:nth-child(2){background:var(--test-tint);}
+  .stat b{display:block;font-family:'Unbounded',sans-serif;font-size:36px;line-height:1.1;color:var(--accent);}
+  .stat:nth-child(2) b{color:var(--test-ink);}
+  .stat span{display:block;margin-top:6px;font-size:14.5px;color:var(--ink-soft);}
+  .card .ic{color:#fff;}
+  .quiz-link{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:10px 18px;border-radius:12px;
+    background:var(--test);color:#fff;font-weight:800;text-decoration:none;font-size:15px;box-shadow:0 8px 18px -10px var(--test);}
+  .quiz-link:hover{background:var(--accent);}
+  @media (max-width:860px){ .steps6{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  @media (max-width:640px){ .hero-net{display:none;} .steps6,.stats{grid-template-columns:1fr;} .example{padding:20px 16px 16px;} }
+
+  .levels span:nth-child(5){background:#C2500C;}
+  .cards.two{grid-template-columns:repeat(2,minmax(0,1fr));}
+  @media (max-width:640px){ .cards.two{grid-template-columns:1fr;} }
+</style>
+
+</head>
+<body>
+<header class="hero">
+  <svg class="hero-net" viewBox="0 0 570 420" aria-hidden="true">
+    <!-- dashboard -->
+    <rect x="250" y="50" width="280" height="200" rx="20" fill="#fff" fill-opacity=".12" stroke="#fff" stroke-opacity=".7" stroke-width="3"/>
+    <g fill="#fff" fill-opacity=".85"><rect x="280" y="170" width="30" height="55" rx="6"/><rect x="325" y="140" width="30" height="85" rx="6"/><rect x="415" y="110" width="30" height="115" rx="6"/></g>
+    <rect x="370" y="190" width="30" height="35" rx="6" fill="#F26B1D"/>
+    <polyline points="280,120 330,100 380,130 440,80 500,90" fill="none" stroke="#FFB27D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- traffic light -->
+    <rect x="460" y="150" width="50" height="90" rx="14" fill="#0E1F4D" fill-opacity=".6"/>
+    <circle cx="485" cy="170" r="10" fill="#7CC79A"/><circle cx="485" cy="195" r="10" fill="#FFDE59"/><circle cx="485" cy="220" r="10" fill="#F26B1D"/>
+    <!-- route -->
+    <circle cx="110" cy="320" r="26" fill="#fff"/>
+    <path d="M136 320 C190 320 200 270 250 270" stroke="#fff" stroke-width="5" fill="none" stroke-dasharray="8 7"/>
+    <path d="M136 320 C190 320 200 360 250 360" stroke="#FFB27D" stroke-width="5" fill="none" stroke-dasharray="8 7"/>
+    <circle cx="265" cy="270" r="15" fill="#fff" fill-opacity=".85"/><circle cx="265" cy="360" r="15" fill="#F26B1D"/>
+  </svg>
+  <div class="hero-inner">
+    <span class="eyebrow">Лекція 13 · Тема 13</span>
+    <h1>Освітня аналітика <span class="hl">та персоналізація навчання</span></h1>
+    <p class="theme">Як читати дані з Classroom, Google Форм і Kahoot!, перетворювати їх на зворотний зв’язок і будувати для кожного здобувача освіти свій маршрут — не забуваючи про етику.</p>
+  </div>
+</header>
+
+<nav class="toc-bar">
+  <div class="toc-inner">
+    <a href="#concept" data-toc="concept">1. Поняття</a>
+    <a href="#levels" data-toc="levels">2. Рівні й інструменти</a>
+    <a href="#feedback" data-toc="feedback">3. Зворотний зв’язок</a>
+    <a href="#personal" data-toc="personal">4. Персоналізація</a>
+    <a href="#vet" data-toc="vet">5. Професійна освіта</a>
+    <a href="#ethics" data-toc="ethics">6. Етика</a>
+    <a href="#summary" data-toc="summary">Підсумок</a>
+    <a href="#literature" data-toc="literature">Література</a>
+    <span class="toc-progress" id="tocProgress">прогрес: <b>0%</b></span>
+  </div>
+  <div class="progress-track"><div class="fill" id="progressFill"></div></div>
+</nav>
+
+<main>
+
+  <div class="goal">
+    <h2>Мета лекції</h2>
+    <p>Сформувати уявлення про освітню аналітику, її рівні, джерела даних та інструменти; розкрити сутність персоналізації навчання та способи побудови індивідуальних освітніх траєкторій; навчити використовувати дані для зворотного зв’язку й ухвалення педагогічних рішень у закладах професійної (професійно-технічної) освіти з дотриманням етики та захисту персональних даних.</p>
+  </div>
+
+  <!-- ============ 1 ============ -->
+  <section class="topic" id="concept">
+    <div class="topic-head"><span class="topic-num">01</span><h2>Поняття освітньої аналітики</h2></div>
+
+    <p>Щоразу, коли здобувач освіти відкриває курс у Classroom чи Moodle, проходить тест у Google Формах або грає у вікторину Kahoot!, з’являються дані: хто, коли, скільки часу, з якою кількістю правильних відповідей. Педагог, який уміє читати ці дані, бачить групу значно краще, ніж за самими оцінками в журналі.</p>
+
+    <div class="callout"><b>Освітня аналітика</b> (learning analytics) — це вимірювання, збирання, аналіз і подання даних про тих, хто навчається, та їхній контекст з метою розуміння й оптимізації навчання та середовищ, у яких воно відбувається. Визначення 1-ї Міжнародної конференції з освітньої аналітики та знань (LAK, 2011); його використовує й Товариство дослідження освітньої аналітики (SoLAR).</div>
+
+    <p>Дж. Сіменс і Ф. Лонг (2011) розмежували <b>освітню аналітику</b>, яка допомагає здобувачам освіти й педагогам на рівні курсу та групи, і <b>академічну аналітику</b>, яка потрібна адміністрації закладу та органам управління освітою — для планування, фінансування, моніторингу набору й випуску.</p>
+
+    <p class="table-cap"><b>Таблиця 1.</b> Джерела освітніх даних</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Джерело</th><th>Які дані</th><th>Що можна побачити</th></tr></thead>
+        <tbody>
+          <tr><td><b>Електронний журнал</b></td><td>Оцінки, відвідування</td><td>Динаміку успішності, пропуски</td></tr>
+          <tr><td><b>Classroom, Moodle</b></td><td>Вхід у курс, перегляди, здані завдання, терміни</td><td>Активність, вчасність, «зниклих» здобувачів освіти</td></tr>
+          <tr><td><b>Google Форми, Kahoot!</b></td><td>Відповіді на кожне питання</td><td>Найскладніші питання, типові помилки</td></tr>
+          <tr><td><b>Виробнича практика</b></td><td>Щоденник, оцінка майстра, фото робіт</td><td>Сформованість практичних навичок</td></tr>
+          <tr><td><b>Опитування</b></td><td>Самооцінка, мотивація, побажання</td><td>Що заважає і що допомагає навчатися</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ 2 ============ -->
+  <section class="topic" id="levels">
+    <div class="topic-head"><span class="topic-num">02</span><h2>Рівні та інструменти аналітики</h2></div>
+
+    <p>Зазвичай виокремлюють чотири рівні аналітики — від простого до складного. Що вищий рівень, то більше користі для рішень, але й більше відповідальності педагога.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 900 330" role="img" aria-label="Сходинки чотирьох рівнів аналітики: описова — що сталося; діагностична — чому; прогностична — що станеться; наказова — що робити">
+        <g font-family="Manrope, sans-serif">
+          <rect x="40" y="230" width="200" height="70" rx="14" style="fill:var(--accent-tint);stroke:var(--accent)" stroke-width="2"/>
+          <rect x="250" y="170" width="200" height="130" rx="14" style="fill:var(--accent)"/>
+          <rect x="460" y="110" width="200" height="190" rx="14" style="fill:var(--test-tint);stroke:var(--test)" stroke-width="2"/>
+          <rect x="670" y="50" width="200" height="250" rx="14" style="fill:var(--test)"/>
+          <text x="140" y="260" text-anchor="middle" font-size="18" font-weight="800" style="fill:var(--accent-ink)">Описова</text>
+          <text x="140" y="284" text-anchor="middle" font-size="14" class="svg-muted">Що сталося?</text>
+          <text x="350" y="205" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">Діагностична</text>
+          <text x="350" y="229" text-anchor="middle" font-size="14" fill="#fff">Чому?</text>
+          <text x="560" y="145" text-anchor="middle" font-size="18" font-weight="800" style="fill:var(--test-ink)">Прогностична</text>
+          <text x="560" y="169" text-anchor="middle" font-size="14" class="svg-muted">Що станеться?</text>
+          <text x="770" y="85" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">Наказова</text>
+          <text x="770" y="109" text-anchor="middle" font-size="14" fill="#fff">Що робити?</text>
+          <path d="M40 320 H870" style="stroke:var(--ink-muted)" stroke-width="2"/>
+          <text x="870" y="316" text-anchor="end" font-size="12" font-weight="700" class="svg-muted" font-family="JetBrains Mono, monospace">ЦІННІСТЬ І СКЛАДНІСТЬ →</text>
+        </g>
+      </svg>
+      <figcaption>Чотири рівні аналітики: від опису фактів до рекомендацій щодо дій.</figcaption>
+    </figure>
+
+    <p class="table-cap"><b>Таблиця 2.</b> Чотири рівні аналітики</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Рівень</th><th>Запитання</th><th>Приклад у професійній освіті</th></tr></thead>
+        <tbody>
+          <tr><td><b>Описова</b></td><td>Що сталося?</td><td>38 % групи правильно відповіли на питання про заземлення</td></tr>
+          <tr><td><b>Діагностична</b></td><td>Чому це сталося?</td><td>Відео про заземлення не мало субтитрів і тривало 25 хвилин</td></tr>
+          <tr><td><b>Прогностична</b></td><td>Що, ймовірно, станеться?</td><td>Здобувач освіти не заходить у курс 3 тижні — ризик академічної заборгованості</td></tr>
+          <tr><td><b>Наказова (рекомендаційна)</b></td><td>Що варто зробити?</td><td>Запропонувати коротке відео, повторний мікротест і консультацію майстра</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 class="sub-h">Інструменти, доступні педагогу вже сьогодні</h3>
+    <div class="cards">
+      <div class="card"><div class="ic">📝</div><h3>Google Форми</h3><p>У режимі тесту — середній бал, розподіл балів і питання, на які найчастіше відповідали неправильно.</p></div>
+      <div class="card"><div class="ic">🎮</div><h3>Kahoot!</h3><p>Звіт після гри: складні питання та здобувачі освіти, яким потрібна допомога.</p></div>
+      <div class="card"><div class="ic">📚</div><h3>Google Classroom</h3><p>Журнал оцінок і статус завдань: здано, не здано, здано із запізненням.</p></div>
+      <div class="card"><div class="ic">🎓</div><h3>Moodle</h3><p>Звіти про активність; з версії 3.4 — модель «Здобувачі освіти під ризиком вибуття» зі сповіщеннями.</p></div>
+      <div class="card"><div class="ic">📊</div><h3>Google Таблиці</h3><p>Зведення результатів, умовне форматування («світлофор»), прості діаграми.</p></div>
+      <div class="card"><div class="ic">🗒️</div><h3>Щоденник практики</h3><p>Фото робіт, оцінка майстра — дані про практичні навички.</p></div>
+    </div>
+
+    <div class="callout"><b>Course Signals: обережно з висновками.</b> Система Університету Пердью (США) показувала кожному студентові сигнал світлофора за даними про активність, оцінки й підготовку. Розробники повідомляли про вищу утримуваність студентів (К. Арнольд, М. Пістіллі, 2012), але згодом М. Колфілд та інші дослідники показали, що частина ефекту могла бути статистичним артефактом: студенти, які довше навчалися, просто встигали пройти більше курсів із системою. Дані — це сигнал, а не доказ.</div>
+
+    <div class="box test" id="test-1">
+      <div class="box-title"><span class="box-tag">ТЕСТ 1</span> Рівні аналітики<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Система попереджає, що здобувач освіти з високою ймовірністю не складе модуль, бо три тижні не відкривав курс. Який це рівень аналітики?</div>
+      <div class="quiz" data-correct="2">
+        <button class="test-opt" type="button">описова</button>
+        <button class="test-opt" type="button">діагностична</button>
+        <button class="test-opt" type="button">прогностична</button>
+        <button class="test-opt" type="button">наказова</button>
+        <div class="test-feedback"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 3 ============ -->
+  <section class="topic" id="feedback">
+    <div class="topic-head"><span class="topic-num">03</span><h2>Дані як основа зворотного зв’язку</h2></div>
+
+    <p>Аналітика має сенс лише тоді, коли перетворюється на <b>зворотний зв’язок</b> і зміни в навчанні. П. Блек і Д. Вільям (1998) у класичному огляді показали: формувальне оцінювання, тобто оцінювання для навчання, а не лише для оцінки, суттєво покращує навчальні результати.</p>
+
+    <div class="stats">
+      <div class="stat"><b>0,79</b><span>середній розмір ефекту зворотного зв’язку в огляді Дж. Гетті та Г. Тімперлі (2007)</span></div>
+      <div class="stat"><b>3</b><span>запитання, на які має відповідати ефективний зворотний зв’язок</span></div>
+      <div class="stat"><b>4</b><span>рівні зворотного зв’язку: завдання, процес, саморегуляція, особистість</span></div>
+    </div>
+
+    <ol class="steps6">
+      <li><b>«Куди я йду?»</b><span>feed up — яка мета, які критерії успіху</span></li>
+      <li><b>«Як я просуваюся?»</b><span>feed back — що вже вдається, а що ні</span></li>
+      <li><b>«Що далі?»</b><span>feed forward — що конкретно зробити, щоб покращити результат</span></li>
+    </ol>
+
+    <p>Автори також розрізняють чотири рівні зворотного зв’язку: щодо <b>завдання</b> («розмір виміряно неточно»), <b>процесу</b> («спершу перевір нуль штангенциркуля»), <b>саморегуляції</b> («як ти перевіриш себе наступного разу?») та <b>особистості</b> («молодець, ти розумний»). Найменш дієвий — останній: похвала особистості не підказує, що робити далі.</p>
+
+    <div class="box test" id="test-2">
+      <div class="box-title"><span class="box-tag">ТЕСТ 2</span> Зворотний зв’язок<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Який коментар майстра виробничого навчання найкраще відповідає на запитання «Що далі?»</div>
+      <div class="quiz" data-correct="2">
+        <button class="test-opt" type="button">«Молодець, ти здібний»</button>
+        <button class="test-opt" type="button">«Шов нерівний»</button>
+        <button class="test-opt" type="button">«Зменш швидкість ведення електрода і перевір кут нахилу перед наступним швом»</button>
+        <button class="test-opt" type="button">«Оцінка — 7 балів»</button>
+        <div class="test-feedback"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 4 ============ -->
+  <section class="topic" id="personal">
+    <div class="topic-head"><span class="topic-num">04</span><h2>Персоналізація навчання</h2></div>
+
+    <p><b>Персоналізація навчання</b> — підхід, за якого зміст, темп, способи навчання та підтримка налаштовуються під потреби, інтереси й рівень конкретного здобувача освіти. Закон України «Про освіту» (ст. 1) визначає <b>індивідуальну освітню траєкторію</b> як персональний шлях реалізації особистісного потенціалу здобувача освіти, що формується з урахуванням його здібностей, інтересів, потреб, мотивації, можливостей і досвіду.</p>
+
+    <p class="table-cap"><b>Таблиця 3.</b> Диференціація, індивідуалізація, персоналізація</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Підхід</th><th>Що змінюється</th><th>Приклад</th></tr></thead>
+        <tbody>
+          <tr><td><b>Диференціація</b></td><td>Завдання для груп різного рівня</td><td>Три варіанти практичної роботи: базовий, середній, підвищений</td></tr>
+          <tr><td><b>Індивідуалізація</b></td><td>Темп і підтримка для кожного</td><td>Кожен проходить мікрокурс у своєму темпі, повторюючи складні етапи</td></tr>
+          <tr><td><b>Персоналізація</b></td><td>Мета, зміст і шлях обирає сам здобувач освіти разом із педагогом</td><td>Здобувач освіти обирає тему Проєкту з власної спеціалізації та форму звіту</td></tr>
+          <tr><td><b>Адаптивне навчання</b></td><td>Наступний крок підбирає алгоритм за відповідями</td><td>Платформа пропонує простіше чи складніше завдання залежно від результату</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>2σ</b><span>«проблема двох сигм» Б. Блума (1984): перевага навчання з індивідуальним тьютором</span></div>
+      <div class="stat"><b>98%</b><span>контрольної групи перевершував середній «тьюторований» учень</span></div>
+      <div class="stat"><b>0,66</b><span>медіанний розмір ефекту інтелектуальних навчальних систем (Дж. Кулік, Дж. Флетчер, 2016)</span></div>
+    </div>
+
+    <p>Індивідуальний тьютор для кожного занадто дорогий, тому відтоді шукають способи наблизитися до цього результату в групі: формувальне оцінювання, навчання до повного засвоєння, адаптивні системи. Українські дослідження підтверджують інтерес педагогів до персоналізації: за результатами опитування 327 педагогів, проведеного А. Кочарян (2026), елементи персоналізації застосовують часто, але масовому впровадженню заважають перевантаження вчителів, великі класи й недостатня методична підтримка.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 900 300" role="img" aria-label="Схема персоналізованого маршруту: після мікротесту здобувачі освіти з результатом 80–100 % отримують завдання підвищеного рівня, 50–79 % — відео й повторний тест, менше 50 % — консультацію з майстром">
+        <g font-family="Manrope, sans-serif">
+          <rect x="30" y="110" width="200" height="80" rx="18" style="fill:var(--navy)"/>
+          <text x="130" y="145" text-anchor="middle" font-size="17" font-weight="800" fill="#fff">Мікротест</text>
+          <text x="130" y="168" text-anchor="middle" font-size="13" fill="#fff">Google Форми, 5 питань</text>
+          <g fill="none" stroke-width="4"><path d="M230 150 C300 150 300 55 380 55" style="stroke:#2E9E5B"/><path d="M230 150 H380" style="stroke:var(--accent)"/><path d="M230 150 C300 150 300 245 380 245" style="stroke:var(--test)"/></g>
+          <rect x="380" y="20" width="490" height="70" rx="16" fill="#E6F7EC" stroke="#2E9E5B" stroke-width="2"/>
+          <text x="400" y="50" font-size="17" font-weight="800" fill="#1F7A3F">80–100 %</text>
+          <text x="400" y="74" font-size="14" style="fill:var(--ink-soft)">інструкційна картка для першокурсників (підвищений рівень)</text>
+          <rect x="380" y="115" width="490" height="70" rx="16" style="fill:var(--accent-tint);stroke:var(--accent)" stroke-width="2"/>
+          <text x="400" y="145" font-size="17" font-weight="800" style="fill:var(--accent-ink)">50–79 %</text>
+          <text x="400" y="169" font-size="14" style="fill:var(--ink-soft)">відео про типові помилки й повторний мікротест через 2 дні</text>
+          <rect x="380" y="210" width="490" height="70" rx="16" style="fill:var(--test-tint);stroke:var(--test)" stroke-width="2"/>
+          <text x="400" y="240" font-size="17" font-weight="800" style="fill:var(--test-ink)">менше 50 %</text>
+          <text x="400" y="264" font-size="14" style="fill:var(--ink-soft)">консультація з майстром і показ на робочому місці</text>
+        </g>
+      </svg>
+      <figcaption>У Google Формах можна налаштувати перехід до різних розділів залежно від відповіді, а результати зібрати в Google Таблиці з кольоровим «світлофором».</figcaption>
+    </figure>
+  </section>
+
+  <!-- ============ 5 ============ -->
+  <section class="topic" id="vet">
+    <div class="topic-head"><span class="topic-num">05</span><h2>Аналітика й персоналізація у професійній освіті</h2></div>
+
+    <p>У закладах професійної (професійно-технічної) освіти аналітика охоплює не лише теорію, а й практичну підготовку. Важливо бачити, як здобувач освіти просувається у формуванні професійних навичок: скільки операцій виконано самостійно, скільки разів знадобилася допомога майстра, яка якість виробів.</p>
+
+    <div class="cards two">
+      <div class="card"><div class="ic">📸</div><h3>Портфоліо та щоденник практики</h3><p>Фото й відео виконаних робіт показують динаміку навичок краще за одну підсумкову оцінку.</p></div>
+      <div class="card"><div class="ic">✅</div><h3>Чек-листи навичок</h3><p>Майстер позначає, які операції виконано самостійно, з підказкою чи ще не опановано.</p></div>
+      <div class="card"><div class="ic">🚦</div><h3>Ранні сигнали</h3><p>Пропуски, нездані завдання, різке падіння результатів — привід для розмови, а не покарання.</p></div>
+      <div class="card"><div class="ic">🗓️</div><h3>Індивідуальний навчальний план</h3><p>Для тих, хто поєднує навчання з роботою, має особливі освітні потреби чи навчається за дуальною формою.</p></div>
+    </div>
+
+    <p class="table-cap"><b>Таблиця 4.</b> Результати мікротесту з охорони праці (група з 24 здобувачів освіти)</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Питання</th><th>Тема</th><th>Правильних відповідей</th></tr></thead>
+        <tbody>
+          <tr><td><b>1</b></td><td>Засоби індивідуального захисту</td><td>92 %</td></tr>
+          <tr><td><b>2</b></td><td>Порядок вмикання верстата</td><td>85 %</td></tr>
+          <tr><td><b>3</b></td><td>Заземлення обладнання</td><td>38 %</td></tr>
+          <tr><td><b>4</b></td><td>Дії у разі травми</td><td>77 %</td></tr>
+          <tr><td><b>5</b></td><td>Маркування небезпечних зон</td><td>54 %</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="box task" id="task-1">
+      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 1</span> Аналізуємо результати мікротесту<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <ol>
+        <li>За таблицею 4 визначте питання, яке потребує повторного пояснення всій групі.</li>
+        <li>Визначте питання, де достатньо точкової підтримки кількох здобувачів освіти.</li>
+        <li>Запропонуйте один захід описової й один захід наказової аналітики.</li>
+        <li>Запишіть відповідь у Classroom. Час — 10 хвилин.</li>
+      </ol>
+    </div>
+
+    <div class="case">
+      <div class="box-title"><span class="box-tag">КЕЙС</span> «Червоний світлофор» для здобувача освіти</div>
+      <div class="case-cols">
+        <div class="case-side plus">
+          <h4>📊 Що показують дані</h4>
+          <p>Здобувач освіти другого курсу три тижні не відкриває курс у Classroom і не здав два завдання. Алгоритм позначив його червоним — «високий ризик». Куратор пропонує терміново повідомити батьків і викликати на педагогічну раду.</p>
+        </div>
+        <div class="case-side minus">
+          <h4>👷 Що знає майстер</h4>
+          <p>Хлопець працює на підприємстві в нічну зміну, щоб допомогти родині, а вдома немає стабільного інтернету. На практичних заняттях він один із найкращих. Дані про активність показали лише частину картини.</p>
+        </div>
+      </div>
+      <div class="box-close"><i>Висновок для педагога:</i> дані — це привід для розмови, а не вирок. Педагог перевіряє сигнал, з’ясовує причини й разом зі здобувачем освіти шукає рішення: індивідуальний графік, офлайн-матеріали, консультації.</div>
+    </div>
+  </section>
+
+  <!-- ============ 6 ============ -->
+  <section class="topic" id="ethics">
+    <div class="topic-head"><span class="topic-num">06</span><h2>Етика, ризики та принципи</h2></div>
+
+    <p>Освітні дані — це персональні дані, тож на них поширюється Закон України «Про захист персональних даних». Ш. Слейд і П. Прінслоо (2013) наголошують, що освітня аналітика має бути прозорою, а здобувачі освіти — не лише об’єктами аналізу, а й активними учасниками, які розуміють, які дані збирають і навіщо. Х. Драхслер і В. Греллер (2016) запропонували контрольний список DELICATE для етичного впровадження аналітики: визначити мету, пояснити її, залучити здобувачів освіти, отримати згоду, знеособити й технічно захистити дані.</p>
+
+    <h3 class="sub-h">Основні ризики</h3>
+    <ul>
+      <li><b>Навішування ярликів</b> — «червоний» статус може знизити очікування педагога й мотивацію здобувача освіти.</li>
+      <li><b>Неповні дані</b> — активність у курсі не показує роботу в майстерні, на підприємстві чи вдома без інтернету.</li>
+      <li><b>Кореляція — не причина</b> — як у випадку Course Signals, зв’язок у даних ще не доводить ефекту.</li>
+      <li><b>Упередженість алгоритмів</b> — моделі можуть відтворювати нерівність, закладену в даних минулих років.</li>
+      <li><b>Надмірне стеження</b> — збір «усього про всіх» без мети порушує приватність і довіру.</li>
+      <li><b>Гонитва за метриками</b> — бали й «зелені» показники стають метою замість навичок.</li>
+    </ul>
+
+    <div class="box test" id="test-3">
+      <div class="box-title"><span class="box-tag">ТЕСТ 3</span> Етика аналітики<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Яке рішення найкраще відповідає етиці освітньої аналітики?</div>
+      <div class="quiz" data-correct="2">
+        <button class="test-opt" type="button">збирати якомога більше даних «про всяк випадок»</button>
+        <button class="test-opt" type="button">автоматично знижувати оцінку тим, хто рідко заходить у курс</button>
+        <button class="test-opt" type="button">пояснити здобувачам освіти, які дані збирають і навіщо, та використовувати їх для підтримки</button>
+        <button class="test-opt" type="button">публікувати рейтинг найменш активних здобувачів освіти</button>
+        <div class="test-feedback"></div>
+      </div>
+    </div>
+
+    <h3 class="sub-h">Принципи відповідальної освітньої аналітики та персоналізації</h3>
+    <ul class="rules">
+      <li>Починайте з педагогічного запитання, а не з даних: що я хочу зрозуміти?</li>
+      <li>Збирайте мінімум даних, потрібних для мети, і пояснюйте здобувачам освіти, навіщо.</li>
+      <li>Перетворюйте дані на зворотний зв’язок: «куди йду — як просуваюся — що далі».</li>
+      <li>Перевіряйте сигнали розмовою: цифри не знають обставин життя.</li>
+      <li>Давайте здобувачам освіти вибір і доступ до власних даних для саморегуляції.</li>
+    </ul>
+
+    <div class="box task" id="task-2">
+      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 2</span> Тест у Google Формах «Освітня аналітика та персоналізація навчання»<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <ol>
+        <li>Відкрийте в <b>Classroom</b> посилання на тест (20 питань, орієнтовно 15 хвилин).</li>
+        <li>Типи питань: один чи кілька правильних варіантів, «правда чи неправда», вибір зі списку, встановлення відповідності.</li>
+        <li>Після надсилання перегляньте результат і пояснення до відповідей.</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ SUMMARY ============ -->
+  <section class="topic" id="summary">
+    <div class="topic-head"><span class="topic-num">✓</span><h2>Ключові поняття та самоперевірка</h2></div>
+    <h3 class="sub-h" style="margin-top:0">Ключові поняття</h3>
+    <dl class="glossary">
+      <div class="term"><dt>Освітня аналітика</dt><dd>вимірювання, збирання, аналіз і подання даних про тих, хто навчається, та їхній контекст для розуміння й оптимізації навчання.</dd></div>
+      <div class="term"><dt>Академічна аналітика</dt><dd>аналітика на рівні закладу та системи освіти для управлінських рішень.</dd></div>
+      <div class="term"><dt>Описова аналітика</dt><dd>відповідає на запитання «Що сталося?».</dd></div>
+      <div class="term"><dt>Прогностична аналітика</dt><dd>відповідає на запитання «Що, ймовірно, станеться?», наприклад виявляє ризик відставання.</dd></div>
+      <div class="term"><dt>Формувальне оцінювання</dt><dd>оцінювання для навчання, що дає зворотний зв’язок і коригує освітній процес.</dd></div>
+      <div class="term"><dt>Зворотний зв’язок</dt><dd>інформація про те, де здобувач освіти перебуває щодо мети і що робити далі.</dd></div>
+      <div class="term"><dt>Персоналізація навчання</dt><dd>налаштування змісту, темпу, способів навчання й підтримки під конкретного здобувача освіти.</dd></div>
+      <div class="term"><dt>Індивідуальна освітня траєкторія</dt><dd>персональний шлях реалізації особистісного потенціалу здобувача освіти.</dd></div>
+      <div class="term"><dt>Адаптивне навчання</dt><dd>навчання, у якому наступний крок підбирає система за відповідями здобувача освіти.</dd></div>
+      <div class="term"><dt>Проблема двох сигм</dt><dd>висновок Б. Блума про значну перевагу індивідуального навчання з тьютором над звичайним груповим.</dd></div>
+    </dl>
+    <h3 class="sub-h">Питання для самоперевірки</h3>
+    <ol class="questions">
+      <li>Що таке освітня аналітика і чим вона відрізняється від академічної аналітики?</li>
+      <li>Які джерела освітніх даних є в закладі професійної освіти?</li>
+      <li>Назвіть чотири рівні аналітики та наведіть приклади до кожного.</li>
+      <li>На які три запитання має відповідати ефективний зворотний зв’язок за Дж. Гетті та Г. Тімперлі?</li>
+      <li>Чим відрізняються диференціація, індивідуалізація та персоналізація навчання?</li>
+      <li>У чому полягає «проблема двох сигм» Б. Блума?</li>
+      <li>Як побудувати персоналізований маршрут за результатами мікротесту?</li>
+      <li>Які етичні ризики має освітня аналітика і як їх зменшити?</li>
+    </ol>
+  </section>
+
+  <section class="lit" id="literature">
+    <h2>Література <span>до теми</span></h2>
+    <ol>
+      <li>Кочарян А. Персоналізація навчання в умовах впровадження цифрових технологій: теоретичні засади та результати опитування педагогів // Освіта та розвиток обдарованої особистості. 2026. № 1 (100). С. 141–149. DOI: 10.63437/3083-6425-2026-1(100)-15.</li>
+      <li>Про захист персональних даних : Закон України від 01.06.2010 № 2297-VI.</li>
+      <li>Про освіту : Закон України від 05.09.2017 № 2145-VIII.</li>
+      <li>Arnold K. E., Pistilli M. D. Course Signals at Purdue: Using learning analytics to increase student success // Proceedings of the 2nd International Conference on Learning Analytics and Knowledge (LAK ’12). New York : ACM, 2012. P. 267–270. DOI: 10.1145/2330601.2330666.</li>
+      <li>Black P., Wiliam D. Assessment and classroom learning // Assessment in Education: Principles, Policy &amp; Practice. 1998. Vol. 5, No. 1. P. 7–74.</li>
+      <li>Bloom B. S. The 2 Sigma Problem: The search for methods of group instruction as effective as one-to-one tutoring // Educational Researcher. 1984. Vol. 13, No. 6. P. 4–16. DOI: 10.3102/0013189X013006004.</li>
+      <li>Drachsler H., Greller W. Privacy and analytics: it’s a DELICATE issue. A checklist for trusted learning analytics // Proceedings of the 6th International Conference on Learning Analytics and Knowledge (LAK ’16). New York : ACM, 2016.</li>
+      <li>Hattie J., Timperley H. The power of feedback // Review of Educational Research. 2007. Vol. 77, No. 1. P. 81–112.</li>
+      <li>Kulik J. A., Fletcher J. D. Effectiveness of intelligent tutoring systems: A meta-analytic review // Review of Educational Research. 2016. Vol. 86, No. 1. P. 42–78.</li>
+      <li>Learning analytics / Moodle Docs (version 3.4). URL: <a href="https://docs.moodle.org/34/en/Learning_analytics" target="_blank" rel="noopener">https://docs.moodle.org/34/en/Learning_analytics</a> (дата звернення: 17.11.2026).</li>
+      <li>Pistilli M. D., Arnold K. E., Bethune M. D. Signals: Using academic analytics to promote student success // EDUCAUSE Review Online. 2012. URL: <a href="https://er.educause.edu/articles/2012/7/signals-using-academic-analytics-to-promote-student-success" target="_blank" rel="noopener">https://er.educause.edu/articles/2012/7/signals-using-academic-analytics-to-promote-student-success</a> (дата звернення: 17.11.2026).</li>
+      <li>Siemens G., Long P. Penetrating the fog: Analytics in learning and education // EDUCAUSE Review. 2011. Vol. 46, No. 5. P. 30–40.</li>
+      <li>Slade S., Prinsloo P. Learning analytics: Ethical issues and dilemmas // American Behavioral Scientist. 2013. Vol. 57, No. 10. P. 1510–1529.</li>
+      <li>Student retention software comes under microscope / Times Higher Education. 11.11.2013. URL: <a href="https://www.timeshighereducation.com/news/student-retention-software-comes-under-microscope/2008904.article" target="_blank" rel="noopener">https://www.timeshighereducation.com/news/student-retention-software-comes-under-microscope/2008904.article</a> (дата звернення: 17.11.2026).</li>
+    </ol>
+  </section>
+
+</main>
+
+<footer>
+  <span>Лекція 13 · Тема 13 · Спеціальність «Професійна освіта»</span>
+  <button class="reset-btn" id="resetBtn" type="button">↺ скинути прогрес</button>
+  <span class="mono">оновлено: 17.11.2026</span>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var STORE_KEY = 'lecture13-analytics-progress-v1';
+
+  function loadState(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    }catch(e){ return {}; }
+  }
+  function saveState(state){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  var state = loadState(); // { "task-1": [true,false,...], "test-1": 0 (chosen index) }
+
+  /* ---------- task checklists ---------- */
+  var taskBoxes = Array.prototype.slice.call(document.querySelectorAll('.box.task'));
+
+  function renderTaskBox(box){
+    var id = box.id;
+    var items = state[id] || [];
+    var lis = box.querySelectorAll('ol > li');
+    var doneCount = 0;
+    lis.forEach(function(li, i){
+      var checked = !!items[i];
+      if (checked) doneCount++;
+      var chk = li.querySelector('.chk');
+      if (chk){
+        chk.checked = checked;
+        li.querySelector('.step').classList.toggle('checked', checked);
+      }
+    });
+    var pill = box.querySelector('[data-progress]');
+    if (pill) pill.textContent = doneCount + ' / ' + lis.length + ' виконано';
+    box.classList.toggle('done', lis.length > 0 && doneCount === lis.length);
+    return { done: doneCount, total: lis.length };
+  }
+
+  taskBoxes.forEach(function(box){
+    var id = box.id;
+    var lis = Array.prototype.slice.call(box.querySelectorAll('ol > li'));
+    lis.forEach(function(li, i){
+      var step = document.createElement('label');
+      step.className = 'step';
+      var num = document.createElement('span');
+      num.className = 'num';
+      num.textContent = (i + 1);
+      var chk = document.createElement('input');
+      chk.type = 'checkbox';
+      chk.className = 'chk';
+      chk.setAttribute('aria-label', 'Крок ' + (i + 1) + ' виконано');
+      var textSpan = document.createElement('span');
+      textSpan.className = 'step-text';
+      while (li.firstChild) textSpan.appendChild(li.firstChild);
+      step.appendChild(chk);
+      step.appendChild(num);
+      step.appendChild(textSpan);
+      li.appendChild(step);
+      chk.addEventListener('change', function(){
+        if (!state[id]) state[id] = [];
+        state[id][i] = chk.checked;
+        saveState(state);
+        renderTaskBox(box);
+        updateOverall();
+      });
+    });
+    renderTaskBox(box);
+  });
+
+  /* ---------- quiz boxes ---------- */
+  var quizzes = Array.prototype.slice.call(document.querySelectorAll('.quiz'));
+  quizzes.forEach(function(quiz){
+    var box = quiz.closest('.box');
+    var boxId = box.id;
+    var correct = parseInt(quiz.getAttribute('data-correct'), 10);
+    var buttons = Array.prototype.slice.call(quiz.querySelectorAll('.test-opt'));
+    var feedback = quiz.querySelector('.test-feedback');
+
+    function applyAnswer(chosenIdx, silent){
+      buttons.forEach(function(btn, i){
+        btn.disabled = true;
+        if (i === correct) btn.classList.add('is-correct');
+        if (i === chosenIdx && chosenIdx !== correct) btn.classList.add('is-wrong');
+      });
+      feedback.classList.add('show');
+      if (chosenIdx === correct){
+        feedback.textContent = '✓ Правильно!';
+        feedback.classList.add('correct');
+      } else {
+        feedback.textContent = '✗ Неправильно. Правильна відповідь виділена зеленим.';
+        feedback.classList.add('wrong');
+      }
+      var pill = box.querySelector('[data-progress]');
+      if (pill) pill.textContent = 'пройдено';
+      box.classList.add('done');
+    }
+
+    buttons.forEach(function(btn, i){
+      btn.addEventListener('click', function(){
+        state[boxId] = i;
+        saveState(state);
+        applyAnswer(i);
+        updateOverall();
+      });
+    });
+
+    if (typeof state[boxId] === 'number'){
+      applyAnswer(state[boxId], true);
+    }
+  });
+
+  /* ---------- overall progress ---------- */
+  function updateOverall(){
+    var totalSteps = 0, doneSteps = 0;
+    taskBoxes.forEach(function(box){
+      var r = renderTaskBox(box);
+      totalSteps += r.total;
+      doneSteps += r.done;
+    });
+    quizzes.forEach(function(quiz){
+      totalSteps += 1;
+      var box = quiz.closest('.box');
+      if (box.classList.contains('done')) doneSteps += 1;
+    });
+    var pct = totalSteps ? Math.round((doneSteps / totalSteps) * 100) : 0;
+    var fill = document.getElementById('progressFill');
+    var label = document.getElementById('tocProgress');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.innerHTML = 'прогрес: <b>' + pct + '%</b>';
+  }
+  updateOverall();
+
+  /* ---------- reset ---------- */
+  var resetBtn = document.getElementById('resetBtn');
+  if (resetBtn){
+    resetBtn.addEventListener('click', function(){
+      try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+      location.reload();
+    });
+  }
+
+  /* ---------- scrollspy ---------- */
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.topic[id], section.lit[id]'));
+  var tocLinks = {};
+  Array.prototype.slice.call(document.querySelectorAll('.toc-inner a[data-toc]')).forEach(function(a){
+    tocLinks[a.getAttribute('data-toc')] = a;
+  });
+  if ('IntersectionObserver' in window && sections.length){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var link = tocLinks[entry.target.id];
+        if (!link) return;
+        if (entry.isIntersecting){
+          Object.keys(tocLinks).forEach(function(k){ tocLinks[k].classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+    sections.forEach(function(s){ observer.observe(s); });
+  }
+})();
+</script>
+
+</body>
+</html>

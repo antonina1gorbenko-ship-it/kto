@@ -1,182 +1,189 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Лекція 13. Інформаційна безпека та кібергігієна</title>
-<meta name="description" content="Лекція 13 електронного посібника «Комп’ютерні технології в освітньому процесі»: Інформаційна безпека та кібергігієна">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23F26B1D'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23fff'%3EКТ%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
-<script>try{var t=localStorage.getItem('posibnyk-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
-</head>
-<body data-lecture="13">
+/**
+ * Тест «Лекція 13. Освітня аналітика та персоналізація навчання» — 20 питань.
+ * Скрипт створює Google Форму в режимі «Тест» з автоматичним оцінюванням
+ * і поясненнями до відповідей.
+ *
+ * СПОСІБ 1 (найпростіший) — запуск у редакторі, без розгортання:
+ * 1. https://script.google.com → «Новий проєкт».
+ * 2. Видаліть увесь текст у редакторі (зокрема function myFunction) і вставте цей файл повністю.
+ * 3. Натисніть «Зберегти» (значок дискети або Ctrl+S).
+ * 4. Угорі у списку функцій виберіть createAnalyticsQuiz → натисніть «▶ Виконати».
+ * 5. Дозвольте доступ (один раз): «Переглянути дозволи» → ваш акаунт →
+ *    «Додатково» → «Перейти до проєкту (небезпечно)» → «Дозволити».
+ * 6. Унизу відкриється «Журнал виконання» з посиланнями на форму.
+ *
+ * СПОСІБ 2 — через «Розгортання → Вебзастосунок» (посилання …/exec):
+ * після вставлення цього файлу оновіть розгортання:
+ * «Розгорнути» → «Керування розгортаннями» → олівець → «Версія: Нова версія» → «Розгорнути».
+ * Відкрийте посилання …/exec — форма створиться один раз, а сторінка покаже посилання.
+ * Розгортати НЕ обов’язково: досить способу 1.
+ */
 
-<div class="course-bar">
-  <div class="course-bar-inner">
-    <a class="course-home" href="index.html" title="На титульну сторінку">
-      <span class="logo">КТ</span><span class="t">Комп’ютерні технології в освітньому процесі</span>
-    </a>
-    <div class="course-actions">
-      <details class="course-menu">
-        <summary class="bar-btn">☰ <span class="lbl">Лекції</span></summary>
-        <div class="menu-panel"><ol id="courseMenuList"></ol></div>
-      </details>
-      <button class="bar-btn" id="themeToggle" type="button" aria-label="Змінити тему оформлення">◐ <span class="lbl">Тема</span></button>
-    </div>
-  </div>
-</div>
+function createAnalyticsQuiz() {
+  var form = FormApp.create('Лекція 13. Освітня аналітика та персоналізація навчання — тест');
 
-<header class="hero">
-  <img class="hero-net" src="assets/img/hero-net.svg" alt="" aria-hidden="true">
-  <div class="hero-inner">
-    <span class="eyebrow">Лекція 13 · Тема 13</span>
-    <h1>Інформаційна безпека <span class="hl">та кібергігієна</span></h1>
-    <p class="theme">Загрози цифрового середовища, захист облікових записів і персональних даних, цифровий етикет.</p>
-    <div class="meta-row">
-      <span class="meta-chip draft-chip">✎ <b>Заготовка</b> лекція в розробці</span>
-    </div>
-  </div>
-</header>
+  try {
+    form.setIsQuiz(true);
+    form.setDescription('Тест до лекції 13 «Освітня аналітика та персоналізація навчання» (спеціальність «Професійна освіта»). ' +
+                        '20 питань різних типів, 1 бал за кожне. Результат і пояснення ви побачите одразу після надсилання. Орієнтовний час — 15 хвилин.');
+    form.setProgressBar(true);
+    form.setConfirmationMessage('Дякуємо! Перегляньте свій результат і пояснення до відповідей.');
 
-<nav class="toc-bar">
-  <div class="toc-inner">
-    <a href="#s1" data-toc="s1">1. Загрози</a>
-    <a href="#s2" data-toc="s2">2. Облікові записи</a>
-    <a href="#s3" data-toc="s3">3. Персональні дані</a>
-    <a href="#s4" data-toc="s4">4. Цифровий етикет</a>
-    <a href="#summary" data-toc="summary">Підсумок</a>
-    <a href="#literature" data-toc="literature">Література</a>
-    <span class="toc-progress" id="tocProgress">прогрес: <b>0%</b></span>
-  </div>
-  <div class="progress-track"><div class="fill" id="progressFill"></div></div>
-</nav>
+    form.addTextItem().setTitle('Прізвище, ім’я та група').setRequired(true);
 
-<main>
+    // ---------- Частина 1 ----------
+    form.addSectionHeaderItem().setTitle('Частина 1. Поняття та рівні освітньої аналітики');
 
-  <div class="goal">
-    <h2>Мета лекції</h2>
-    <p class="placeholder">Сформулюйте мету лекції: які знання, уміння та компетентності сформує тема в здобувачів освіти.</p>
-  </div>
+    single_(form, '1. Освітня аналітика — це…',
+      ['виставлення оцінок у журнал', 'вимірювання, збирання, аналіз і подання даних про тих, хто навчається, для розуміння й оптимізації навчання', 'рейтинг закладів освіти', 'контроль відвідування занять'], 1,
+      'Визначення LAK 2011 / SoLAR: мета аналітики — зрозуміти й покращити навчання та середовище, у якому воно відбувається.');
 
-  <!-- ================= 1. ЗАГРОЗИ В ЦИФРОВОМУ СЕРЕДОВИЩІ ================= -->
-  <section class="topic" id="s1">
-    <div class="topic-head">
-      <span class="topic-num">01</span>
-      <h2>Загрози в цифровому середовищі</h2>
-    </div>
+    list_(form, '2. Аналітика для адміністрації закладу та органів управління освітою (набір, випуск, фінансування) — це…',
+      ['освітня аналітика', 'академічна аналітика', 'описова статистика', 'адаптивне навчання'], 1,
+      'Дж. Сіменс і Ф. Лонг (2011): освітня аналітика — рівень курсу й групи, академічна — рівень закладу та системи.');
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
-        <p>Підказка: готові блоки (схема, таблиця, картки, кейс, виноска) можна скопіювати з <a href="lecture-08.html">лекції 8</a> — стилі вже підключено до всіх сторінок.</p>
-    </div>
-  </section>
+    form.addSectionHeaderItem().setTitle('Питання 3–6: встановіть відповідність між запитанням і рівнем аналітики');
+    var lv = ['описова', 'діагностична', 'прогностична', 'наказова (рекомендаційна)'];
+    list_(form, '3. «Що сталося?» — 38 % групи правильно відповіли на питання про заземлення.', lv, 0, 'Описова аналітика фіксує, що сталося.');
+    list_(form, '4. «Чому це сталося?» — відео про заземлення тривало 25 хвилин і не мало субтитрів.', lv, 1, 'Діагностична аналітика шукає причини.');
+    list_(form, '5. «Що, ймовірно, станеться?» — здобувач освіти три тижні не відкриває курс.', lv, 2, 'Прогностична аналітика оцінює ризик у майбутньому.');
+    list_(form, '6. «Що варто зробити?» — запропонувати відео, повторний мікротест і консультацію.', lv, 3, 'Наказова аналітика рекомендує дії.');
 
-  <!-- ================= 2. ЗАХИСТ ОБЛІКОВИХ ЗАПИСІВ ================= -->
-  <section class="topic" id="s2">
-    <div class="topic-head">
-      <span class="topic-num">02</span>
-      <h2>Захист облікових записів</h2>
-    </div>
+    multi_(form, '7. Які з цих джерел дають педагогу освітні дані?',
+      ['статистика тесту в Google Формах', 'звіт Kahoot! після гри', 'щоденник виробничої практики', 'прогноз погоди', 'журнал оцінок у Classroom'], [0, 1, 2, 4],
+      'Освітні дані — результати тестів, активність у курсі, оцінки, щоденник практики, опитування.');
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
-    </div>
+    trueFalse_(form, 8, 'Moodle з версії 3.4 має вбудовану модель прогнозування «Здобувачі освіти під ризиком вибуття».', true,
+      'Модель аналізує залученість і надсилає викладачу сповіщення.');
 
-    <!-- ТЕСТ: змініть текст запитання та варіантів.
-         data-correct — номер правильної відповіді, відлік від 0 (0 — перший варіант). -->
-    <div class="box test" id="test-1">
-      <div class="box-title"><span class="box-tag">ТЕСТ 1</span> Назва тесту<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
-      <div class="test-q">Сформулюйте запитання тесту.</div>
-      <div class="quiz" data-correct="0">
-        <button class="test-opt" type="button">варіант відповіді 1 (правильний)</button>
-        <button class="test-opt" type="button">варіант відповіді 2</button>
-        <button class="test-opt" type="button">варіант відповіді 3</button>
-        <button class="test-opt" type="button">варіант відповіді 4</button>
-        <div class="test-feedback"></div>
-      </div>
-    </div>
-  </section>
+    single_(form, '9. Чому результати системи Course Signals (Університет Пердью) щодо утримуваності студентів згодом критикували?',
+      ['система була платною', 'частина ефекту могла бути статистичним артефактом: ті, хто довше навчався, проходили більше курсів із системою', 'вона не показувала оцінок', 'нею не користувалися викладачі'], 1,
+      'Кореляція — не причина: дані — це сигнал, а не доказ.');
 
-  <!-- ================= 3. ЗАХИСТ ПЕРСОНАЛЬНИХ ДАНИХ ЗДОБУВАЧІВ ОСВІТИ ================= -->
-  <section class="topic" id="s3">
-    <div class="topic-head">
-      <span class="topic-num">03</span>
-      <h2>Захист персональних даних здобувачів освіти</h2>
-    </div>
+    // ---------- Частина 2 ----------
+    form.addSectionHeaderItem().setTitle('Частина 2. Зворотний зв’язок');
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
-    </div>
-  </section>
+    multi_(form, '10. На які три запитання має відповідати ефективний зворотний зв’язок за Дж. Гетті та Г. Тімперлі?',
+      ['«Куди я йду?»', '«Хто найкращий у групі?»', '«Як я просуваюся?»', '«Що далі?»', '«Скільки балів у сусіда?»'], [0, 2, 3],
+      'Feed up — feed back — feed forward.');
 
-  <!-- ================= 4. КІБЕРБУЛІНГ І ЦИФРОВИЙ ЕТИКЕТ ================= -->
-  <section class="topic" id="s4">
-    <div class="topic-head">
-      <span class="topic-num">04</span>
-      <h2>Кібербулінг і цифровий етикет</h2>
-    </div>
+    single_(form, '11. Який рівень зворотного зв’язку найменш дієвий?',
+      ['щодо завдання', 'щодо процесу', 'щодо саморегуляції', 'щодо особистості («молодець, ти розумний»)'], 3,
+      'Похвала особистості не підказує, що робити далі.');
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
-    </div>
+    single_(form, '12. Який коментар майстра відповідає на запитання «Що далі?»',
+      ['«Оцінка — 7 балів»', '«Шов нерівний»', '«Молодець»', '«Зменш швидкість ведення електрода і перевір кут нахилу перед наступним швом»'], 3,
+      'Feed forward — конкретна дія для покращення.');
 
-    <!-- ЗАВДАННЯ: кожен пункт списку — окремий крок, який здобувач освіти позначає галочкою. -->
-    <div class="box task" id="task-1">
-      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 1</span> Назва практичного завдання<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
-      <ol>
-        <li>Опишіть перший крок завдання.</li>
-        <li>Опишіть другий крок завдання.</li>
-        <li>Опишіть, де та як здобувач освіти здає результат (наприклад, у <b>Classroom</b>).</li>
-      </ol>
-    </div>
-  </section>
+    trueFalse_(form, 13, 'Формувальне оцінювання — це оцінювання для навчання, яке дає зворотний зв’язок і допомагає скоригувати освітній процес.', true,
+      'П. Блек і Д. Вільям (1998) показали, що формувальне оцінювання суттєво покращує результати.');
 
-  <!-- ================= ПІДСУМОК ================= -->
-  <section class="topic" id="summary">
-    <div class="topic-head">
-      <span class="topic-num">✓</span>
-      <h2>Ключові поняття та самоперевірка</h2>
-    </div>
+    // ---------- Частина 3 ----------
+    form.addSectionHeaderItem().setTitle('Частина 3. Персоналізація навчання');
 
-    <h3 class="sub-h" style="margin-top:0">Ключові поняття</h3>
-    <dl class="glossary">
-      <div class="term"><dt>Термін 1</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 2</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 3</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 4</dt><dd class="placeholder">визначення терміна.</dd></div>
-    </dl>
+    var ap = ['диференціація', 'індивідуалізація', 'персоналізація', 'адаптивне навчання'];
+    list_(form, '14. Три варіанти практичної роботи — базовий, середній і підвищений — для груп різного рівня. Це…', ap, 0, 'Диференціація — завдання для груп різного рівня.');
+    list_(form, '15. Платформа сама пропонує простіше чи складніше завдання залежно від відповіді. Це…', ap, 3, 'Адаптивне навчання — наступний крок підбирає алгоритм.');
+    list_(form, '16. Здобувач освіти разом із педагогом обирає тему Проєкту зі своєї спеціалізації та форму звіту. Це…', ap, 2, 'Персоналізація — здобувач освіти впливає на мету, зміст і шлях.');
 
-    <h3 class="sub-h">Питання для самоперевірки</h3>
-    <ol class="questions">
-      <li class="placeholder">Питання для самоперевірки.</li>
-      <li class="placeholder">Питання для самоперевірки.</li>
-      <li class="placeholder">Питання для самоперевірки.</li>
-    </ol>
-  </section>
+    single_(form, '17. «Проблема двох сигм» Б. Блума (1984) полягає в тому, що…',
+      ['групове навчання завжди краще за індивідуальне', 'учні з індивідуальним тьютором значно випереджали однолітків зі звичайних занять', 'тести не можуть виміряти знання', 'два стандартні відхилення — норма для будь-якої групи'], 1,
+      'Середній «тьюторований» учень перевершував 98 % контрольної групи; тому шукають способи наблизитися до цього в групі.');
 
-  <!-- ================= ЛІТЕРАТУРА ================= -->
-  <section class="lit end" id="literature">
-    <h2>Література <span>до теми</span></h2>
-    <ol>
-      <li>Додайте джерело, оформлене за ДСТУ 8302:2015.</li>
-      <li>Для електронних ресурсів укажіть URL та дату звернення.</li>
-    </ol>
-  </section>
+    single_(form, '18. За результатами мікротесту здобувач освіти набрав 60 %. Який крок персоналізованого маршруту найдоречніший?',
+      ['завдання підвищеного рівня', 'коротке відео про типові помилки й повторний мікротест через 2 дні', 'жодних дій', 'відрахування з групи'], 1,
+      '50–79 % — повторення з поясненням типових помилок; менше 50 % — консультація з майстром.');
 
-</main>
+    // ---------- Частина 4 ----------
+    form.addSectionHeaderItem().setTitle('Частина 4. Етика освітньої аналітики');
 
-<nav class="lecture-nav" id="lectureNav" aria-label="Навігація між лекціями"></nav>
+    multi_(form, '19. Які з цих дій відповідають етиці освітньої аналітики?',
+      ['пояснювати здобувачам освіти, які дані збирають і навіщо', 'збирати «все про всіх» про всяк випадок', 'перевіряти сигнал системи розмовою зі здобувачем освіти', 'публікувати рейтинг найменш активних', 'захищати й знеособлювати персональні дані'], [0, 2, 4],
+      'Прозорість, мінімум даних, захист і підтримка замість покарання (Ш. Слейд і П. Прінслоо; DELICATE).');
 
-<footer>
-  <span>Лекція 13 · Тема 13 · Спеціальність «Професійна освіта»</span>
-  <button class="reset-btn" id="resetBtn" type="button">↺ скинути прогрес</button>
-  <span class="mono">оновлено: 08.11.2026</span>
-</footer>
+    single_(form, '20. Система позначила здобувача освіти «червоним», бо він три тижні не заходив у курс. Що зробити насамперед?',
+      ['одразу знизити оцінку', 'повідомити всій групі', 'поговорити зі здобувачем освіти й з’ясувати причини', 'нічого не робити'], 2,
+      'Дані — привід для розмови, а не вирок: цифри не знають обставин життя.');
 
-<script src="assets/js/course.js"></script>
-<script src="assets/js/lecture.js"></script>
-</body>
-</html>
+  } catch (e) {
+    Logger.log('ПОМИЛКА після елемента № ' + form.getItems().length + ': ' + e.message);
+    Logger.log('Недороблену форму можна видалити з Диска: ' + form.getEditUrl());
+    throw e;
+  }
+
+  Logger.log('Готово! Створено елементів: ' + form.getItems().length);
+  Logger.log('Посилання для здобувачів освіти: ' + form.getPublishedUrl());
+  try { Logger.log('Коротке посилання: ' + form.shortenFormUrl(form.getPublishedUrl())); } catch (e) {}
+  Logger.log('Посилання для редагування: ' + form.getEditUrl());
+  return form;
+}
+
+/* ===== Відкриття через посилання вебзастосунку (…/exec) ===== */
+function doGet() {
+  var props = PropertiesService.getScriptProperties();
+  var form = null;
+  var id = props.getProperty('FORM_ID');
+  if (id) {
+    try { form = FormApp.openById(id); } catch (e) { form = null; }
+  }
+  if (!form) {
+    form = createAnalyticsQuiz();
+    props.setProperty('FORM_ID', form.getId());
+  }
+  var pub = form.getPublishedUrl(), edit = form.getEditUrl();
+  var html = '<div style="font-family:Arial,sans-serif;max-width:720px;margin:32px auto;line-height:1.6">' +
+    '<h2 style="color:#08338F">Тест готовий ✓</h2>' +
+    '<p><b>' + form.getTitle() + '</b></p>' +
+    '<p>Посилання для здобувачів освіти (надіслати в Classroom):<br><a href="' + pub + '" target="_blank">' + pub + '</a></p>' +
+    '<p>Посилання для редагування:<br><a href="' + edit + '" target="_blank">' + edit + '</a></p>' +
+    '<p style="color:#5A6378">Форму також збережено на вашому Google Диску. Повторне відкриття цієї сторінки нову форму не створює.</p></div>';
+  return HtmlService.createHtmlOutput(html).setTitle('Тест створено');
+}
+
+/* ===== Допоміжні функції. Знак _ у кінці назви ховає їх зі списку «Виконати». ===== */
+
+function fb_(text) {
+  return FormApp.createFeedback().setText(text).build();
+}
+
+/** Питання з одним правильним варіантом. correct — номер правильної відповіді (з 0). */
+function single_(form, title, options, correct, why) {
+  var it = form.addMultipleChoiceItem();
+  it.setTitle(title);
+  it.setChoices(options.map(function (o, i) { return it.createChoice(o, i === correct); }));
+  it.setPoints(1);
+  it.setRequired(true);
+  it.setFeedbackForCorrect(fb_('Правильно! ' + why));
+  it.setFeedbackForIncorrect(fb_('Зверніть увагу: ' + why));
+  return it;
+}
+
+/** Питання з кількома правильними варіантами. correct — масив номерів (з 0). */
+function multi_(form, title, options, correct, why) {
+  var it = form.addCheckboxItem();
+  it.setTitle(title);
+  it.setHelpText('Оберіть усі правильні варіанти.');
+  it.setChoices(options.map(function (o, i) { return it.createChoice(o, correct.indexOf(i) >= 0); }));
+  it.setPoints(1);
+  it.setRequired(true);
+  it.setFeedbackForCorrect(fb_('Правильно! ' + why));
+  it.setFeedbackForIncorrect(fb_('Зверніть увагу: ' + why));
+  return it;
+}
+
+/** Вибір зі спадного списку. */
+function list_(form, title, options, correct, why) {
+  var it = form.addListItem();
+  it.setTitle(title);
+  it.setChoices(options.map(function (o, i) { return it.createChoice(o, i === correct); }));
+  it.setPoints(1);
+  it.setRequired(true);
+  it.setFeedbackForCorrect(fb_('Правильно! ' + why));
+  it.setFeedbackForIncorrect(fb_('Зверніть увагу: ' + why));
+  return it;
+}
+
+/** Правда / неправда. */
+function trueFalse_(form, num, title, isTrue, why) {
+  return single_(form, num + '. Правда чи неправда? ' + title, ['Правда', 'Неправда'], isTrue ? 0 : 1, why);
+}

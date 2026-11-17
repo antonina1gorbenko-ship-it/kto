@@ -3,50 +3,708 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Лекція 11. Електронні освітні ресурси та вебсайт педагога</title>
-<meta name="description" content="Лекція 11 електронного посібника «Комп’ютерні технології в освітньому процесі»: Електронні освітні ресурси та вебсайт педагога">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23F26B1D'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23fff'%3EКТ%3C/text%3E%3C/svg%3E">
+<title>STEM-освіта та цифрові лабораторії</title>
+<meta name="description" content="Лекція 11 для спеціальності «Професійна освіта»: STEM-освіта та цифрові лабораторії — поняття, нормативна база, методи, види цифрових лабораторій, застосування у професійній освіті, ризики">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
-<script>try{var t=localStorage.getItem('posibnyk-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<style>
+  :root{
+    --navy:#0E1F4D;
+    --ink:#0E1F4D;
+    --ink-soft:#2B3A63;
+    --ink-muted:#5A6788;
+    --paper:#FFFFFF;
+    --surface:#FFFFFF;
+    --surface-2:#F4F7FF;
+    --line:#DCE3F4;
+    --accent:#1D4ED8;
+    --accent-ink:#163BA6;
+    --accent-tint:#E8EEFF;
+    --task:#1597E5;
+    --task-ink:#0B6AA8;
+    --task-tint:#E4F4FD;
+    --test:#F26B1D;
+    --test-ink:#C2500C;
+    --test-tint:#FFF1E7;
+    --bad:#C0262D;
+    --hero-a:#0E1F4D;
+    --hero-b:#1D4ED8;
+    --shadow:0 1px 2px rgba(14,31,77,.05), 0 14px 32px -18px rgba(14,31,77,.35);
+    --radius:18px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#EEF2FF;
+      --ink-soft:#C9D3F2;
+      --ink-muted:#93A1C8;
+      --paper:#081332;
+      --surface:#0F1D45;
+      --surface-2:#132453;
+      --line:#22346B;
+      --accent:#7C9BFF;
+      --accent-ink:#AFC2FF;
+      --accent-tint:#18295C;
+      --task:#4DB8F7;
+      --task-ink:#8FD3FB;
+      --task-tint:#0F2D4F;
+      --test:#FF8A3D;
+      --test-ink:#FFB27D;
+      --test-tint:#3A2210;
+      --bad:#FF6B6B;
+      --hero-a:#050C24;
+      --hero-b:#1636B0;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 34px -18px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#EEF2FF;
+    --ink-soft:#C9D3F2;
+    --ink-muted:#93A1C8;
+    --paper:#081332;
+    --surface:#0F1D45;
+    --surface-2:#132453;
+    --line:#22346B;
+    --accent:#7C9BFF;
+    --accent-ink:#AFC2FF;
+    --accent-tint:#18295C;
+    --task:#4DB8F7;
+    --task-ink:#8FD3FB;
+    --task-tint:#0F2D4F;
+    --test:#FF8A3D;
+    --test-ink:#FFB27D;
+    --test-tint:#3A2210;
+    --bad:#FF6B6B;
+    --hero-a:#050C24;
+    --hero-b:#1636B0;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 34px -18px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope',system-ui,'Segoe UI',sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Unbounded',system-ui,sans-serif;margin:0;text-wrap:balance;}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+  a{color:var(--accent);}
+  ::selection{background:var(--test);color:#fff;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    color:#fff;
+    background:
+      radial-gradient(circle at 88% 18%, rgba(242,107,29,.55) 0, rgba(242,107,29,0) 26%),
+      linear-gradient(135deg, var(--hero-a) 0%, var(--hero-b) 100%);
+    padding:72px 24px 120px;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    left:-5%; right:-5%; bottom:-1px;
+    height:90px;
+    background:var(--paper);
+    clip-path:polygon(0 70%, 30% 35%, 62% 72%, 100% 20%, 100% 100%, 0 100%);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    left:-5%; right:-5%; bottom:-1px;
+    height:110px;
+    background:var(--test);
+    clip-path:polygon(0 62%, 30% 27%, 62% 64%, 100% 12%, 100% 22%, 62% 74%, 30% 37%, 0 72%);
+    z-index:1;
+  }
+  .hero-net{
+    position:absolute;
+    right:-40px; top:10px;
+    width:min(560px,70vw);
+    height:auto;
+    opacity:.55;
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:2;max-width:1000px;margin:0 auto;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;
+    background:var(--test);
+    color:#fff;
+    padding:6px 14px;
+    border-radius:99px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;}
+  .hero h1{
+    font-size:clamp(32px,5.2vw,58px);
+    line-height:1.08;
+    font-weight:800;
+    max-width:14em;
+  }
+  .hero h1 .hl{
+    color:#FFB27D;
+  }
+  .hero .theme{
+    margin:18px 0 0;
+    font-size:clamp(16px,2vw,19px);
+    color:rgba(255,255,255,.86);
+    max-width:36em;
+    font-weight:500;
+  }
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+  .meta-chip{
+    display:flex;align-items:center;gap:7px;
+    font-size:13.5px;
+    color:#fff;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:12px;
+    padding:7px 13px;
+    backdrop-filter:blur(4px);
+  }
+  .meta-chip b{color:#FFB27D;font-family:'Unbounded',sans-serif;font-size:15px;}
+
+  /* ---------- sticky toc ---------- */
+  .toc-bar{
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .toc-inner{
+    max-width:1000px;margin:0 auto;padding:0 24px;
+    display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
+  }
+  .toc-inner::-webkit-scrollbar{display:none;}
+  .toc-inner a{
+    flex:none;
+    font-size:13px;font-weight:700;
+    color:var(--ink-muted);
+    text-decoration:none;
+    padding:14px 12px 12px;
+    border-bottom:3px solid transparent;
+    white-space:nowrap;
+  }
+  .toc-inner a:hover{color:var(--accent);}
+  .toc-inner a.active{color:var(--accent);border-bottom-color:var(--test);}
+  .toc-progress{
+    flex:none;margin-left:auto;
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--ink-muted);
+    padding:14px 0 12px 14px;white-space:nowrap;
+  }
+  .toc-progress b{color:var(--test);}
+  .progress-track{height:4px;background:var(--surface-2);}
+  .progress-track .fill{
+    height:100%;width:0%;
+    background:linear-gradient(90deg, var(--accent), var(--test));
+    border-radius:0 4px 4px 0;
+    transition:width .35s ease;
+  }
+
+  /* ---------- content ---------- */
+  main{max-width:1000px;margin:0 auto;padding:0 24px 40px;}
+
+  .goal{
+    position:relative;
+    margin:40px 0 0;
+    padding:26px 28px 24px 96px;
+    background:var(--accent-tint);
+    border-radius:var(--radius);
+  }
+  .goal::before{
+    content:"🎯";
+    position:absolute;left:24px;top:24px;
+    width:52px;height:52px;border-radius:16px;
+    background:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;
+    box-shadow:0 8px 18px -8px var(--accent);
+  }
+  .goal h2{font-size:15px;color:var(--accent-ink);margin-bottom:8px;letter-spacing:.02em;}
+  .goal p{margin:0;color:var(--ink-soft);font-size:16px;}
+
+  section.topic{margin-top:80px;scroll-margin-top:70px;}
+  .topic-head{
+    display:flex;align-items:center;gap:18px;
+    margin-bottom:26px;
+  }
+  .topic-num{
+    flex:none;
+    font-family:'Unbounded',sans-serif;
+    font-weight:800;
+    font-size:54px;
+    line-height:1;
+    color:transparent;
+    -webkit-text-stroke:2px var(--test);
+    letter-spacing:-.02em;
+  }
+  .topic h2{
+    font-size:clamp(22px,2.8vw,30px);
+    font-weight:700;
+    color:var(--ink);
+    position:relative;
+    padding-bottom:10px;
+  }
+  .topic h2::after{
+    content:"";position:absolute;left:0;bottom:0;
+    width:64px;height:5px;border-radius:5px;
+    background:linear-gradient(90deg, var(--test), var(--accent));
+  }
+  .topic p{color:var(--ink-soft);font-size:16.5px;margin:0 0 16px;}
+  .topic p b,.topic li b{color:var(--ink);font-weight:800;}
+  .topic ul{margin:0 0 20px;padding-left:0;list-style:none;color:var(--ink-soft);font-size:16px;}
+  .topic ul li{position:relative;padding-left:26px;margin-bottom:10px;}
+  .topic ul li::before{
+    content:"";position:absolute;left:4px;top:.62em;
+    width:9px;height:9px;border-radius:3px;
+    background:var(--test);
+    transform:rotate(45deg);
+  }
+
+  .callout{
+    position:relative;
+    background:var(--surface-2);
+    border-radius:14px;
+    padding:16px 20px 16px 22px;
+    margin:0 0 20px;
+    font-size:15px;
+    color:var(--ink-soft);
+    border-left:5px solid var(--test);
+  }
+  .callout b{color:var(--accent-ink);}
+
+  .sub-h{font-size:19px;font-weight:700;color:var(--ink);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .sub-h::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:5px 0 0 var(--test);margin-right:6px;}
+
+  /* ---------- diagrams ---------- */
+  figure.diagram{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 20px 16px;
+    margin:28px 0 30px;
+    box-shadow:var(--shadow);
+    position:relative;
+  }
+  figure.diagram::before{
+    content:"";position:absolute;left:24px;top:-1px;width:80px;height:4px;border-radius:0 0 4px 4px;
+    background:var(--test);
+  }
+  figure.diagram svg{display:block;width:100%;height:auto;}
+  figure.diagram figcaption{margin-top:14px;font-size:13.5px;color:var(--ink-muted);text-align:center;}
+  .svg-ink{fill:var(--ink);}
+  .svg-muted{fill:var(--ink-muted);}
+
+  /* ---------- tables ---------- */
+  .table-wrap{overflow-x:auto;}
+  .table-cap{font-size:14.5px;color:var(--ink-muted);margin:0 0 8px;}
+  .table-cap b{color:var(--test-ink);}
+  .data-table{
+    width:100%;border-collapse:separate;border-spacing:0;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;
+    font-size:14.5px;margin:6px 0 24px;
+  }
+  .data-table th{
+    text-align:left;
+    font-size:12.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+    color:#fff;background:var(--accent);
+    padding:11px 14px;
+  }
+  .data-table td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink-soft);vertical-align:top;}
+  .data-table tr:nth-child(even) td{background:var(--surface-2);}
+  .data-table tr:last-child td{border-bottom:none;}
+  .data-table td.yr{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--test-ink);white-space:nowrap;}
+  details.more{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:0 0 26px;overflow:hidden;}
+  details.more summary{
+    cursor:pointer;list-style:none;
+    padding:13px 18px;font-weight:800;font-size:15px;color:var(--accent-ink);
+    display:flex;align-items:center;gap:10px;
+  }
+  details.more summary::-webkit-details-marker{display:none;}
+  details.more summary::before{
+    content:"+";flex:none;
+    width:24px;height:24px;border-radius:8px;background:var(--test);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:800;
+  }
+  details.more[open] summary::before{content:"−";}
+  details.more .data-table{margin:0;border:none;border-radius:0;}
+  .risk{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:var(--ink);white-space:nowrap;}
+  .risk::before{content:"";width:11px;height:11px;border-radius:50%;background:var(--dot);flex:none;}
+  .risk.r1{--dot:var(--bad);}
+  .risk.r2{--dot:var(--test);}
+  .risk.r3{--dot:var(--accent);}
+  .risk.r4{--dot:var(--task);}
+
+  /* ---------- boxes ---------- */
+  .box{
+    position:relative;
+    border-radius:var(--radius);
+    padding:26px 26px 22px;
+    margin:28px 0 32px;
+    box-shadow:var(--shadow);
+    background:var(--surface);
+    border:2px solid var(--line);
+  }
+  .box.test{border-color:var(--test);background:linear-gradient(180deg, var(--test-tint), var(--surface) 70%);}
+  .box.task{border-color:var(--accent);background:linear-gradient(180deg, var(--accent-tint), var(--surface) 80%);}
+  .box-title{
+    font-family:'Unbounded',sans-serif;font-weight:700;font-size:16px;
+    margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .box.test .box-title{color:var(--test-ink);}
+  .box.task .box-title{color:var(--accent-ink);}
+  .box-tag{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:.06em;
+    padding:4px 10px;border-radius:8px;color:#fff;
+  }
+  .box.test .box-tag{background:var(--test);}
+  .box.task .box-tag{background:var(--accent);}
+  .box-check{display:none;font-size:13px;}
+  .box.done .box-check{display:inline;}
+  .box-progress{
+    margin-left:auto;
+    font-family:'JetBrains Mono',monospace;font-weight:600;font-size:11.5px;
+    padding:3px 10px;border-radius:99px;
+    background:var(--surface);color:var(--ink-muted);border:1px solid var(--line);
+    white-space:nowrap;
+  }
+  .box-progress:empty{display:none;}
+  .box.done .box-progress{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .box.test.done .box-progress{background:var(--test);border-color:var(--test);}
+  .box-close{
+    margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);
+    font-size:14.5px;color:var(--ink-soft);
+  }
+
+  .box ol{margin:0;padding:0;list-style:none;}
+  .box ol li{margin-bottom:12px;font-size:15.5px;color:var(--ink-soft);}
+  .box ol li:last-child{margin-bottom:0;}
+  .box ol li b{color:var(--ink);}
+  .step{display:flex;gap:12px;align-items:flex-start;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .step .num{
+    flex:none;width:28px;height:28px;border-radius:9px;
+    background:var(--surface);border:2px solid var(--accent);color:var(--accent);
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .15s,color .15s;
+  }
+  .chk{position:absolute;opacity:0;width:1px;height:1px;}
+  .step:has(.chk:checked) .num,.step.checked .num{background:var(--accent);color:#fff;}
+  .step:has(.chk:checked) .step-text,.step.checked .step-text{color:var(--ink-muted);text-decoration:line-through;text-decoration-color:var(--test);}
+  .chk:focus-visible ~ .num{outline:2px solid var(--test);outline-offset:2px;}
+  .step-text{flex:1;padding-top:2px;}
+
+  .test-q{font-weight:700;color:var(--ink);margin-bottom:14px;font-size:16px;}
+  .quiz{display:grid;gap:8px;}
+  .test-opt{
+    display:flex;width:100%;gap:12px;align-items:center;
+    font-size:15px;color:var(--ink-soft);
+    padding:11px 14px;margin:0;
+    border:2px solid var(--line);border-radius:12px;
+    background:var(--surface);
+    font-family:inherit;text-align:left;cursor:pointer;
+    transition:border-color .15s, transform .15s, background .15s;
+  }
+  .test-opt::before{
+    content:"";flex:none;width:18px;height:18px;border-radius:50%;
+    border:2px solid var(--test);background:var(--surface);
+  }
+  .test-opt:hover:not(:disabled){border-color:var(--test);transform:translateX(3px);}
+  .test-opt:disabled{cursor:default;}
+  .test-opt.is-correct{border-color:var(--accent);background:var(--accent-tint);color:var(--accent-ink);font-weight:800;}
+  .test-opt.is-correct::before{background:var(--accent);border-color:var(--accent);box-shadow:inset 0 0 0 3px var(--surface);}
+  .test-opt.is-wrong{border-color:var(--bad);background:color-mix(in srgb, var(--bad) 10%, var(--surface));}
+  .test-opt.is-wrong::before{background:var(--bad);border-color:var(--bad);box-shadow:inset 0 0 0 3px var(--surface);}
+  .test-feedback{margin-top:6px;font-size:14px;font-weight:800;display:none;}
+  .test-feedback.show{display:block;}
+  .test-feedback.correct{color:var(--accent-ink);}
+  .test-feedback.wrong{color:var(--bad);}
+  .box.done{box-shadow:var(--shadow), 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);}
+  .box.test.done{box-shadow:var(--shadow), 0 0 0 4px color-mix(in srgb, var(--test) 25%, transparent);}
+
+  /* ---------- prompt anatomy ---------- */
+  .prompt-demo{
+    background:var(--navy);
+    color:#fff;
+    border-radius:var(--radius);
+    padding:24px 26px 20px;
+    margin:28px 0 32px;
+    box-shadow:var(--shadow);
+  }
+  :root[data-theme="dark"] .prompt-demo{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .prompt-demo{background:var(--surface-2);} }
+  .prompt-demo .box-title{color:#fff;}
+  .prompt-demo .box-tag{background:var(--test);}
+  .prompt-text{font-size:16px;line-height:2.05;color:rgba(255,255,255,.9);font-family:'JetBrains Mono',monospace;font-size:14.5px;}
+  .seg{border-radius:6px;padding:2px 4px;cursor:pointer;box-shadow:inset 0 -2px 0 var(--c);transition:background .15s;}
+  .seg:hover,.seg.on{background:var(--c);color:#fff;}
+  .seg-role{--c:#5B8CFF;}
+  .seg-task{--c:#38BDF8;}
+  .seg-ctx{--c:#F26B1D;}
+  .seg-fmt{--c:#FFB27D;}
+  .seg-fmt.on,.seg-fmt:hover{color:var(--navy);}
+  .seg-lim{--c:#FF5A5F;}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px dashed rgba(255,255,255,.25);}
+  .legend button{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;
+    border:2px solid var(--c);color:#fff;background:transparent;
+    border-radius:99px;padding:5px 13px;cursor:pointer;
+  }
+  .legend button.on{background:var(--c);}
+  .legend button.seg-fmt.on{color:var(--navy);}
+  .legend-hint{font-size:13px;color:rgba(255,255,255,.65);margin:10px 0 0;}
+
+  /* ---------- cards ---------- */
+  .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:8px 0 30px;}
+  .card{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px 20px 18px;
+    box-shadow:var(--shadow);
+    transition:transform .2s, border-color .2s;
+  }
+  .card:hover{transform:translateY(-3px);border-color:var(--test);}
+  .card:nth-child(odd) .ic{background:var(--accent);}
+  .card:nth-child(even) .ic{background:var(--test);}
+  .card .ic{
+    width:44px;height:44px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:21px;margin-bottom:12px;
+  }
+  .card h3{font-family:'Manrope',sans-serif;font-size:16.5px;font-weight:800;margin-bottom:8px;color:var(--ink);}
+  .card p{font-size:14.5px;margin:0;color:var(--ink-soft);}
+
+  /* ---------- case ---------- */
+  .case{
+    background:var(--surface);
+    border:2px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 26px 20px;margin:28px 0 32px;box-shadow:var(--shadow);
+  }
+  .case .box-title{color:var(--ink);}
+  .case .box-tag{background:var(--navy);}
+  :root[data-theme="dark"] .case .box-tag{background:var(--accent);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .case .box-tag{background:var(--accent);} }
+  .case-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .case-side{border-radius:14px;padding:16px 18px;font-size:15px;color:var(--ink-soft);}
+  .case-side h4{margin:0 0 8px;font-size:14px;font-family:'Unbounded',sans-serif;}
+  .case-side.plus{background:var(--accent-tint);border-top:4px solid var(--accent);}
+  .case-side.plus h4{color:var(--accent-ink);}
+  .case-side.minus{background:var(--test-tint);border-top:4px solid var(--test);}
+  .case-side.minus h4{color:var(--test-ink);}
+  .case-side p{margin:0;}
+  .case .box-close i{color:var(--test-ink);font-weight:800;font-style:normal;}
+
+  /* ---------- rules ---------- */
+  .topic ul.rules{counter-reset:r;display:grid;gap:10px;margin-bottom:26px;}
+  .topic ul.rules li{
+    counter-increment:r;
+    margin:0;padding:14px 16px 14px 62px;
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);
+  }
+  .topic ul.rules li::before{
+    content:counter(r);
+    transform:none;
+    left:14px;top:50%;margin-top:-17px;
+    width:34px;height:34px;border-radius:11px;
+    background:var(--accent);
+    color:#fff;font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  .topic ul.rules li:nth-child(even)::before{background:var(--test);}
+
+  /* ---------- glossary & questions ---------- */
+  .glossary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:6px 0 28px;}
+  .term{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:14px 16px;}
+  .term:nth-child(4n+2),.term:nth-child(4n+3){border-left-color:var(--test);}
+  .term dt{font-weight:800;color:var(--ink);font-size:15.5px;margin-bottom:4px;}
+  .term dd{margin:0;font-size:14.5px;color:var(--ink-soft);}
+  .questions{counter-reset:q;list-style:none;padding:0;margin:0 0 10px;}
+  .questions li{
+    counter-increment:q;
+    display:flex;gap:14px;align-items:flex-start;
+    padding:12px 0;border-bottom:1px solid var(--line);
+    color:var(--ink-soft);font-size:16px;
+  }
+  .questions li:last-child{border-bottom:none;}
+  .questions li::before{
+    content:counter(q, decimal-leading-zero);
+    flex:none;font-family:'Unbounded',sans-serif;font-weight:800;font-size:15px;
+    color:var(--test);min-width:30px;
+  }
+
+  /* ---------- literature (end) ---------- */
+  .lit{
+    margin:80px 0 0;
+    background:var(--navy);
+    color:#fff;
+    border-radius:24px;
+    padding:34px 34px 30px;
+    position:relative;overflow:hidden;
+    scroll-margin-top:70px;
+  }
+  :root[data-theme="dark"] .lit{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .lit{background:var(--surface-2);} }
+  .lit::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle, rgba(242,107,29,.55), rgba(242,107,29,0) 70%);
+  }
+  .lit h2{font-size:22px;margin-bottom:20px;position:relative;z-index:1;}
+  .lit h2 span{color:#FFB27D;}
+  .lit ol{counter-reset:l;list-style:none;margin:0;padding:0;position:relative;z-index:1;}
+  .lit li{
+    counter-increment:l;
+    position:relative;
+    padding:0 0 12px 46px;margin-bottom:12px;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    font-size:14.5px;color:rgba(255,255,255,.85);
+  }
+  .lit li:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .lit li::before{
+    content:counter(l);
+    position:absolute;left:0;top:0;
+    width:30px;height:30px;border-radius:9px;
+    background:var(--test);color:#fff;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12.5px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .lit a{color:#9DB7FF;word-break:break-all;}
+  .lit i{color:#fff;}
+
+  footer{
+    max-width:1000px;margin:0 auto;padding:30px 24px 56px;
+    color:var(--ink-muted);font-size:13.5px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .reset-btn{
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--accent);background:var(--surface);
+    border:2px solid var(--accent);border-radius:10px;
+    padding:7px 14px;cursor:pointer;font-weight:700;
+  }
+  .reset-btn:hover{background:var(--accent);color:#fff;}
+
+  @media (max-width:860px){
+    .cards{grid-template-columns:repeat(2,minmax(0,1fr));}
+  }
+  @media (max-width:640px){
+    .hero{padding:52px 16px 100px;}
+    .toc-inner,main,footer{padding-left:16px;padding-right:16px;}
+    .goal{padding:84px 20px 20px;}
+    .goal::before{top:18px;left:20px;}
+    .topic-num{font-size:40px;}
+    .box,.prompt-demo,.case{padding:20px 16px 16px;}
+    .cards,.glossary,.case-cols{grid-template-columns:1fr;}
+    .lit{padding:26px 20px 22px;}
+  }
+
+  /* ---------- lecture 9 additions ---------- */
+  .example{
+    background:var(--navy);color:#fff;border-radius:var(--radius);
+    padding:24px 26px 20px;margin:28px 0 32px;box-shadow:var(--shadow);
+  }
+  :root[data-theme="dark"] .example{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .example{background:var(--surface-2);} }
+  .example .box-title{color:#fff;}
+  .example .box-tag{background:var(--test);}
+  .levels{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 18px;}
+  .levels span{
+    position:relative;flex:1 1 120px;text-align:center;
+    font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;
+    padding:10px 14px;border-radius:10px;
+    background:rgba(255,255,255,.12);color:#fff;
+  }
+  .levels span:nth-child(2){background:rgba(255,255,255,.2);}
+  .levels span:nth-child(3){background:rgba(242,107,29,.55);}
+  .levels span:nth-child(4){background:var(--test);}
+  .topic ul.ex-list{color:rgba(255,255,255,.9);font-size:15.5px;margin:0;}
+  .topic ul.ex-list li b{color:#FFB27D;}
+  .steps6{list-style:none;padding:0;margin:8px 0 26px;counter-reset:s;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+  .steps6 li{
+    counter-increment:s;position:relative;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:52px 18px 16px;box-shadow:var(--shadow);
+  }
+  .steps6 li::before{
+    content:counter(s);position:absolute;left:18px;top:14px;
+    width:30px;height:30px;border-radius:10px;
+    background:var(--accent);color:#fff;
+    font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .steps6 li:nth-child(even)::before{background:var(--test);}
+  .steps6 li b{display:block;color:var(--ink);font-size:16px;margin-bottom:6px;}
+  .steps6 li span{display:block;color:var(--ink-soft);font-size:14.5px;}
+  .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:8px 0 26px;}
+  .stat{background:var(--accent-tint);border-radius:var(--radius);padding:18px 20px;}
+  .stat:nth-child(2){background:var(--test-tint);}
+  .stat b{display:block;font-family:'Unbounded',sans-serif;font-size:36px;line-height:1.1;color:var(--accent);}
+  .stat:nth-child(2) b{color:var(--test-ink);}
+  .stat span{display:block;margin-top:6px;font-size:14.5px;color:var(--ink-soft);}
+  .card .ic{color:#fff;}
+  .quiz-link{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:10px 18px;border-radius:12px;
+    background:var(--test);color:#fff;font-weight:800;text-decoration:none;font-size:15px;box-shadow:0 8px 18px -10px var(--test);}
+  .quiz-link:hover{background:var(--accent);}
+  @media (max-width:860px){ .steps6{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  @media (max-width:640px){ .hero-net{display:none;} .steps6,.stats{grid-template-columns:1fr;} .example{padding:20px 16px 16px;} }
+
+  .levels span:nth-child(5){background:#C2500C;}
+  .cards.two{grid-template-columns:repeat(2,minmax(0,1fr));}
+  @media (max-width:640px){ .cards.two{grid-template-columns:1fr;} }
+</style>
+
 </head>
-<body data-lecture="11">
-
-<div class="course-bar">
-  <div class="course-bar-inner">
-    <a class="course-home" href="index.html" title="На титульну сторінку">
-      <span class="logo">КТ</span><span class="t">Комп’ютерні технології в освітньому процесі</span>
-    </a>
-    <div class="course-actions">
-      <details class="course-menu">
-        <summary class="bar-btn">☰ <span class="lbl">Лекції</span></summary>
-        <div class="menu-panel"><ol id="courseMenuList"></ol></div>
-      </details>
-      <button class="bar-btn" id="themeToggle" type="button" aria-label="Змінити тему оформлення">◐ <span class="lbl">Тема</span></button>
-    </div>
-  </div>
-</div>
-
+<body>
 <header class="hero">
-  <img class="hero-net" src="assets/img/hero-net.svg" alt="" aria-hidden="true">
+  <svg class="hero-net" viewBox="0 0 570 420" aria-hidden="true">
+    <!-- flask -->
+    <path d="M345 60 h70 v20 h-10 v80 l70 140 a24 24 0 0 1 -22 34 h-146 a24 24 0 0 1 -22 -34 l70 -140 v-80 h-10 z" fill="#fff" fill-opacity=".12" stroke="#fff" stroke-opacity=".7" stroke-width="3"/>
+    <path d="M317 250 h126 l32 62 a14 14 0 0 1 -12 20 h-166 a14 14 0 0 1 -12 -20 z" fill="#F26B1D" fill-opacity=".9"/>
+    <circle cx="360" cy="290" r="8" fill="#fff" fill-opacity=".7"/><circle cx="395" cy="275" r="5" fill="#fff" fill-opacity=".7"/><circle cx="415" cy="300" r="7" fill="#fff" fill-opacity=".6"/>
+    <!-- sensor graph -->
+    <rect x="70" y="90" width="200" height="130" rx="16" fill="#fff" fill-opacity=".12" stroke="#fff" stroke-opacity=".6" stroke-width="3"/>
+    <polyline points="90,190 120,170 145,180 170,140 195,150 220,115 250,125" fill="none" stroke="#FFB27D" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#fff" fill-opacity=".85"><circle cx="170" cy="140" r="6"/><circle cx="220" cy="115" r="6"/></g>
+    <!-- gear -->
+    <g transform="translate(150 310)" fill="#fff" fill-opacity=".8">
+      <circle r="34"/><g><rect x="-9" y="-50" width="18" height="22" rx="4"/><rect x="-9" y="28" width="18" height="22" rx="4"/><rect x="-50" y="-9" width="22" height="18" rx="4"/><rect x="28" y="-9" width="22" height="18" rx="4"/></g>
+      <circle r="13" fill="#1D4ED8"/>
+    </g>
+    <g font-family="JetBrains Mono, monospace" font-size="26" font-weight="800" fill="#fff">
+      <text x="480" y="80">S</text><text x="500" y="160">T</text><text x="490" y="240">E</text><text x="505" y="320">M</text>
+    </g>
+    <g stroke="#FFB27D" stroke-width="3" stroke-dasharray="6 6" fill="none"><path d="M270 155 C300 155 310 170 330 180"/><path d="M190 300 C240 300 270 310 300 300"/></g>
+  </svg>
   <div class="hero-inner">
     <span class="eyebrow">Лекція 11 · Тема 11</span>
-    <h1>Електронні освітні ресурси <span class="hl">та вебсайт педагога</span></h1>
-    <p class="theme">Види та вимоги до електронних освітніх ресурсів; створення й публікація власного вебресурсу.</p>
-    <div class="meta-row">
-      <span class="meta-chip draft-chip">✎ <b>Заготовка</b> лекція в розробці</span>
-    </div>
+    <h1>STEM-освіта <span class="hl">та цифрові лабораторії</span></h1>
+    <p class="theme">Як природничі науки, технології, інженерія й математика зустрічаються в одному професійному завданні — і як цифрові датчики, симуляції та прототипи роблять науку видимою.</p>
   </div>
 </header>
 
 <nav class="toc-bar">
   <div class="toc-inner">
-    <a href="#s1" data-toc="s1">1. Види ЕОР</a>
-    <a href="#s2" data-toc="s2">2. Вимоги</a>
-    <a href="#s3" data-toc="s3">3. Вебсторінка</a>
-    <a href="#s4" data-toc="s4">4. GitHub Pages</a>
+    <a href="#stem" data-toc="stem">1. Поняття STEM</a>
+    <a href="#ukraine" data-toc="ukraine">2. STEM в Україні</a>
+    <a href="#methods" data-toc="methods">3. Методи</a>
+    <a href="#labs" data-toc="labs">4. Цифрові лабораторії</a>
+    <a href="#vet" data-toc="vet">5. Професійна освіта</a>
+    <a href="#risks" data-toc="risks">6. Ефективність і ризики</a>
     <a href="#summary" data-toc="summary">Підсумок</a>
     <a href="#literature" data-toc="literature">Література</a>
     <span class="toc-progress" id="tocProgress">прогрес: <b>0%</b></span>
@@ -58,125 +716,537 @@
 
   <div class="goal">
     <h2>Мета лекції</h2>
-    <p class="placeholder">Сформулюйте мету лекції: які знання, уміння та компетентності сформує тема в здобувачів освіти.</p>
+    <p>Сформувати уявлення про сутність STEM-освіти, її нормативне підґрунтя в Україні та провідні методи STEM-навчання; ознайомити з видами цифрових лабораторій і навчити добирати їх для закладів професійної (професійно-технічної) освіти; розвинути вміння проєктувати STEM-заняття та критично оцінювати ефективність і ризики цифрових лабораторій.</p>
   </div>
 
-  <!-- ================= 1. ВИДИ ЕЛЕКТРОННИХ ОСВІТНІХ РЕСУРСІВ ================= -->
-  <section class="topic" id="s1">
-    <div class="topic-head">
-      <span class="topic-num">01</span>
-      <h2>Види електронних освітніх ресурсів</h2>
+  <!-- ============ 1 ============ -->
+  <section class="topic" id="stem">
+    <div class="topic-head"><span class="topic-num">01</span><h2>Поняття STEM-освіти</h2></div>
+
+    <p><b>STEM-освіта</b> — це підхід, що інтегрує природничі науки (Science), технології (Technology), інженерію (Engineering) та математику (Mathematics) з акцентом на практичне застосування знань. Головна ідея — не вивчати фізику, математику й технології окремо, а розв’язувати реальну проблему, для якої потрібні знання з кількох галузей одночасно.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 900 380" role="img" aria-label="Схема STEM: чотири складники — природничі науки, технології, інженерія, математика — навколо реальної професійної проблеми; мистецтва (A) доповнюють їх у підході STEAM">
+        <g font-family="Manrope, sans-serif" text-anchor="middle">
+          <line x1="450" y1="190" x2="230" y2="95" style="stroke:var(--line)" stroke-width="3"/>
+          <line x1="450" y1="190" x2="670" y2="95" style="stroke:var(--line)" stroke-width="3"/>
+          <line x1="450" y1="190" x2="230" y2="290" style="stroke:var(--line)" stroke-width="3"/>
+          <line x1="450" y1="190" x2="670" y2="290" style="stroke:var(--line)" stroke-width="3"/>
+          <line x1="450" y1="190" x2="450" y2="345" style="stroke:var(--line)" stroke-width="3" stroke-dasharray="6 6"/>
+          <rect x="120" y="55" width="220" height="80" rx="18" style="fill:var(--accent)"/>
+          <text x="230" y="90" font-size="26" font-weight="800" fill="#fff" font-family="Unbounded, sans-serif">S</text>
+          <text x="230" y="118" font-size="14" font-weight="700" fill="#fff">природничі науки</text>
+          <rect x="560" y="55" width="220" height="80" rx="18" style="fill:var(--test)"/>
+          <text x="670" y="90" font-size="26" font-weight="800" fill="#fff" font-family="Unbounded, sans-serif">T</text>
+          <text x="670" y="118" font-size="14" font-weight="700" fill="#fff">технології</text>
+          <rect x="120" y="250" width="220" height="80" rx="18" style="fill:var(--test)"/>
+          <text x="230" y="285" font-size="26" font-weight="800" fill="#fff" font-family="Unbounded, sans-serif">E</text>
+          <text x="230" y="313" font-size="14" font-weight="700" fill="#fff">інженерія</text>
+          <rect x="560" y="250" width="220" height="80" rx="18" style="fill:var(--accent)"/>
+          <text x="670" y="285" font-size="26" font-weight="800" fill="#fff" font-family="Unbounded, sans-serif">M</text>
+          <text x="670" y="313" font-size="14" font-weight="700" fill="#fff">математика</text>
+          <circle cx="450" cy="190" r="78" style="fill:var(--navy)"/>
+          <text x="450" y="180" font-size="15" font-weight="800" fill="#fff">реальна</text>
+          <text x="450" y="200" font-size="15" font-weight="800" fill="#fff">професійна</text>
+          <text x="450" y="220" font-size="15" font-weight="800" fill="#fff">проблема</text>
+          <rect x="390" y="330" width="120" height="40" rx="20" style="fill:var(--surface-2);stroke:var(--test)" stroke-width="2" stroke-dasharray="5 4"/>
+          <text x="450" y="356" font-size="14" font-weight="800" style="fill:var(--test-ink)">+ A = STEAM</text>
+        </g>
+      </svg>
+      <figcaption>STEM об’єднує чотири галузі навколо однієї проблеми; у підході STEAM до них додаються мистецтва (Arts).</figcaption>
+    </figure>
+
+    <p>Абревіатура STEM виникла в США. Найчастіше її появу пов’язують з Дж. Рамелі, яка на початку 2000-х років очолювала освітній напрям Національного наукового фонду США (NSF): раніше там використовували скорочення SMET, але воно, за її словами, «погано звучало», тож літери переставили. Інтеграція цих предметів існувала й раніше — нова назва лише закріпила підхід.</p>
+
+    <p>Згодом з’явилося розширення <b>STEAM</b>, де літера A означає мистецтва (Arts). Авторкою концепції вважає себе американська педагогиня Дж. Якмен: до STEM вона додала мовні, гуманітарні, образотворчі й ручні мистецтва. Для професійної освіти це особливо близько: дизайн виробу, естетика страви чи інтер’єру, ергономіка робочого місця — теж частина інженерного мислення.</p>
+
+    <div class="stats">
+      <div class="stat"><b>65%</b><span>українських 15-річних учнів досягли базового рівня природничо-наукової грамотності (PISA-2025)</span></div>
+      <div class="stat"><b>54%</b><span>досягли базового рівня математичної грамотності — майже половина не досягла</span></div>
+      <div class="stat"><b>448 / 431</b><span>середні бали України з природничих наук і математики (УЦОЯО, 2026)</span></div>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
-        <p>Підказка: готові блоки (схема, таблиця, картки, кейс, виноска) можна скопіювати з <a href="lecture-08.html">лекції 8</a> — стилі вже підключено до всіх сторінок.</p>
-    </div>
-  </section>
+    <p>Отже, третина підлітків не може застосувати природничі знання в простих життєвих ситуаціях, а майже половина — математичні. Саме ці підлітки згодом приходять до закладів професійної освіти — і STEM-підхід допомагає показати, навіщо їм фізика й математика в майбутній професії.</p>
 
-  <!-- ================= 2. ВИМОГИ ДО ЕЛЕКТРОННИХ ОСВІТНІХ РЕСУРСІВ ================= -->
-  <section class="topic" id="s2">
-    <div class="topic-head">
-      <span class="topic-num">02</span>
-      <h2>Вимоги до електронних освітніх ресурсів</h2>
+    <p class="table-cap"><b>Таблиця 1.</b> Традиційне предметне навчання та STEM-навчання</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Ознака</th><th>Традиційне предметне навчання</th><th>STEM-навчання</th></tr></thead>
+        <tbody>
+          <tr><td><b>Зміст</b></td><td>Окремі предмети, кожен «сам по собі»</td><td>Інтеграція кількох галузей навколо однієї проблеми</td></tr>
+          <tr><td><b>Вихідна точка</b></td><td>Тема з програми</td><td>Реальна проблема чи виробниче завдання</td></tr>
+          <tr><td><b>Діяльність</b></td><td>Слухання, відтворення, розв’язування типових задач</td><td>Дослідження, експеримент, проєктування, створення прототипу</td></tr>
+          <tr><td><b>Помилка</b></td><td>Привід знизити оцінку</td><td>Нормальний етап удосконалення рішення</td></tr>
+          <tr><td><b>Результат</b></td><td>Знання з предмета</td><td>Продукт, рішення, компетентності</td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
-    </div>
-
-    <!-- ТЕСТ: змініть текст запитання та варіантів.
-         data-correct — номер правильної відповіді, відлік від 0 (0 — перший варіант). -->
     <div class="box test" id="test-1">
-      <div class="box-title"><span class="box-tag">ТЕСТ 1</span> Назва тесту<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
-      <div class="test-q">Сформулюйте запитання тесту.</div>
-      <div class="quiz" data-correct="0">
-        <button class="test-opt" type="button">варіант відповіді 1 (правильний)</button>
-        <button class="test-opt" type="button">варіант відповіді 2</button>
-        <button class="test-opt" type="button">варіант відповіді 3</button>
-        <button class="test-opt" type="button">варіант відповіді 4</button>
+      <div class="box-title"><span class="box-tag">ТЕСТ 1</span> Від STEM до STEAM<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Що означає літера A в абревіатурі STEAM?</div>
+      <div class="quiz" data-correct="1">
+        <button class="test-opt" type="button">автоматизація (Automation)</button>
+        <button class="test-opt" type="button">мистецтва (Arts)</button>
+        <button class="test-opt" type="button">алгоритми (Algorithms)</button>
+        <button class="test-opt" type="button">аналітика (Analytics)</button>
         <div class="test-feedback"></div>
       </div>
     </div>
   </section>
 
-  <!-- ================= 3. СТВОРЕННЯ ВЕБСТОРІНКИ: HTML І КОНСТРУКТОРИ ================= -->
-  <section class="topic" id="s3">
-    <div class="topic-head">
-      <span class="topic-num">03</span>
-      <h2>Створення вебсторінки: HTML і конструктори</h2>
+  <!-- ============ 2 ============ -->
+  <section class="topic" id="ukraine">
+    <div class="topic-head"><span class="topic-num">02</span><h2>STEM-освіта в Україні</h2></div>
+
+    <p>Державну політику у сфері STEM визначає <b>Концепція розвитку природничо-математичної освіти (STEM-освіти)</b>, схвалена розпорядженням Кабінету Міністрів України від 5 серпня 2020 року № 960-р. План заходів щодо її реалізації на період до 2027 року затверджено розпорядженням КМУ від 13 січня 2021 року № 131-р.</p>
+
+    <ol class="steps6">
+      <li><b>2020 · № 960-р</b><span>Концепція розвитку природничо-математичної освіти (STEM-освіти)</span></li>
+      <li><b>2020 · наказ МОН № 574</b><span>Типовий перелік засобів навчання та обладнання для кабінетів і STEM-лабораторій</span></li>
+      <li><b>2021 · № 131-р</b><span>план заходів щодо реалізації Концепції на період до 2027 року</span></li>
+      <li><b>щороку · ІМЗО</b><span>методичні рекомендації; 2025/2026 — лист від 18.07.2025 № 21/08-624</span></li>
+      <li><b>щороку · заходи</b><span>«STEM-тиждень» (понад 100 тис. учнів), «STEM-весна», «STEM-школа»</span></li>
+      <li><b>2025 · субвенція</b><span>369,36 млн грн розподілено на STEM-обладнання для профільної старшої школи</span></li>
+    </ol>
+
+    <p>У методичних рекомендаціях ІМЗО на 2025/2026 навчальний рік серед провідних підходів названо проєктно-орієнтоване та дослідницьке навчання, розвиток інженерного мислення, навчання в STEM-лабораторіях і мейкер-кабінетах, а серед цифрових інструментів — симуляції PhET і середовище Tinkercad. У червні 2025 року Уряд затвердив розподіл 369,36 млн грн субвенції на STEM-обладнання (загальний обсяг субвенції — 499,4 млн грн): кошти спрямовують на облаштування кабінетів природничих наук і математики та STEM-лабораторій.</p>
+
+    <div class="callout"><b>Навчально-практичні центри.</b> У професійній освіті роль STEM-лабораторій часто виконують НПЦ — сучасно обладнані приміщення в закладах професійної (професійно-технічної) освіти, де здобувачі освіти проходять практичне навчання, а дорослі підвищують кваліфікацію. Їх створюють з 2016 року; за даними МОН, до початку 2021 року за державні кошти створено чи оновлено 194 центри, ще близько 180 — за підтримки соціальних партнерів.</div>
+  </section>
+
+  <!-- ============ 3 ============ -->
+  <section class="topic" id="methods">
+    <div class="topic-head"><span class="topic-num">03</span><h2>Методи STEM-навчання</h2></div>
+
+    <p>STEM — це не набір гаджетів, а насамперед спосіб організувати діяльність здобувачів освіти.</p>
+
+    <div class="cards two">
+      <div class="card"><div class="ic">🔍</div><h3>Дослідницьке навчання</h3><p>Запитання → гіпотеза → експеримент → висновок (inquiry-based learning).</p></div>
+      <div class="card"><div class="ic">🧩</div><h3>Проєктне навчання</h3><p>Робота над Проєктом, що завершується реальним продуктом чи рішенням.</p></div>
+      <div class="card"><div class="ic">❓</div><h3>Проблемне навчання</h3><p>Навчання починається з проблеми, яку треба розв’язати.</p></div>
+      <div class="card"><div class="ic">⚙️</div><h3>Інженерне проєктування</h3><p>Циклічне створення, випробування й удосконалення технічного рішення.</p></div>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+    <h3 class="sub-h">Цикл інженерного проєктування</h3>
+    <figure class="diagram">
+      <svg viewBox="0 0 900 400" role="img" aria-label="Цикл інженерного проєктування з шести етапів по колу: визначити проблему, дослідити, згенерувати ідеї, створити прототип, випробувати, удосконалити й презентувати; від випробування стрілка повертає до ідей">
+        <g font-family="Manrope, sans-serif" text-anchor="middle">
+          <circle cx="450" cy="200" r="140" fill="none" style="stroke:var(--line)" stroke-width="4" stroke-dasharray="10 8"/>
+          <circle cx="450" cy="200" r="62" style="fill:var(--navy)"/>
+          <text x="450" y="196" font-size="15" font-weight="800" fill="#fff">інженерне</text>
+          <text x="450" y="216" font-size="15" font-weight="800" fill="#fff">мислення</text>
+          <g font-size="14" font-weight="800">
+            <rect x="370" y="20" width="160" height="56" rx="16" style="fill:var(--accent)"/><text x="450" y="44" fill="#fff">1. Визначити</text><text x="450" y="63" fill="#fff">проблему</text>
+            <rect x="610" y="80" width="160" height="56" rx="16" style="fill:var(--test)"/><text x="690" y="113" fill="#fff">2. Дослідити</text>
+            <rect x="610" y="264" width="160" height="56" rx="16" style="fill:var(--accent)"/><text x="690" y="288" fill="#fff">3. Згенерувати</text><text x="690" y="307" fill="#fff">ідеї</text>
+            <rect x="370" y="324" width="160" height="56" rx="16" style="fill:var(--test)"/><text x="450" y="348" fill="#fff">4. Створити</text><text x="450" y="367" fill="#fff">прототип</text>
+            <rect x="130" y="264" width="160" height="56" rx="16" style="fill:var(--accent)"/><text x="210" y="297" fill="#fff">5. Випробувати</text>
+            <rect x="130" y="80" width="160" height="56" rx="16" style="fill:var(--test)"/><text x="210" y="104" fill="#fff">6. Удосконалити</text><text x="210" y="123" fill="#fff">і презентувати</text>
+          </g>
+          <path d="M292 300 C 380 312 520 312 606 300" fill="none" style="stroke:var(--test-ink)" stroke-width="3" stroke-dasharray="6 5" marker-end="url(#arr)"/>
+          <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" style="fill:var(--test-ink)"/></marker></defs>
+          <text x="450" y="292" font-size="12.5" font-weight="700" class="svg-muted">не спрацювало? — назад до ідей</text>
+        </g>
+      </svg>
+      <figcaption>Помилка в STEM — не провал, а сигнал повернутися на крок назад і вдосконалити рішення.</figcaption>
+    </figure>
+
+    <p class="table-cap"><b>Таблиця 2.</b> Цикл інженерного проєктування на прикладі професійного завдання</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Етап</th><th>Що роблять здобувачі освіти</th><th>Приклад: «Контроль температури в холодильній камері кафе»</th></tr></thead>
+        <tbody>
+          <tr><td><b>1. Визначити проблему</b></td><td>Формулюють завдання й обмеження</td><td>Продукти псуються, бо ніхто не помічає підвищення температури</td></tr>
+          <tr><td><b>2. Дослідити</b></td><td>Збирають інформацію, норми, вимоги</td><td>Вивчають допустимі температури зберігання продуктів</td></tr>
+          <tr><td><b>3. Згенерувати ідеї</b></td><td>Пропонують кілька варіантів рішення</td><td>Журнал на папері, термометр із сигналом, датчик з повідомленням на смартфон</td></tr>
+          <tr><td><b>4. Створити прототип</b></td><td>Будують модель чи макет</td><td>Збирають схему з датчиком температури в Tinkercad, потім на Arduino</td></tr>
+          <tr><td><b>5. Випробувати</b></td><td>Тестують, вимірюють, фіксують дані</td><td>Перевіряють спрацювання сигналу, порівнюють з еталонним термометром</td></tr>
+          <tr><td><b>6. Удосконалити й презентувати</b></td><td>Виправляють недоліки, захищають рішення</td><td>Додають запис даних і презентують рішення шеф-кухарю</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Для структурування STEM-заняття зручна <b>модель 5E</b> Р. Байбі (BSCS): Engage — зацікавити (проблемна ситуація), Explore — дослідити (експеримент), Explain — пояснити (наукові поняття), Elaborate — застосувати в новій ситуації, Evaluate — оцінити. Вона добре узгоджується з <b>циклом навчання через досвід</b> Д. Колба (1984): конкретний досвід → рефлексивне спостереження → абстрактне осмислення → активне експериментування.</p>
+
+    <div class="box test" id="test-2">
+      <div class="box-title"><span class="box-tag">ТЕСТ 2</span> Інженерне проєктування<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Прототип датчика спрацьовує із запізненням. Що робить команда згідно з циклом інженерного проєктування?</div>
+      <div class="quiz" data-correct="1">
+        <button class="test-opt" type="button">оголошує Проєкт невдалим</button>
+        <button class="test-opt" type="button">повертається до етапів ідей та прототипу й удосконалює рішення</button>
+        <button class="test-opt" type="button">одразу презентує результат</button>
+        <button class="test-opt" type="button">змінює тему Проєкту</button>
+        <div class="test-feedback"></div>
+      </div>
     </div>
   </section>
 
-  <!-- ================= 4. ПУБЛІКАЦІЯ РЕСУРСУ НА GITHUB PAGES ================= -->
-  <section class="topic" id="s4">
-    <div class="topic-head">
-      <span class="topic-num">04</span>
-      <h2>Публікація ресурсу на GitHub Pages</h2>
+  <!-- ============ 4 ============ -->
+  <section class="topic" id="labs">
+    <div class="topic-head"><span class="topic-num">04</span><h2>Цифрові лабораторії: види та інструменти</h2></div>
+
+    <p><b>Цифрова лабораторія</b> — це сукупність апаратних і програмних засобів для проведення експериментів, вимірювань та моделювання з автоматизованим збиранням, опрацюванням і візуалізацією даних.</p>
+
+    <div class="cards two">
+      <div class="card"><div class="ic">🌡️</div><h3>Реальна з цифровими датчиками</h3><p>Справжній експеримент; температуру, pH, вологість, силу струму знімають датчики й передають на комп’ютер чи смартфон.</p></div>
+      <div class="card"><div class="ic">💻</div><h3>Віртуальна (симуляція)</h3><p>Модель процесу на екрані: параметри можна змінювати без ризику. PhET, Labster, Algodoo.</p></div>
+      <div class="card"><div class="ic">🌐</div><h3>Дистанційна (remote lab)</h3><p>Справжнє обладнання, яким керують через інтернет, наприклад колекції онлайн-лабораторій Go-Lab.</p></div>
+      <div class="card"><div class="ic">🛠️</div><h3>Мейкерська / робототехнічна</h3><p>Створення власних пристроїв і прототипів: Arduino, micro:bit, 3D-принтер, Tinkercad.</p></div>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+    <div class="stats">
+      <div class="stat"><b>121</b><span>HTML-симуляція PhET з фізики, хімії, математики, біології та наук про Землю (звіт PhET, 2025)</span></div>
+      <div class="stat"><b>131</b><span>мова, якою доступні симуляції PhET, зокрема українська</span></div>
+      <div class="stat"><b>600+</b><span>онлайн-лабораторій в екосистемі Go-Lab (CORDIS)</span></div>
     </div>
 
-    <!-- ЗАВДАННЯ: кожен пункт списку — окремий крок, який здобувач освіти позначає галочкою. -->
+    <p><b>PhET</b> — проєкт Університету Колорадо в Боулдері, заснований 2002 року нобелівським лауреатом К. Віманом. Симуляції запускають майже 250 млн разів на рік; вони безкоштовні й працюють у браузері, зокрема на смартфоні. <b>Labster</b> — платформа віртуальних лабораторій: у листопаді 2022 року МОН повідомило, що Labster надав безкоштовний доступ на рік до близько 300 симуляцій усім школам, коледжам і університетам України. <b>Go-Lab</b> — європейська екосистема онлайн-лабораторій для дослідницького навчання (координатор — Університет Твенте, Нідерланди).</p>
+
+    <p><b>Arduino</b> — відкрита платформа для створення електронних пристроїв, що з’явилася 2005 року в Італії (м. Івреа) як інструмент для студентів-дизайнерів. <b>Tinkercad</b> від Autodesk — безкоштовне онлайн-середовище для 3D-моделювання та віртуального складання електричних схем з Arduino: схему можна перевірити на екрані, перш ніж збирати її з реальних деталей.</p>
+
     <div class="box task" id="task-1">
-      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 1</span> Назва практичного завдання<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 1</span> Віртуальний експеримент у PhET<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
       <ol>
-        <li>Опишіть перший крок завдання.</li>
-        <li>Опишіть другий крок завдання.</li>
-        <li>Опишіть, де та як здобувач освіти здає результат (наприклад, у <b>Classroom</b>).</li>
+        <li>Відкрийте симуляцію «Circuit Construction Kit: DC — Virtual Lab» (конструктор кіл постійного струму).</li>
+        <li>Зберіть послідовне коло з двома лампочками, потім — паралельне.</li>
+        <li>Виміряйте амперметром силу струму в кожному колі.</li>
+        <li>Запишіть у Classroom висновок: у якому колі лампочки світять яскравіше і чому. Час — 10 хвилин.</li>
+      </ol>
+      <a class="quiz-link" href="https://phet.colorado.edu/uk/simulations/circuit-construction-kit-dc-virtual-lab" target="_blank" rel="noopener">▶ Відкрити симуляцію PhET</a>
+    </div>
+  </section>
+
+  <!-- ============ 5 ============ -->
+  <section class="topic" id="vet">
+    <div class="topic-head"><span class="topic-num">05</span><h2>STEM і цифрові лабораторії у професійній освіті</h2></div>
+
+    <p>У професійній освіті STEM має виразно прикладний характер: фізика, хімія й математика потрібні не «для оцінки», а щоб зрозуміти технологічний процес, безпечно працювати з обладнанням і контролювати якість продукції. Цифрові лабораторії дають змогу побачити науку «всередині» професії.</p>
+
+    <p class="table-cap"><b>Таблиця 3.</b> Цифрові лабораторії для різних професій</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Галузь</th><th>Цифровий інструмент</th><th>Що досліджують здобувачі освіти</th></tr></thead>
+        <tbody>
+          <tr><td><b>Електротехніка, енергетика</b></td><td>Tinkercad Circuits, PhET, датчики струму й напруги</td><td>Закон Ома, послідовне й паралельне з’єднання, енергоспоживання приладів</td></tr>
+          <tr><td><b>Машинобудування, металообробка</b></td><td>Симулятори верстатів з ЧПК, 3D-моделювання</td><td>Траєкторію інструмента, режими різання, похибки розмірів</td></tr>
+          <tr><td><b>Харчові технології, ресторанна справа</b></td><td>Датчики температури, pH, вологості</td><td>Температурні режими обробки й зберігання, кислотність продуктів</td></tr>
+          <tr><td><b>Будівництво</b></td><td>Датчики вологості й температури, 3D-моделі</td><td>Висихання розчинів, теплоізоляцію, геометрію конструкцій</td></tr>
+          <tr><td><b>Сільське господарство</b></td><td>Arduino з датчиками ґрунту, освітленості</td><td>Вологість ґрунту, автоматичний полив «розумної теплиці»</td></tr>
+          <tr><td><b>Зварювання</b></td><td>Віртуальні зварювальні тренажери</td><td>Кут нахилу, швидкість ведення електрода — без витрати металу</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Віртуальні тренажери особливо цінні там, де помилка на реальному обладнанні дорога або небезпечна: здобувач освіти може багато разів відпрацювати рухи, отримати миттєвий зворотний зв’язок і лише потім перейти до реального верстата чи зварювального поста під наглядом майстра виробничого навчання.</p>
+
+    <div class="example">
+      <div class="box-title"><span class="box-tag">ПРИКЛАД</span> Міні-Проєкт «Розумна холодильна камера» (кухар, 4 заняття)</div>
+      <div class="levels"><span>S</span><span>T</span><span>E</span><span>A</span><span>M</span></div>
+      <ul class="ex-list">
+        <li><b>Заняття 1 (Engage, Explore):</b> проблемна ситуація «Чому псуються продукти?»; вимірювання температури в різних зонах холодильника цифровим датчиком.</li>
+        <li><b>Заняття 2 (Explain):</b> фізика теплообміну, норми температур зберігання; побудова графіка зміни температури за даними датчика.</li>
+        <li><b>Заняття 3 (Elaborate):</b> складання схеми з датчиком температури та світлодіодом-сигналом у Tinkercad, потім — на Arduino.</li>
+        <li><b>Заняття 4 (Evaluate):</b> випробування прототипу, презентація рішення, самооцінювання за критеріями.</li>
+        <li><b>Інтеграція:</b> S — фізика теплообміну; T — датчик, Arduino; E — проєктування пристрою; A — зручність і дизайн для кухні; M — графіки, середні значення.</li>
+      </ul>
+    </div>
+
+    <p>Українські дослідники також наголошують на ролі STEM у підготовці фахівців технічних спеціальностей: Т. Кравченко, К. Кравченко та О. Мисюк (2025) розглядають STEM-освіту як важливий чинник модернізації технічної освіти в умовах цифрової трансформації, але вказують на нерівномірне забезпечення обладнанням і недостатню підготовку педагогів.</p>
+
+    <div class="case">
+      <div class="box-title"><span class="box-tag">КЕЙС</span> Віртуальна чи реальна лабораторія?</div>
+      <div class="case-cols">
+        <div class="case-side plus">
+          <h4>💻 Віртуальна</h4>
+          <p>Коледж отримав кошти на оновлення лабораторії електротехніки. Частина педагогів пропонує купити комп’ютери й ліцензії на симулятори: це дешевше, безпечно, дає змогу провести багато дослідів за заняття й показати невидимі процеси — рух електронів, магнітне поле.</p>
+        </div>
+        <div class="case-side minus">
+          <h4>🔧 Реальна</h4>
+          <p>Інші наполягають на реальних стендах і цифрових датчиках: майбутній електрик має навчитися працювати з реальними приладами, шукати несправності, бачити «неідеальні» дані вимірювань і дотримуватися правил безпеки. Т. де Йонг, М. Лінн і З. Захарія (Science, 2013): поєднання віртуальних і реальних лабораторій дає те, чого жоден вид не досягає сам по собі.</p>
+        </div>
+      </div>
+      <div class="box-close"><i>Висновок для педагога:</i> не «або — або», а «і — і»: віртуальна лабораторія — для розуміння явищ і безпечних спроб, реальна — для практичних навичок; порядок і пропорцію визначає мета заняття.</div>
+    </div>
+
+    <div class="box test" id="test-3">
+      <div class="box-title"><span class="box-tag">ТЕСТ 3</span> Віртуальна та реальна лабораторія<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Яку перевагу дає саме реальна (фізична) лабораторія?</div>
+      <div class="quiz" data-correct="2">
+        <button class="test-opt" type="button">можна показати рух електронів</button>
+        <button class="test-opt" type="button">можна провести багато дослідів за кілька хвилин</button>
+        <button class="test-opt" type="button">здобувачі освіти вчаться працювати з реальними приладами й «неідеальними» даними</button>
+        <button class="test-opt" type="button">не потрібне обладнання</button>
+        <div class="test-feedback"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6 ============ -->
+  <section class="topic" id="risks">
+    <div class="topic-head"><span class="topic-num">06</span><h2>Ефективність, ризики та принципи</h2></div>
+
+    <div class="stats">
+      <div class="stat"><b>28</b><span>досліджень інтегрованих STEM-підходів у метааналізі К. Беккера і К. Пака (2011)</span></div>
+      <div class="stat"><b>0,63</b><span>середній розмір ефекту: помірний позитивний вплив на навчальні досягнення</span></div>
+      <div class="stat"><b>S+T+E+M</b><span>найбільший ефект — за інтеграції всіх чотирьох складників</span></div>
+    </div>
+
+    <p>Т. де Йонг і співавтори (2013) показали, що віртуальні дослідження можуть не поступатися реальним щодо розуміння понять, а вирішальним чинником успіху є продуманий супровід педагога.</p>
+
+    <h3 class="sub-h">Основні ризики</h3>
+    <ul>
+      <li><b>«STEM заради гаджетів»</b> — дороге обладнання без продуманої методики лишається виставковим експонатом.</li>
+      <li><b>Нерівний доступ</b> — не всі заклади мають обладнання, швидкісний інтернет і достатньо комп’ютерів.</li>
+      <li><b>Підготовка педагогів</b> — інтегроване навчання потребує співпраці викладачів різних предметів і майстрів виробничого навчання.</li>
+      <li><b>Ілюзія навички</b> — симуляція не замінює роботу з реальним інструментом і матеріалом.</li>
+      <li><b>Безпека</b> — робота з електрикою, паяльником, хімічними реактивами вимагає інструктажу з охорони праці.</li>
+      <li><b>Перевантаження</b> — надто складний Проєкт без поетапного супроводу демотивує.</li>
+    </ul>
+
+    <h3 class="sub-h">Принципи STEM-навчання з цифровими лабораторіями</h3>
+    <ul class="rules">
+      <li>Починайте з реальної професійної проблеми, а не з обладнання.</li>
+      <li>Поєднуйте віртуальні та реальні лабораторії відповідно до мети заняття.</li>
+      <li>Плануйте цикл: проблема — дослідження — прототип — випробування — удосконалення.</li>
+      <li>Працюйте в команді педагогів: природничі предмети, математика, професійна підготовка.</li>
+      <li>Дотримуйтеся правил безпеки та оцінюйте і процес, і результат за чіткими критеріями.</li>
+    </ul>
+
+    <div class="box task" id="task-2">
+      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 2</span> Тест у Google Формах «STEM-освіта та цифрові лабораторії»<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <ol>
+        <li>Відкрийте в <b>Classroom</b> посилання на тест (20 питань, орієнтовно 15 хвилин).</li>
+        <li>Типи питань: один чи кілька правильних варіантів, «правда чи неправда», вибір зі списку, встановлення відповідності.</li>
+        <li>Після надсилання перегляньте результат і пояснення до відповідей.</li>
       </ol>
     </div>
   </section>
 
-  <!-- ================= ПІДСУМОК ================= -->
+  <!-- ============ SUMMARY ============ -->
   <section class="topic" id="summary">
-    <div class="topic-head">
-      <span class="topic-num">✓</span>
-      <h2>Ключові поняття та самоперевірка</h2>
-    </div>
-
+    <div class="topic-head"><span class="topic-num">✓</span><h2>Ключові поняття та самоперевірка</h2></div>
     <h3 class="sub-h" style="margin-top:0">Ключові поняття</h3>
     <dl class="glossary">
-      <div class="term"><dt>Термін 1</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 2</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 3</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 4</dt><dd class="placeholder">визначення терміна.</dd></div>
+      <div class="term"><dt>STEM-освіта</dt><dd>підхід, що інтегрує природничі науки, технології, інженерію та математику з акцентом на практичне застосування знань.</dd></div>
+      <div class="term"><dt>STEAM</dt><dd>розширення STEM-підходу, що додає мистецтва (Arts): дизайн, творчість, гуманітарний складник.</dd></div>
+      <div class="term"><dt>Цифрова лабораторія</dt><dd>сукупність апаратних і програмних засобів для експериментів, вимірювань і моделювання з автоматизованим опрацюванням даних.</dd></div>
+      <div class="term"><dt>Віртуальна лабораторія</dt><dd>комп’ютерна модель експерименту, у якій можна змінювати параметри без реального обладнання.</dd></div>
+      <div class="term"><dt>Дистанційна лабораторія</dt><dd>реальне обладнання, яким керують через інтернет.</dd></div>
+      <div class="term"><dt>Дослідницьке навчання</dt><dd>навчання через постановку запитань, висування гіпотез і проведення експериментів.</dd></div>
+      <div class="term"><dt>Інженерне проєктування</dt><dd>циклічний процес визначення проблеми, створення, випробування й удосконалення технічного рішення.</dd></div>
+      <div class="term"><dt>Прототип</dt><dd>робоча модель рішення, яку випробовують і вдосконалюють.</dd></div>
+      <div class="term"><dt>Модель 5E</dt><dd>структура заняття: зацікавити, дослідити, пояснити, застосувати, оцінити.</dd></div>
+      <div class="term"><dt>Навчально-практичний центр</dt><dd>сучасно обладнаний підрозділ закладу професійної освіти для практичного навчання й підвищення кваліфікації.</dd></div>
     </dl>
-
     <h3 class="sub-h">Питання для самоперевірки</h3>
     <ol class="questions">
-      <li class="placeholder">Питання для самоперевірки.</li>
-      <li class="placeholder">Питання для самоперевірки.</li>
-      <li class="placeholder">Питання для самоперевірки.</li>
+      <li>Що таке STEM-освіта і чим STEM-навчання відрізняється від традиційного предметного навчання?</li>
+      <li>Чим STEAM відрізняється від STEM і чому мистецький складник важливий для професійної освіти?</li>
+      <li>Які нормативні документи визначають розвиток STEM-освіти в Україні?</li>
+      <li>Які етапи має цикл інженерного проєктування? Наведіть приклад з вашої професії.</li>
+      <li>Як побудувати STEM-заняття за моделлю 5E?</li>
+      <li>Які види цифрових лабораторій ви знаєте? Наведіть приклади інструментів.</li>
+      <li>Які переваги мають віртуальні й реальні лабораторії і чому їх варто поєднувати?</li>
+      <li>Які ризики має впровадження STEM-освіти і як їх зменшити?</li>
     </ol>
   </section>
 
-  <!-- ================= ЛІТЕРАТУРА ================= -->
-  <section class="lit end" id="literature">
+  <section class="lit" id="literature">
     <h2>Література <span>до теми</span></h2>
     <ol>
-      <li>Додайте джерело, оформлене за ДСТУ 8302:2015.</li>
-      <li>Для електронних ресурсів укажіть URL та дату звернення.</li>
+      <li>Кравченко Т. В., Кравченко К. А., Мисюк О. Ю. Роль STEM-освіти в підготовці фахівців технічних спеціальностей в умовах цифрової трансформації України // Теорія і методика професійної освіти. 2025. DOI: 10.5281/zenodo.15686855.</li>
+      <li>Методичні рекомендації щодо розвитку STEM-освіти в закладах загальної середньої та позашкільної освіти у 2025/2026 навчальному році : лист ДНУ «Інститут модернізації змісту освіти» від 18.07.2025 № 21/08-624. URL: <a href="https://osvita.ua/legislation/Ser_osv/95271/" target="_blank" rel="noopener">https://osvita.ua/legislation/Ser_osv/95271/</a> (дата звернення: 17.11.2026).</li>
+      <li>Навчально-практичні центри / Міністерство освіти і науки України. URL: <a href="https://mon.gov.ua/osvita-2/profesiyno-tekhnichna-osvita/reforma-profesiynoi-osviti/derzhavno-privatne-partnerstvo-ta-dualna-osvita/derzhavno-privatne-partnerstvo/navchalno-praktichni-tsentri" target="_blank" rel="noopener">https://mon.gov.ua/osvita-2/profesiyno-tekhnichna-osvita/reforma-profesiynoi-osviti/derzhavno-privatne-partnerstvo-ta-dualna-osvita/derzhavno-privatne-partnerstvo/navchalno-praktichni-tsentri</a> (дата звернення: 17.11.2026).</li>
+      <li>Основні результати та висновки PISA-2025: резюме Національного звіту за підсумками дослідження. Київ : Український центр оцінювання якості освіти, 2026. URL: <a href="https://testportal.gov.ua/wp-content/uploads/2026/09/PISA-2025_osnovni-rezultaty.pdf" target="_blank" rel="noopener">https://testportal.gov.ua/wp-content/uploads/2026/09/PISA-2025_osnovni-rezultaty.pdf</a> (дата звернення: 17.11.2026).</li>
+      <li>Платформа «Labster» для віртуальних лабораторій та інтерактивної науки відкриває нові можливості для України / Урядовий портал. 28.11.2022. URL: <a href="https://www.kmu.gov.ua/news/mon-platforma-labster-dlya-virtualnih-laboratorij-ta-interaktivnoyi-nauki-vidkrivaye-novi-mozhlivosti-dlya-ukrayini" target="_blank" rel="noopener">https://www.kmu.gov.ua/news/mon-platforma-labster-dlya-virtualnih-laboratorij-ta-interaktivnoyi-nauki-vidkrivaye-novi-mozhlivosti-dlya-ukrayini</a> (дата звернення: 17.11.2026).</li>
+      <li>Про затвердження Типового переліку засобів навчання та обладнання для навчальних кабінетів і STEM-лабораторій : наказ МОН України від 29.04.2020 № 574. URL: <a href="https://osvita.ua/legislation/Ser_osv/73528/" target="_blank" rel="noopener">https://osvita.ua/legislation/Ser_osv/73528/</a> (дата звернення: 17.11.2026).</li>
+      <li>Про схвалення Концепції розвитку природничо-математичної освіти (STEM-освіти) : розпорядження Кабінету Міністрів України від 05.08.2020 № 960-р.</li>
+      <li>Про затвердження плану заходів щодо реалізації Концепції розвитку природничо-математичної освіти (STEM-освіти) на період до 2027 року : розпорядження Кабінету Міністрів України від 13.01.2021 № 131-р.</li>
+      <li>Уряд виділив субвенції на STEM-лабораторії: які школи отримають фінансування і скільки / ZAXID.NET. 12.06.2025. URL: <a href="https://zaxid.net/uryad_vidiliv_finansuvannya_na_stem_laboratoriyi_yaki_shkoli_otrimayut_groshi_i_skilki_n1612428" target="_blank" rel="noopener">https://zaxid.net/uryad_vidiliv_finansuvannya_na_stem_laboratoriyi_yaki_shkoli_otrimayut_groshi_i_skilki_n1612428</a> (дата звернення: 17.11.2026).</li>
+      <li>Becker K., Park K. Integrative approaches among science, technology, engineering, and mathematics (STEM) subjects on students’ learning: A meta-analysis // Journal of STEM Education: Innovations and Research. 2011. Vol. 12, No. 5.</li>
+      <li>Bybee R. W. The BSCS 5E Instructional Model: Creating Teachable Moments. Arlington : NSTA Press, 2015.</li>
+      <li>de Jong T., Linn M. C., Zacharia Z. C. Physical and virtual laboratories in science and engineering education // Science. 2013. Vol. 340, No. 6130. P. 305–308. DOI: 10.1126/science.1230579.</li>
+      <li>Kolb D. A. Experiential Learning: Experience as the Source of Learning and Development. Englewood Cliffs : Prentice Hall, 1984.</li>
+      <li>Online labs for more engaging STEM education / CORDIS, European Commission. URL: <a href="https://cordis.europa.eu/article/id/415746-online-labs-for-more-engaging-stem-education" target="_blank" rel="noopener">https://cordis.europa.eu/article/id/415746-online-labs-for-more-engaging-stem-education</a> (дата звернення: 17.11.2026).</li>
+      <li>PhET Impact Report 2025 / PhET Interactive Simulations, University of Colorado Boulder. URL: <a href="https://phet.colorado.edu/publications/PhET_Impact_Report_2025.pdf" target="_blank" rel="noopener">https://phet.colorado.edu/publications/PhET_Impact_Report_2025.pdf</a> (дата звернення: 17.11.2026).</li>
+      <li>Gathering STEAM // PE Magazine / National Society of Professional Engineers. October 2014. URL: <a href="https://www.nspe.org/career-growth/pe-magazine/october-2014/gathering-steam" target="_blank" rel="noopener">https://www.nspe.org/career-growth/pe-magazine/october-2014/gathering-steam</a> (дата звернення: 17.11.2026).</li>
+      <li>When did science education become STEM? // Education Week. 2015. URL: <a href="https://www.edweek.org/teaching-learning/when-did-science-education-become-stem/2015/04" target="_blank" rel="noopener">https://www.edweek.org/teaching-learning/when-did-science-education-become-stem/2015/04</a> (дата звернення: 17.11.2026).</li>
     </ol>
   </section>
 
 </main>
 
-<nav class="lecture-nav" id="lectureNav" aria-label="Навігація між лекціями"></nav>
-
 <footer>
   <span>Лекція 11 · Тема 11 · Спеціальність «Професійна освіта»</span>
   <button class="reset-btn" id="resetBtn" type="button">↺ скинути прогрес</button>
-  <span class="mono">оновлено: 08.11.2026</span>
+  <span class="mono">оновлено: 17.11.2026</span>
 </footer>
 
-<script src="assets/js/course.js"></script>
-<script src="assets/js/lecture.js"></script>
+<script>
+(function(){
+  "use strict";
+  var STORE_KEY = 'lecture11-stem-progress-v1';
+
+  function loadState(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    }catch(e){ return {}; }
+  }
+  function saveState(state){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  var state = loadState(); // { "task-1": [true,false,...], "test-1": 0 (chosen index) }
+
+  /* ---------- task checklists ---------- */
+  var taskBoxes = Array.prototype.slice.call(document.querySelectorAll('.box.task'));
+
+  function renderTaskBox(box){
+    var id = box.id;
+    var items = state[id] || [];
+    var lis = box.querySelectorAll('ol > li');
+    var doneCount = 0;
+    lis.forEach(function(li, i){
+      var checked = !!items[i];
+      if (checked) doneCount++;
+      var chk = li.querySelector('.chk');
+      if (chk){
+        chk.checked = checked;
+        li.querySelector('.step').classList.toggle('checked', checked);
+      }
+    });
+    var pill = box.querySelector('[data-progress]');
+    if (pill) pill.textContent = doneCount + ' / ' + lis.length + ' виконано';
+    box.classList.toggle('done', lis.length > 0 && doneCount === lis.length);
+    return { done: doneCount, total: lis.length };
+  }
+
+  taskBoxes.forEach(function(box){
+    var id = box.id;
+    var lis = Array.prototype.slice.call(box.querySelectorAll('ol > li'));
+    lis.forEach(function(li, i){
+      var step = document.createElement('label');
+      step.className = 'step';
+      var num = document.createElement('span');
+      num.className = 'num';
+      num.textContent = (i + 1);
+      var chk = document.createElement('input');
+      chk.type = 'checkbox';
+      chk.className = 'chk';
+      chk.setAttribute('aria-label', 'Крок ' + (i + 1) + ' виконано');
+      var textSpan = document.createElement('span');
+      textSpan.className = 'step-text';
+      while (li.firstChild) textSpan.appendChild(li.firstChild);
+      step.appendChild(chk);
+      step.appendChild(num);
+      step.appendChild(textSpan);
+      li.appendChild(step);
+      chk.addEventListener('change', function(){
+        if (!state[id]) state[id] = [];
+        state[id][i] = chk.checked;
+        saveState(state);
+        renderTaskBox(box);
+        updateOverall();
+      });
+    });
+    renderTaskBox(box);
+  });
+
+  /* ---------- quiz boxes ---------- */
+  var quizzes = Array.prototype.slice.call(document.querySelectorAll('.quiz'));
+  quizzes.forEach(function(quiz){
+    var box = quiz.closest('.box');
+    var boxId = box.id;
+    var correct = parseInt(quiz.getAttribute('data-correct'), 10);
+    var buttons = Array.prototype.slice.call(quiz.querySelectorAll('.test-opt'));
+    var feedback = quiz.querySelector('.test-feedback');
+
+    function applyAnswer(chosenIdx, silent){
+      buttons.forEach(function(btn, i){
+        btn.disabled = true;
+        if (i === correct) btn.classList.add('is-correct');
+        if (i === chosenIdx && chosenIdx !== correct) btn.classList.add('is-wrong');
+      });
+      feedback.classList.add('show');
+      if (chosenIdx === correct){
+        feedback.textContent = '✓ Правильно!';
+        feedback.classList.add('correct');
+      } else {
+        feedback.textContent = '✗ Неправильно. Правильна відповідь виділена зеленим.';
+        feedback.classList.add('wrong');
+      }
+      var pill = box.querySelector('[data-progress]');
+      if (pill) pill.textContent = 'пройдено';
+      box.classList.add('done');
+    }
+
+    buttons.forEach(function(btn, i){
+      btn.addEventListener('click', function(){
+        state[boxId] = i;
+        saveState(state);
+        applyAnswer(i);
+        updateOverall();
+      });
+    });
+
+    if (typeof state[boxId] === 'number'){
+      applyAnswer(state[boxId], true);
+    }
+  });
+
+  /* ---------- overall progress ---------- */
+  function updateOverall(){
+    var totalSteps = 0, doneSteps = 0;
+    taskBoxes.forEach(function(box){
+      var r = renderTaskBox(box);
+      totalSteps += r.total;
+      doneSteps += r.done;
+    });
+    quizzes.forEach(function(quiz){
+      totalSteps += 1;
+      var box = quiz.closest('.box');
+      if (box.classList.contains('done')) doneSteps += 1;
+    });
+    var pct = totalSteps ? Math.round((doneSteps / totalSteps) * 100) : 0;
+    var fill = document.getElementById('progressFill');
+    var label = document.getElementById('tocProgress');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.innerHTML = 'прогрес: <b>' + pct + '%</b>';
+  }
+  updateOverall();
+
+  /* ---------- reset ---------- */
+  var resetBtn = document.getElementById('resetBtn');
+  if (resetBtn){
+    resetBtn.addEventListener('click', function(){
+      try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+      location.reload();
+    });
+  }
+
+  /* ---------- scrollspy ---------- */
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.topic[id], section.lit[id]'));
+  var tocLinks = {};
+  Array.prototype.slice.call(document.querySelectorAll('.toc-inner a[data-toc]')).forEach(function(a){
+    tocLinks[a.getAttribute('data-toc')] = a;
+  });
+  if ('IntersectionObserver' in window && sections.length){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var link = tocLinks[entry.target.id];
+        if (!link) return;
+        if (entry.isIntersecting){
+          Object.keys(tocLinks).forEach(function(k){ tocLinks[k].classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+    sections.forEach(function(s){ observer.observe(s); });
+  }
+})();
+</script>
+
 </body>
 </html>

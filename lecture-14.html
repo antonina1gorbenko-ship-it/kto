@@ -3,50 +3,703 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Лекція 14. Авторське право та відкриті освітні ресурси</title>
-<meta name="description" content="Лекція 14 електронного посібника «Комп’ютерні технології в освітньому процесі»: Авторське право та відкриті освітні ресурси">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%23F26B1D'/%3E%3Ctext x='16' y='22' font-size='15' font-family='Arial' font-weight='700' text-anchor='middle' fill='%23fff'%3EКТ%3C/text%3E%3C/svg%3E">
+<title>Цифрова безпека та медіаграмотність</title>
+<meta name="description" content="Лекція 14 для спеціальності «Професійна освіта»: цифрова безпека та медіаграмотність — кіберзагрози, кібергігієна, кібербулінг, перевірка інформації, метод SIFT">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
-<script>try{var t=localStorage.getItem('posibnyk-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+<style>
+  :root{
+    --navy:#0E1F4D;
+    --ink:#0E1F4D;
+    --ink-soft:#2B3A63;
+    --ink-muted:#5A6788;
+    --paper:#FFFFFF;
+    --surface:#FFFFFF;
+    --surface-2:#F4F7FF;
+    --line:#DCE3F4;
+    --accent:#1D4ED8;
+    --accent-ink:#163BA6;
+    --accent-tint:#E8EEFF;
+    --task:#1597E5;
+    --task-ink:#0B6AA8;
+    --task-tint:#E4F4FD;
+    --test:#F26B1D;
+    --test-ink:#C2500C;
+    --test-tint:#FFF1E7;
+    --bad:#C0262D;
+    --hero-a:#0E1F4D;
+    --hero-b:#1D4ED8;
+    --shadow:0 1px 2px rgba(14,31,77,.05), 0 14px 32px -18px rgba(14,31,77,.35);
+    --radius:18px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#EEF2FF;
+      --ink-soft:#C9D3F2;
+      --ink-muted:#93A1C8;
+      --paper:#081332;
+      --surface:#0F1D45;
+      --surface-2:#132453;
+      --line:#22346B;
+      --accent:#7C9BFF;
+      --accent-ink:#AFC2FF;
+      --accent-tint:#18295C;
+      --task:#4DB8F7;
+      --task-ink:#8FD3FB;
+      --task-tint:#0F2D4F;
+      --test:#FF8A3D;
+      --test-ink:#FFB27D;
+      --test-tint:#3A2210;
+      --bad:#FF6B6B;
+      --hero-a:#050C24;
+      --hero-b:#1636B0;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 34px -18px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#EEF2FF;
+    --ink-soft:#C9D3F2;
+    --ink-muted:#93A1C8;
+    --paper:#081332;
+    --surface:#0F1D45;
+    --surface-2:#132453;
+    --line:#22346B;
+    --accent:#7C9BFF;
+    --accent-ink:#AFC2FF;
+    --accent-tint:#18295C;
+    --task:#4DB8F7;
+    --task-ink:#8FD3FB;
+    --task-tint:#0F2D4F;
+    --test:#FF8A3D;
+    --test-ink:#FFB27D;
+    --test-tint:#3A2210;
+    --bad:#FF6B6B;
+    --hero-a:#050C24;
+    --hero-b:#1636B0;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 16px 34px -18px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Manrope',system-ui,'Segoe UI',sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{font-family:'Unbounded',system-ui,sans-serif;margin:0;text-wrap:balance;}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;}
+  a{color:var(--accent);}
+  ::selection{background:var(--test);color:#fff;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    color:#fff;
+    background:
+      radial-gradient(circle at 88% 18%, rgba(242,107,29,.55) 0, rgba(242,107,29,0) 26%),
+      linear-gradient(135deg, var(--hero-a) 0%, var(--hero-b) 100%);
+    padding:72px 24px 120px;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    left:-5%; right:-5%; bottom:-1px;
+    height:90px;
+    background:var(--paper);
+    clip-path:polygon(0 70%, 30% 35%, 62% 72%, 100% 20%, 100% 100%, 0 100%);
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    left:-5%; right:-5%; bottom:-1px;
+    height:110px;
+    background:var(--test);
+    clip-path:polygon(0 62%, 30% 27%, 62% 64%, 100% 12%, 100% 22%, 62% 74%, 30% 37%, 0 72%);
+    z-index:1;
+  }
+  .hero-net{
+    position:absolute;
+    right:-40px; top:10px;
+    width:min(560px,70vw);
+    height:auto;
+    opacity:.55;
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;z-index:2;max-width:1000px;margin:0 auto;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12.5px;font-weight:700;
+    letter-spacing:.1em;text-transform:uppercase;
+    background:var(--test);
+    color:#fff;
+    padding:6px 14px;
+    border-radius:99px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;}
+  .hero h1{
+    font-size:clamp(32px,5.2vw,58px);
+    line-height:1.08;
+    font-weight:800;
+    max-width:14em;
+  }
+  .hero h1 .hl{
+    color:#FFB27D;
+  }
+  .hero .theme{
+    margin:18px 0 0;
+    font-size:clamp(16px,2vw,19px);
+    color:rgba(255,255,255,.86);
+    max-width:36em;
+    font-weight:500;
+  }
+  .meta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+  .meta-chip{
+    display:flex;align-items:center;gap:7px;
+    font-size:13.5px;
+    color:#fff;
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.28);
+    border-radius:12px;
+    padding:7px 13px;
+    backdrop-filter:blur(4px);
+  }
+  .meta-chip b{color:#FFB27D;font-family:'Unbounded',sans-serif;font-size:15px;}
+
+  /* ---------- sticky toc ---------- */
+  .toc-bar{
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .toc-inner{
+    max-width:1000px;margin:0 auto;padding:0 24px;
+    display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
+  }
+  .toc-inner::-webkit-scrollbar{display:none;}
+  .toc-inner a{
+    flex:none;
+    font-size:13px;font-weight:700;
+    color:var(--ink-muted);
+    text-decoration:none;
+    padding:14px 12px 12px;
+    border-bottom:3px solid transparent;
+    white-space:nowrap;
+  }
+  .toc-inner a:hover{color:var(--accent);}
+  .toc-inner a.active{color:var(--accent);border-bottom-color:var(--test);}
+  .toc-progress{
+    flex:none;margin-left:auto;
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--ink-muted);
+    padding:14px 0 12px 14px;white-space:nowrap;
+  }
+  .toc-progress b{color:var(--test);}
+  .progress-track{height:4px;background:var(--surface-2);}
+  .progress-track .fill{
+    height:100%;width:0%;
+    background:linear-gradient(90deg, var(--accent), var(--test));
+    border-radius:0 4px 4px 0;
+    transition:width .35s ease;
+  }
+
+  /* ---------- content ---------- */
+  main{max-width:1000px;margin:0 auto;padding:0 24px 40px;}
+
+  .goal{
+    position:relative;
+    margin:40px 0 0;
+    padding:26px 28px 24px 96px;
+    background:var(--accent-tint);
+    border-radius:var(--radius);
+  }
+  .goal::before{
+    content:"🎯";
+    position:absolute;left:24px;top:24px;
+    width:52px;height:52px;border-radius:16px;
+    background:var(--accent);
+    display:flex;align-items:center;justify-content:center;
+    font-size:24px;
+    box-shadow:0 8px 18px -8px var(--accent);
+  }
+  .goal h2{font-size:15px;color:var(--accent-ink);margin-bottom:8px;letter-spacing:.02em;}
+  .goal p{margin:0;color:var(--ink-soft);font-size:16px;}
+
+  section.topic{margin-top:80px;scroll-margin-top:70px;}
+  .topic-head{
+    display:flex;align-items:center;gap:18px;
+    margin-bottom:26px;
+  }
+  .topic-num{
+    flex:none;
+    font-family:'Unbounded',sans-serif;
+    font-weight:800;
+    font-size:54px;
+    line-height:1;
+    color:transparent;
+    -webkit-text-stroke:2px var(--test);
+    letter-spacing:-.02em;
+  }
+  .topic h2{
+    font-size:clamp(22px,2.8vw,30px);
+    font-weight:700;
+    color:var(--ink);
+    position:relative;
+    padding-bottom:10px;
+  }
+  .topic h2::after{
+    content:"";position:absolute;left:0;bottom:0;
+    width:64px;height:5px;border-radius:5px;
+    background:linear-gradient(90deg, var(--test), var(--accent));
+  }
+  .topic p{color:var(--ink-soft);font-size:16.5px;margin:0 0 16px;}
+  .topic p b,.topic li b{color:var(--ink);font-weight:800;}
+  .topic ul{margin:0 0 20px;padding-left:0;list-style:none;color:var(--ink-soft);font-size:16px;}
+  .topic ul li{position:relative;padding-left:26px;margin-bottom:10px;}
+  .topic ul li::before{
+    content:"";position:absolute;left:4px;top:.62em;
+    width:9px;height:9px;border-radius:3px;
+    background:var(--test);
+    transform:rotate(45deg);
+  }
+
+  .callout{
+    position:relative;
+    background:var(--surface-2);
+    border-radius:14px;
+    padding:16px 20px 16px 22px;
+    margin:0 0 20px;
+    font-size:15px;
+    color:var(--ink-soft);
+    border-left:5px solid var(--test);
+  }
+  .callout b{color:var(--accent-ink);}
+
+  .sub-h{font-size:19px;font-weight:700;color:var(--ink);margin:34px 0 14px;display:flex;align-items:center;gap:10px;}
+  .sub-h::before{content:"";width:14px;height:14px;border-radius:50%;background:var(--accent);box-shadow:5px 0 0 var(--test);margin-right:6px;}
+
+  /* ---------- diagrams ---------- */
+  figure.diagram{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 20px 16px;
+    margin:28px 0 30px;
+    box-shadow:var(--shadow);
+    position:relative;
+  }
+  figure.diagram::before{
+    content:"";position:absolute;left:24px;top:-1px;width:80px;height:4px;border-radius:0 0 4px 4px;
+    background:var(--test);
+  }
+  figure.diagram svg{display:block;width:100%;height:auto;}
+  figure.diagram figcaption{margin-top:14px;font-size:13.5px;color:var(--ink-muted);text-align:center;}
+  .svg-ink{fill:var(--ink);}
+  .svg-muted{fill:var(--ink-muted);}
+
+  /* ---------- tables ---------- */
+  .table-wrap{overflow-x:auto;}
+  .table-cap{font-size:14.5px;color:var(--ink-muted);margin:0 0 8px;}
+  .table-cap b{color:var(--test-ink);}
+  .data-table{
+    width:100%;border-collapse:separate;border-spacing:0;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;
+    font-size:14.5px;margin:6px 0 24px;
+  }
+  .data-table th{
+    text-align:left;
+    font-size:12.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+    color:#fff;background:var(--accent);
+    padding:11px 14px;
+  }
+  .data-table td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--ink-soft);vertical-align:top;}
+  .data-table tr:nth-child(even) td{background:var(--surface-2);}
+  .data-table tr:last-child td{border-bottom:none;}
+  .data-table td.yr{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--test-ink);white-space:nowrap;}
+  details.more{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:0 0 26px;overflow:hidden;}
+  details.more summary{
+    cursor:pointer;list-style:none;
+    padding:13px 18px;font-weight:800;font-size:15px;color:var(--accent-ink);
+    display:flex;align-items:center;gap:10px;
+  }
+  details.more summary::-webkit-details-marker{display:none;}
+  details.more summary::before{
+    content:"+";flex:none;
+    width:24px;height:24px;border-radius:8px;background:var(--test);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:800;
+  }
+  details.more[open] summary::before{content:"−";}
+  details.more .data-table{margin:0;border:none;border-radius:0;}
+  .risk{display:inline-flex;align-items:center;gap:8px;font-weight:800;color:var(--ink);white-space:nowrap;}
+  .risk::before{content:"";width:11px;height:11px;border-radius:50%;background:var(--dot);flex:none;}
+  .risk.r1{--dot:var(--bad);}
+  .risk.r2{--dot:var(--test);}
+  .risk.r3{--dot:var(--accent);}
+  .risk.r4{--dot:var(--task);}
+
+  /* ---------- boxes ---------- */
+  .box{
+    position:relative;
+    border-radius:var(--radius);
+    padding:26px 26px 22px;
+    margin:28px 0 32px;
+    box-shadow:var(--shadow);
+    background:var(--surface);
+    border:2px solid var(--line);
+  }
+  .box.test{border-color:var(--test);background:linear-gradient(180deg, var(--test-tint), var(--surface) 70%);}
+  .box.task{border-color:var(--accent);background:linear-gradient(180deg, var(--accent-tint), var(--surface) 80%);}
+  .box-title{
+    font-family:'Unbounded',sans-serif;font-weight:700;font-size:16px;
+    margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .box.test .box-title{color:var(--test-ink);}
+  .box.task .box-title{color:var(--accent-ink);}
+  .box-tag{
+    font-family:'JetBrains Mono',monospace;font-size:11.5px;font-weight:700;letter-spacing:.06em;
+    padding:4px 10px;border-radius:8px;color:#fff;
+  }
+  .box.test .box-tag{background:var(--test);}
+  .box.task .box-tag{background:var(--accent);}
+  .box-check{display:none;font-size:13px;}
+  .box.done .box-check{display:inline;}
+  .box-progress{
+    margin-left:auto;
+    font-family:'JetBrains Mono',monospace;font-weight:600;font-size:11.5px;
+    padding:3px 10px;border-radius:99px;
+    background:var(--surface);color:var(--ink-muted);border:1px solid var(--line);
+    white-space:nowrap;
+  }
+  .box-progress:empty{display:none;}
+  .box.done .box-progress{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .box.test.done .box-progress{background:var(--test);border-color:var(--test);}
+  .box-close{
+    margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);
+    font-size:14.5px;color:var(--ink-soft);
+  }
+
+  .box ol{margin:0;padding:0;list-style:none;}
+  .box ol li{margin-bottom:12px;font-size:15.5px;color:var(--ink-soft);}
+  .box ol li:last-child{margin-bottom:0;}
+  .box ol li b{color:var(--ink);}
+  .step{display:flex;gap:12px;align-items:flex-start;cursor:pointer;-webkit-tap-highlight-color:transparent;}
+  .step .num{
+    flex:none;width:28px;height:28px;border-radius:9px;
+    background:var(--surface);border:2px solid var(--accent);color:var(--accent);
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+    transition:background .15s,color .15s;
+  }
+  .chk{position:absolute;opacity:0;width:1px;height:1px;}
+  .step:has(.chk:checked) .num,.step.checked .num{background:var(--accent);color:#fff;}
+  .step:has(.chk:checked) .step-text,.step.checked .step-text{color:var(--ink-muted);text-decoration:line-through;text-decoration-color:var(--test);}
+  .chk:focus-visible ~ .num{outline:2px solid var(--test);outline-offset:2px;}
+  .step-text{flex:1;padding-top:2px;}
+
+  .test-q{font-weight:700;color:var(--ink);margin-bottom:14px;font-size:16px;}
+  .quiz{display:grid;gap:8px;}
+  .test-opt{
+    display:flex;width:100%;gap:12px;align-items:center;
+    font-size:15px;color:var(--ink-soft);
+    padding:11px 14px;margin:0;
+    border:2px solid var(--line);border-radius:12px;
+    background:var(--surface);
+    font-family:inherit;text-align:left;cursor:pointer;
+    transition:border-color .15s, transform .15s, background .15s;
+  }
+  .test-opt::before{
+    content:"";flex:none;width:18px;height:18px;border-radius:50%;
+    border:2px solid var(--test);background:var(--surface);
+  }
+  .test-opt:hover:not(:disabled){border-color:var(--test);transform:translateX(3px);}
+  .test-opt:disabled{cursor:default;}
+  .test-opt.is-correct{border-color:var(--accent);background:var(--accent-tint);color:var(--accent-ink);font-weight:800;}
+  .test-opt.is-correct::before{background:var(--accent);border-color:var(--accent);box-shadow:inset 0 0 0 3px var(--surface);}
+  .test-opt.is-wrong{border-color:var(--bad);background:color-mix(in srgb, var(--bad) 10%, var(--surface));}
+  .test-opt.is-wrong::before{background:var(--bad);border-color:var(--bad);box-shadow:inset 0 0 0 3px var(--surface);}
+  .test-feedback{margin-top:6px;font-size:14px;font-weight:800;display:none;}
+  .test-feedback.show{display:block;}
+  .test-feedback.correct{color:var(--accent-ink);}
+  .test-feedback.wrong{color:var(--bad);}
+  .box.done{box-shadow:var(--shadow), 0 0 0 4px color-mix(in srgb, var(--accent) 22%, transparent);}
+  .box.test.done{box-shadow:var(--shadow), 0 0 0 4px color-mix(in srgb, var(--test) 25%, transparent);}
+
+  /* ---------- prompt anatomy ---------- */
+  .prompt-demo{
+    background:var(--navy);
+    color:#fff;
+    border-radius:var(--radius);
+    padding:24px 26px 20px;
+    margin:28px 0 32px;
+    box-shadow:var(--shadow);
+  }
+  :root[data-theme="dark"] .prompt-demo{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .prompt-demo{background:var(--surface-2);} }
+  .prompt-demo .box-title{color:#fff;}
+  .prompt-demo .box-tag{background:var(--test);}
+  .prompt-text{font-size:16px;line-height:2.05;color:rgba(255,255,255,.9);font-family:'JetBrains Mono',monospace;font-size:14.5px;}
+  .seg{border-radius:6px;padding:2px 4px;cursor:pointer;box-shadow:inset 0 -2px 0 var(--c);transition:background .15s;}
+  .seg:hover,.seg.on{background:var(--c);color:#fff;}
+  .seg-role{--c:#5B8CFF;}
+  .seg-task{--c:#38BDF8;}
+  .seg-ctx{--c:#F26B1D;}
+  .seg-fmt{--c:#FFB27D;}
+  .seg-fmt.on,.seg-fmt:hover{color:var(--navy);}
+  .seg-lim{--c:#FF5A5F;}
+  .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;padding-top:16px;border-top:1px dashed rgba(255,255,255,.25);}
+  .legend button{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;font-weight:700;
+    border:2px solid var(--c);color:#fff;background:transparent;
+    border-radius:99px;padding:5px 13px;cursor:pointer;
+  }
+  .legend button.on{background:var(--c);}
+  .legend button.seg-fmt.on{color:var(--navy);}
+  .legend-hint{font-size:13px;color:rgba(255,255,255,.65);margin:10px 0 0;}
+
+  /* ---------- cards ---------- */
+  .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:8px 0 30px;}
+  .card{
+    position:relative;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px 20px 18px;
+    box-shadow:var(--shadow);
+    transition:transform .2s, border-color .2s;
+  }
+  .card:hover{transform:translateY(-3px);border-color:var(--test);}
+  .card:nth-child(odd) .ic{background:var(--accent);}
+  .card:nth-child(even) .ic{background:var(--test);}
+  .card .ic{
+    width:44px;height:44px;border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:21px;margin-bottom:12px;
+  }
+  .card h3{font-family:'Manrope',sans-serif;font-size:16.5px;font-weight:800;margin-bottom:8px;color:var(--ink);}
+  .card p{font-size:14.5px;margin:0;color:var(--ink-soft);}
+
+  /* ---------- case ---------- */
+  .case{
+    background:var(--surface);
+    border:2px solid var(--line);
+    border-radius:var(--radius);
+    padding:24px 26px 20px;margin:28px 0 32px;box-shadow:var(--shadow);
+  }
+  .case .box-title{color:var(--ink);}
+  .case .box-tag{background:var(--navy);}
+  :root[data-theme="dark"] .case .box-tag{background:var(--accent);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .case .box-tag{background:var(--accent);} }
+  .case-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .case-side{border-radius:14px;padding:16px 18px;font-size:15px;color:var(--ink-soft);}
+  .case-side h4{margin:0 0 8px;font-size:14px;font-family:'Unbounded',sans-serif;}
+  .case-side.plus{background:var(--accent-tint);border-top:4px solid var(--accent);}
+  .case-side.plus h4{color:var(--accent-ink);}
+  .case-side.minus{background:var(--test-tint);border-top:4px solid var(--test);}
+  .case-side.minus h4{color:var(--test-ink);}
+  .case-side p{margin:0;}
+  .case .box-close i{color:var(--test-ink);font-weight:800;font-style:normal;}
+
+  /* ---------- rules ---------- */
+  .topic ul.rules{counter-reset:r;display:grid;gap:10px;margin-bottom:26px;}
+  .topic ul.rules li{
+    counter-increment:r;
+    margin:0;padding:14px 16px 14px 62px;
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    box-shadow:var(--shadow);
+  }
+  .topic ul.rules li::before{
+    content:counter(r);
+    transform:none;
+    left:14px;top:50%;margin-top:-17px;
+    width:34px;height:34px;border-radius:11px;
+    background:var(--accent);
+    color:#fff;font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  .topic ul.rules li:nth-child(even)::before{background:var(--test);}
+
+  /* ---------- glossary & questions ---------- */
+  .glossary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:6px 0 28px;}
+  .term{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:12px;padding:14px 16px;}
+  .term:nth-child(4n+2),.term:nth-child(4n+3){border-left-color:var(--test);}
+  .term dt{font-weight:800;color:var(--ink);font-size:15.5px;margin-bottom:4px;}
+  .term dd{margin:0;font-size:14.5px;color:var(--ink-soft);}
+  .questions{counter-reset:q;list-style:none;padding:0;margin:0 0 10px;}
+  .questions li{
+    counter-increment:q;
+    display:flex;gap:14px;align-items:flex-start;
+    padding:12px 0;border-bottom:1px solid var(--line);
+    color:var(--ink-soft);font-size:16px;
+  }
+  .questions li:last-child{border-bottom:none;}
+  .questions li::before{
+    content:counter(q, decimal-leading-zero);
+    flex:none;font-family:'Unbounded',sans-serif;font-weight:800;font-size:15px;
+    color:var(--test);min-width:30px;
+  }
+
+  /* ---------- literature (end) ---------- */
+  .lit{
+    margin:80px 0 0;
+    background:var(--navy);
+    color:#fff;
+    border-radius:24px;
+    padding:34px 34px 30px;
+    position:relative;overflow:hidden;
+    scroll-margin-top:70px;
+  }
+  :root[data-theme="dark"] .lit{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .lit{background:var(--surface-2);} }
+  .lit::after{
+    content:"";position:absolute;right:-60px;top:-60px;width:200px;height:200px;border-radius:50%;
+    background:radial-gradient(circle, rgba(242,107,29,.55), rgba(242,107,29,0) 70%);
+  }
+  .lit h2{font-size:22px;margin-bottom:20px;position:relative;z-index:1;}
+  .lit h2 span{color:#FFB27D;}
+  .lit ol{counter-reset:l;list-style:none;margin:0;padding:0;position:relative;z-index:1;}
+  .lit li{
+    counter-increment:l;
+    position:relative;
+    padding:0 0 12px 46px;margin-bottom:12px;
+    border-bottom:1px solid rgba(255,255,255,.12);
+    font-size:14.5px;color:rgba(255,255,255,.85);
+  }
+  .lit li:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+  .lit li::before{
+    content:counter(l);
+    position:absolute;left:0;top:0;
+    width:30px;height:30px;border-radius:9px;
+    background:var(--test);color:#fff;
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:12.5px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .lit a{color:#9DB7FF;word-break:break-all;}
+  .lit i{color:#fff;}
+
+  footer{
+    max-width:1000px;margin:0 auto;padding:30px 24px 56px;
+    color:var(--ink-muted);font-size:13.5px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .reset-btn{
+    font-family:'JetBrains Mono',monospace;font-size:12px;
+    color:var(--accent);background:var(--surface);
+    border:2px solid var(--accent);border-radius:10px;
+    padding:7px 14px;cursor:pointer;font-weight:700;
+  }
+  .reset-btn:hover{background:var(--accent);color:#fff;}
+
+  @media (max-width:860px){
+    .cards{grid-template-columns:repeat(2,minmax(0,1fr));}
+  }
+  @media (max-width:640px){
+    .hero{padding:52px 16px 100px;}
+    .toc-inner,main,footer{padding-left:16px;padding-right:16px;}
+    .goal{padding:84px 20px 20px;}
+    .goal::before{top:18px;left:20px;}
+    .topic-num{font-size:40px;}
+    .box,.prompt-demo,.case{padding:20px 16px 16px;}
+    .cards,.glossary,.case-cols{grid-template-columns:1fr;}
+    .lit{padding:26px 20px 22px;}
+  }
+
+  /* ---------- lecture 9 additions ---------- */
+  .example{
+    background:var(--navy);color:#fff;border-radius:var(--radius);
+    padding:24px 26px 20px;margin:28px 0 32px;box-shadow:var(--shadow);
+  }
+  :root[data-theme="dark"] .example{background:var(--surface-2);}
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .example{background:var(--surface-2);} }
+  .example .box-title{color:#fff;}
+  .example .box-tag{background:var(--test);}
+  .levels{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 18px;}
+  .levels span{
+    position:relative;flex:1 1 120px;text-align:center;
+    font-family:'Unbounded',sans-serif;font-weight:700;font-size:13px;
+    padding:10px 14px;border-radius:10px;
+    background:rgba(255,255,255,.12);color:#fff;
+  }
+  .levels span:nth-child(2){background:rgba(255,255,255,.2);}
+  .levels span:nth-child(3){background:rgba(242,107,29,.55);}
+  .levels span:nth-child(4){background:var(--test);}
+  .topic ul.ex-list{color:rgba(255,255,255,.9);font-size:15.5px;margin:0;}
+  .topic ul.ex-list li b{color:#FFB27D;}
+  .steps6{list-style:none;padding:0;margin:8px 0 26px;counter-reset:s;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+  .steps6 li{
+    counter-increment:s;position:relative;
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    padding:52px 18px 16px;box-shadow:var(--shadow);
+  }
+  .steps6 li::before{
+    content:counter(s);position:absolute;left:18px;top:14px;
+    width:30px;height:30px;border-radius:10px;
+    background:var(--accent);color:#fff;
+    font-family:'Unbounded',sans-serif;font-weight:800;font-size:14px;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .steps6 li:nth-child(even)::before{background:var(--test);}
+  .steps6 li b{display:block;color:var(--ink);font-size:16px;margin-bottom:6px;}
+  .steps6 li span{display:block;color:var(--ink-soft);font-size:14.5px;}
+  .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:8px 0 26px;}
+  .stat{background:var(--accent-tint);border-radius:var(--radius);padding:18px 20px;}
+  .stat:nth-child(2){background:var(--test-tint);}
+  .stat b{display:block;font-family:'Unbounded',sans-serif;font-size:36px;line-height:1.1;color:var(--accent);}
+  .stat:nth-child(2) b{color:var(--test-ink);}
+  .stat span{display:block;margin-top:6px;font-size:14.5px;color:var(--ink-soft);}
+  .card .ic{color:#fff;}
+  .quiz-link{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:10px 18px;border-radius:12px;
+    background:var(--test);color:#fff;font-weight:800;text-decoration:none;font-size:15px;box-shadow:0 8px 18px -10px var(--test);}
+  .quiz-link:hover{background:var(--accent);}
+  @media (max-width:860px){ .steps6{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  @media (max-width:640px){ .hero-net{display:none;} .steps6,.stats{grid-template-columns:1fr;} .example{padding:20px 16px 16px;} }
+
+  .levels span:nth-child(5){background:#C2500C;}
+  .cards.two{grid-template-columns:repeat(2,minmax(0,1fr));}
+  @media (max-width:640px){ .cards.two{grid-template-columns:1fr;} }
+</style>
+
 </head>
-<body data-lecture="14">
-
-<div class="course-bar">
-  <div class="course-bar-inner">
-    <a class="course-home" href="index.html" title="На титульну сторінку">
-      <span class="logo">КТ</span><span class="t">Комп’ютерні технології в освітньому процесі</span>
-    </a>
-    <div class="course-actions">
-      <details class="course-menu">
-        <summary class="bar-btn">☰ <span class="lbl">Лекції</span></summary>
-        <div class="menu-panel"><ol id="courseMenuList"></ol></div>
-      </details>
-      <button class="bar-btn" id="themeToggle" type="button" aria-label="Змінити тему оформлення">◐ <span class="lbl">Тема</span></button>
-    </div>
-  </div>
-</div>
-
+<body>
 <header class="hero">
-  <img class="hero-net" src="assets/img/hero-net.svg" alt="" aria-hidden="true">
+  <svg class="hero-net" viewBox="0 0 570 420" aria-hidden="true">
+    <!-- shield -->
+    <path d="M400 60 L490 95 V190 C490 260 445 305 400 330 C355 305 310 260 310 190 V95 Z" fill="#fff" fill-opacity=".14" stroke="#fff" stroke-opacity=".75" stroke-width="4"/>
+    <rect x="370" y="175" width="60" height="50" rx="8" fill="#F26B1D"/>
+    <path d="M380 175 v-18 a20 20 0 0 1 40 0 v18" fill="none" stroke="#F26B1D" stroke-width="9"/>
+    <circle cx="400" cy="198" r="7" fill="#fff"/>
+    <!-- magnifier over news -->
+    <rect x="70" y="80" width="180" height="130" rx="16" fill="#fff" fill-opacity=".12" stroke="#fff" stroke-opacity=".6" stroke-width="3"/>
+    <g fill="#fff" fill-opacity=".7"><rect x="90" y="100" width="110" height="14" rx="6"/><rect x="90" y="125" width="140" height="9" rx="4"/><rect x="90" y="143" width="120" height="9" rx="4"/><rect x="90" y="161" width="130" height="9" rx="4"/></g>
+    <circle cx="210" cy="215" r="44" fill="none" stroke="#FFB27D" stroke-width="9"/>
+    <path d="M242 247 L280 285" stroke="#FFB27D" stroke-width="12" stroke-linecap="round"/>
+    <text x="210" y="230" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="40" font-weight="800" fill="#fff">?</text>
+    <g stroke="#FFB27D" stroke-width="3" stroke-dasharray="6 6" fill="none"><path d="M260 150 C280 150 290 160 305 170"/></g>
+  </svg>
   <div class="hero-inner">
     <span class="eyebrow">Лекція 14 · Тема 14</span>
-    <h1>Авторське право та <span class="hl">відкриті освітні ресурси</span></h1>
-    <p class="theme">Правові засади використання чужих творів, ліцензії Creative Commons та відкриті освітні ресурси.</p>
-    <div class="meta-row">
-      <span class="meta-chip draft-chip">✎ <b>Заготовка</b> лекція в розробці</span>
-    </div>
+    <h1>Цифрова безпека <span class="hl">та медіаграмотність</span></h1>
+    <p class="theme">Як захистити акаунти й дані, зупинити кібербулінг і не потрапити на гачок фейків — правила для педагогів і здобувачів освіти.</p>
   </div>
 </header>
 
 <nav class="toc-bar">
   <div class="toc-inner">
-    <a href="#s1" data-toc="s1">1. Авторське право</a>
-    <a href="#s2" data-toc="s2">2. Creative Commons</a>
-    <a href="#s3" data-toc="s3">3. ВОР</a>
-    <a href="#s4" data-toc="s4">4. Доброчесність</a>
+    <a href="#concept" data-toc="concept">1. Поняття</a>
+    <a href="#threats" data-toc="threats">2. Кіберзагрози</a>
+    <a href="#env" data-toc="env">3. Освітнє середовище</a>
+    <a href="#bullying" data-toc="bullying">4. Кібербулінг</a>
+    <a href="#media" data-toc="media">5. Медіаграмотність</a>
+    <a href="#vet" data-toc="vet">6. Професійна освіта</a>
     <a href="#summary" data-toc="summary">Підсумок</a>
     <a href="#literature" data-toc="literature">Література</a>
     <span class="toc-progress" id="tocProgress">прогрес: <b>0%</b></span>
@@ -58,125 +711,496 @@
 
   <div class="goal">
     <h2>Мета лекції</h2>
-    <p class="placeholder">Сформулюйте мету лекції: які знання, уміння та компетентності сформує тема в здобувачів освіти.</p>
+    <p>Сформувати уявлення про цифрову безпеку та медіаграмотність як складники цифрової компетентності; ознайомити з основними кіберзагрозами, правилами кібергігієни та протидією кібербулінгу; навчити перевіряти інформацію, розпізнавати маніпуляції й формувати безпечну поведінку учасників освітнього процесу в закладах професійної (професійно-технічної) освіти.</p>
   </div>
 
-  <!-- ================= 1. АВТОРСЬКЕ ПРАВО В ОСВІТІ ================= -->
-  <section class="topic" id="s1">
-    <div class="topic-head">
-      <span class="topic-num">01</span>
-      <h2>Авторське право в освіті</h2>
+  <!-- ============ 1 ============ -->
+  <section class="topic" id="concept">
+    <div class="topic-head"><span class="topic-num">01</span><h2>Цифрова безпека й медіаграмотність: поняття</h2></div>
+
+    <p>Європейська рамка цифрової компетентності громадян <b>DigComp 2.2</b> (2022) виокремлює п’ять сфер: інформаційна грамотність і робота з даними, комунікація та співпраця, створення цифрового контенту, <b>безпека</b> та розв’язання проблем. Безпека охоплює захист пристроїв, персональних даних і приватності, здоров’я й добробуту, а також довкілля. В Україні розвиток цифрових навичок визначає Концепція розвитку цифрових компетентностей (розпорядження КМУ від 03.03.2021 № 167-р).</p>
+
+    <div class="cards two">
+      <div class="card"><div class="ic">🛡️</div><h3>Цифрова безпека</h3><p>Знання, уміння й звички, що дають змогу захищати пристрої, облікові записи, персональні дані й психологічний добробут у цифровому середовищі.</p></div>
+      <div class="card"><div class="ic">🔍</div><h3>Медіаграмотність</h3><p>Здатність знаходити, критично оцінювати, використовувати й створювати медіаконтент, розпізнавати маніпуляції та дезінформацію. Визначення містить Закон України «Про медіа» (2022).</p></div>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
-        <p>Підказка: готові блоки (схема, таблиця, картки, кейс, виноска) можна скопіювати з <a href="lecture-08.html">лекції 8</a> — стилі вже підключено до всіх сторінок.</p>
+    <div class="callout"><b>«Фільтр».</b> З 2021 року Міністерство культури та інформаційної політики реалізує національний проєкт з медіаграмотності «Фільтр», мета якого — зробити медіаграмотність невід’ємною навичкою українців.</div>
+
+    <p class="table-cap"><b>Таблиця 1.</b> Два складники безпечної поведінки в цифровому середовищі</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Складник</th><th>Від чого захищає</th><th>Ключові вміння</th></tr></thead>
+        <tbody>
+          <tr><td><b>Цифрова безпека (кібергігієна)</b></td><td>Від зламу облікових записів, шахрайства, витоку даних, кібербулінгу</td><td>Надійні паролі, двофакторна автентифікація, оновлення, обережність із посиланнями</td></tr>
+          <tr><td><b>Медіаграмотність</b></td><td>Від дезінформації, маніпуляцій, фейків і пропаганди</td><td>Перевірка джерел, латеральне читання, розпізнавання маніпулятивних прийомів</td></tr>
+          <tr><td><b>Спільне</b></td><td>Від рішень, ухвалених під тиском емоцій</td><td>Зупинитися, перевірити, лише потім діяти</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
-  <!-- ================= 2. ЛІЦЕНЗІЇ CREATIVE COMMONS ================= -->
-  <section class="topic" id="s2">
-    <div class="topic-head">
-      <span class="topic-num">02</span>
-      <h2>Ліцензії Creative Commons</h2>
+  <!-- ============ 2 ============ -->
+  <section class="topic" id="threats">
+    <div class="topic-head"><span class="topic-num">02</span><h2>Кіберзагрози та кібергігієна</h2></div>
+
+    <div class="stats">
+      <div class="stat"><b>≈60%</b><span>витоків даних пов’язані з людським чинником (Verizon DBIR 2025)</span></div>
+      <div class="stat"><b>96%</b><span>масових фішингових атак блокував навіть SMS-код як другий фактор (Google, 2019)</span></div>
+      <div class="stat"><b>99%</b><span>масового фішингу блокував запит на пристрої (Google, 2019)</span></div>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+    <p>Більшість атак спрямовані не на «залізо», а на людину. Тому кібергігієна — це насамперед звички.</p>
+
+    <p class="table-cap"><b>Таблиця 2.</b> Поширені кіберзагрози</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Загроза</th><th>Як виглядає</th><th>Як захиститися</th></tr></thead>
+        <tbody>
+          <tr><td><b>Фішинг</b></td><td>Лист чи повідомлення з посиланням на «вхід у Classroom» або «виплату», що веде на підроблений сайт</td><td>Не переходити за посиланнями з неочікуваних повідомлень, перевіряти адресу сайту</td></tr>
+          <tr><td><b>Соціальна інженерія</b></td><td>«Я з банку, назвіть код із SMS», «терміново позич, це я, новий номер»</td><td>Ніколи не повідомляти коди, перевіряти через інший канал зв’язку</td></tr>
+          <tr><td><b>Шахрайські вакансії й оголошення</b></td><td>«Легкий заробіток», передоплата, прохання надіслати фото документів</td><td>Перевіряти роботодавця, не платити за працевлаштування</td></tr>
+          <tr><td><b>Шкідливі програми</b></td><td>Файл «Оцінки_група.apk» чи «документ.exe» у чаті</td><td>Не відкривати невідомі файли, встановлювати застосунки лише з офіційних магазинів</td></tr>
+          <tr><td><b>Витік і крадіжка паролів</b></td><td>Один пароль до всіх сервісів, пароль на папірці біля комп’ютера</td><td>Унікальні довгі паролі, менеджер паролів, двофакторна автентифікація</td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <!-- ТЕСТ: змініть текст запитання та варіантів.
-         data-correct — номер правильної відповіді, відлік від 0 (0 — перший варіант). -->
+    <p><b>Двофакторна автентифікація</b> (2FA) — другий крок підтвердження входу, крім пароля: код, запит на телефоні або апаратний ключ. Дослідження Google (К. Томас, А. Мощицкі, 2019) показало: навіть код у SMS блокував 100 % автоматизованих атак ботів, 96 % масових фішингових атак і 76 % цілеспрямованих атак, а запит на пристрої — відповідно 100 %, 99 % і 90 %.</p>
+
+    <h3 class="sub-h">Правила кібергігієни</h3>
+    <ul class="rules">
+      <li>Довгий унікальний пароль або парольна фраза для кожного сервісу; зручно — менеджер паролів.</li>
+      <li>Двофакторна автентифікація для пошти, Classroom, соцмереж, банківських застосунків.</li>
+      <li>Своєчасні оновлення операційної системи й застосунків.</li>
+      <li>Резервні копії важливих файлів (хмарне сховище або зовнішній диск).</li>
+      <li>Перевірка адреси сайту й відправника перед введенням паролів чи даних картки.</li>
+    </ul>
+
     <div class="box test" id="test-1">
-      <div class="box-title"><span class="box-tag">ТЕСТ 1</span> Назва тесту<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
-      <div class="test-q">Сформулюйте запитання тесту.</div>
-      <div class="quiz" data-correct="0">
-        <button class="test-opt" type="button">варіант відповіді 1 (правильний)</button>
-        <button class="test-opt" type="button">варіант відповіді 2</button>
-        <button class="test-opt" type="button">варіант відповіді 3</button>
-        <button class="test-opt" type="button">варіант відповіді 4</button>
+      <div class="box-title"><span class="box-tag">ТЕСТ 1</span> Фішинг<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Здобувачеві освіти в месенджер надійшло повідомлення: «Ваш акаунт Classroom буде заблоковано через 2 години. Підтвердіть вхід за посиланням». Що це, найімовірніше?</div>
+      <div class="quiz" data-correct="1">
+        <button class="test-opt" type="button">технічне сповіщення Google</button>
+        <button class="test-opt" type="button">фішинг</button>
+        <button class="test-opt" type="button">резервне копіювання</button>
+        <button class="test-opt" type="button">двофакторна автентифікація</button>
         <div class="test-feedback"></div>
       </div>
     </div>
   </section>
 
-  <!-- ================= 3. ВІДКРИТІ ОСВІТНІ РЕСУРСИ ================= -->
-  <section class="topic" id="s3">
-    <div class="topic-head">
-      <span class="topic-num">03</span>
-      <h2>Відкриті освітні ресурси</h2>
-    </div>
+  <!-- ============ 3 ============ -->
+  <section class="topic" id="env">
+    <div class="topic-head"><span class="topic-num">03</span><h2>Безпека в цифровому освітньому середовищі</h2></div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+    <p>Педагог відповідає не лише за власну безпеку, а й за безпечне цифрове середовище групи.</p>
+
+    <div class="cards">
+      <div class="card"><div class="ic">⚙️</div><h3>Налаштування сервісів</h3><p>У Classroom, Google Meet чи Zoom — доступ лише для учасників групи, демонстрацію екрана — не для всіх.</p></div>
+      <div class="card"><div class="ic">🔐</div><h3>Персональні дані</h3><p>Оцінки, телефони, довідки не публікують у відкритих групах (Закон «Про захист персональних даних»).</p></div>
+      <div class="card"><div class="ic">📷</div><h3>Фото з практики</h3><p>Лише за згодою людей у кадрі, для неповнолітніх — за згодою батьків.</p></div>
+      <div class="card"><div class="ic">💬</div><h3>Групові чати</h3><p>Правила спілкування, модератори, жодних сторонніх.</p></div>
+      <div class="card"><div class="ic">👣</div><h3>Цифровий слід</h3><p>Усе опубліковане може прочитати майбутній роботодавець.</p></div>
+      <div class="card"><div class="ic">🔄</div><h3>Оновлення й резервні копії</h3><p>Комп’ютери кабінету й майстерні — з актуальними оновленнями.</p></div>
     </div>
   </section>
 
-  <!-- ================= 4. АКАДЕМІЧНА ДОБРОЧЕСНІСТЬ І ЦИТУВАННЯ ================= -->
-  <section class="topic" id="s4">
-    <div class="topic-head">
-      <span class="topic-num">04</span>
-      <h2>Академічна доброчесність і цитування</h2>
+  <!-- ============ 4 ============ -->
+  <section class="topic" id="bullying">
+    <div class="topic-head"><span class="topic-num">04</span><h2>Кібербулінг: розпізнати й зупинити</h2></div>
+
+    <div class="callout"><b>Булінг (цькування)</b> — діяння (дії або бездіяльність) учасників освітнього процесу, які полягають у психологічному, фізичному, економічному, сексуальному насильстві, у тому числі із застосуванням засобів електронних комунікацій, що вчиняються стосовно малолітньої чи неповнолітньої особи та (або) такою особою стосовно інших учасників освітнього процесу, внаслідок чого могла бути чи була заподіяна шкода психічному або фізичному здоров’ю потерпілого. <i>Закон України від 18.12.2018 № 2657-VIII, зміни до Закону «Про освіту».</i></div>
+
+    <p><b>Кібербулінг</b> — цькування саме за допомогою електронних комунікацій. Типові ознаки булінгу: <b>систематичність</b> (повторюваність), наявність сторін — кривдника, потерпілого та спостерігачів, — і нерівність сил. Одноразова сварка булінгом не є. У цифровому середовищі кібербулінг має свої форми: образливі повідомлення, поширення чужих фото, створення фейкових сторінок, виключення з групових чатів, «тролінг».</p>
+
+    <ol class="steps6">
+      <li><b>Підтримати</b><span>вислухати потерпілого, не звинувачувати, подякувати за довіру</span></li>
+      <li><b>Зберегти докази</b><span>скриншоти з датою, посилання, імена акаунтів</span></li>
+      <li><b>Зупинити поширення</b><span>скарга модераторам платформи, видалення допису в груповому чаті</span></li>
+      <li><b>Повідомити</b><span>керівника закладу освіти за процедурою реагування на булінг, батьків неповнолітніх</span></li>
+      <li><b>Працювати з групою</b><span>психолог, бесіда про правила, підтримка спостерігачів, щоб вони не мовчали</span></li>
+      <li><b>Стежити далі</b><span>перевірити через кілька днів, чи цькування припинилося</span></li>
+    </ol>
+
+    <div class="box test" id="test-3">
+      <div class="box-title"><span class="box-tag">ТЕСТ 2</span> Кібербулінг<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Яка ознака відрізняє булінг від одноразового конфлікту?</div>
+      <div class="quiz" data-correct="1">
+        <button class="test-opt" type="button">наявність свідків</button>
+        <button class="test-opt" type="button">систематичність (повторюваність) дій</button>
+        <button class="test-opt" type="button">використання смартфона</button>
+        <button class="test-opt" type="button">вік учасників</button>
+        <div class="test-feedback"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5 ============ -->
+  <section class="topic" id="media">
+    <div class="topic-head"><span class="topic-num">05</span><h2>Медіаграмотність: перевірка інформації</h2></div>
+
+    <div class="stats">
+      <div class="stat"><b>69%</b><span>українців мають вищий за середній або високий рівень медіаграмотності («Детектор медіа», 2025)</span></div>
+      <div class="stat"><b>9%</b><span>мають високий рівень</span></div>
+      <div class="stat"><b>30%</b><span>ніколи не перевіряють інформацію на достовірність (було 37 %)</span></div>
     </div>
 
-    <div class="draft">
-        <p><b>Зміст розділу в розробці.</b> Додайте сюди теоретичний матеріал: визначення, приклади, схеми, таблиці.</p>
+    <p>Дослідження охопило 1612 респондентів (грудень 2025 року). Медіаграмотність залежить від віку, освіти й доходу: серед людей із середньою освітою 46 % мають низький або нижчий за середній рівень.</p>
+
+    <p>С. Вайнбург і С. Макґрю (Стенфордський університет) порівняли, як оцінюють сайти професійні фактчекери, історики та студенти. Фактчекери читали <b>латерально</b>: швидко залишали сторінку й відкривали нові вкладки, щоб дізнатися, що про це джерело пишуть інші, — і робили правильні висновки швидше. Цю ідею розвиває метод <b>SIFT</b> М. Колфілда.</p>
+
+    <figure class="diagram">
+      <svg viewBox="0 0 900 220" role="img" aria-label="Метод SIFT: чотири кроки — Stop (зупинись), Investigate the source (досліди джерело), Find better coverage (знайди кращі джерела), Trace claims (простеж до першоджерела)">
+        <g font-family="Manrope, sans-serif" text-anchor="middle">
+          <g>
+            <rect x="20" y="30" width="200" height="150" rx="20" style="fill:var(--test)"/>
+            <text x="120" y="95" font-size="54" font-weight="800" fill="#fff" font-family="Unbounded, sans-serif">S</text>
+            <text x="120" y="130" font-size="16" font-weight="800" fill="#fff">Зупинись</text>
+            <text x="120" y="152" font-size="13" fill="#fff">не поширюй одразу</text>
+          </g>
+          <g>
+            <rect x="240" y="30" width="200" height="150" rx="20" style="fill:var(--accent)"/>
+            <text x="340" y="95" font-size="54" font-weight="800" fill="#fff" font-family="Unbounded, sans-serif">I</text>
+            <text x="340" y="130" font-size="16" font-weight="800" fill="#fff">Досліди джерело</text>
+            <text x="340" y="152" font-size="13" fill="#fff">хто автор і навіщо</text>
+          </g>
+          <g>
+            <rect x="460" y="30" width="200" height="150" rx="20" style="fill:var(--navy)"/>
+            <text x="560" y="95" font-size="54" font-weight="800" fill="#fff" font-family="Unbounded, sans-serif">F</text>
+            <text x="560" y="130" font-size="16" font-weight="800" fill="#fff">Знайди кращі джерела</text>
+            <text x="560" y="152" font-size="13" fill="#fff">чи підтверджують інші</text>
+          </g>
+          <g>
+            <rect x="680" y="30" width="200" height="150" rx="20" style="fill:var(--task)"/>
+            <text x="780" y="95" font-size="54" font-weight="800" fill="#fff" font-family="Unbounded, sans-serif">T</text>
+            <text x="780" y="130" font-size="16" font-weight="800" fill="#fff">Простеж оригінал</text>
+            <text x="780" y="152" font-size="13" fill="#fff">чи не вирвано з контексту</text>
+          </g>
+        </g>
+      </svg>
+      <figcaption>Метод SIFT: чотири кроки, щоб за кілька хвилин перевірити допис, фото чи новину.</figcaption>
+    </figure>
+
+    <p class="table-cap"><b>Таблиця 3.</b> Метод SIFT для швидкої перевірки інформації</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>Крок</th><th>Що робити</th><th>Запитання до себе</th></tr></thead>
+        <tbody>
+          <tr><td><b>S — Stop (Зупинись)</b></td><td>Не поширюй одразу, особливо якщо допис викликає сильні емоції</td><td>Чи знаю я це джерело?</td></tr>
+          <tr><td><b>I — Investigate the source (Досліди джерело)</b></td><td>Дізнайся, хто автор чи видання, читаючи латерально</td><td>Хто за цим стоїть і навіщо?</td></tr>
+          <tr><td><b>F — Find better coverage (Знайди кращі джерела)</b></td><td>Пошукай, що пишуть про це надійні медіа</td><td>Чи підтверджують це інші?</td></tr>
+          <tr><td><b>T — Trace claims (Простеж до першоджерела)</b></td><td>Знайди оригінальне фото, документ, дослідження</td><td>Чи не вирвано це з контексту?</td></tr>
+        </tbody>
+      </table>
     </div>
 
-    <!-- ЗАВДАННЯ: кожен пункт списку — окремий крок, який здобувач освіти позначає галочкою. -->
+    <p>Ще один підхід — <b>«психологічне щеплення»</b> (prebunking): людей заздалегідь знайомлять із маніпулятивними прийомами. Дж. Розенбек, С. ван дер Лінден та співавтори (2022) показали короткі 90-секундні відео про такі прийоми, як цапи-відбувайли, хибна дилема чи надмірно емоційна мова. У польовому експерименті на YouTube відео побачили близько 5,4 млн користувачів, і здатність розпізнавати маніпуляції зросла в середньому приблизно на 5 %.</p>
+
+    <p>Окремий виклик — <b>діпфейки</b> та інший контент, створений штучним інтелектом: реалістичні фото, голос і відео людей, які насправді нічого такого не казали. Правило те саме: не довіряти емоційному враженню, шукати першоджерело й підтвердження в надійних медіа.</p>
+
+    <div class="box test" id="test-2">
+      <div class="box-title"><span class="box-tag">ТЕСТ 3</span> Метод SIFT<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="test-q">Ви побачили в Telegram сенсаційне фото з підписом про «закриття всіх коледжів». Яка перша дія за методом SIFT?</div>
+      <div class="quiz" data-correct="1">
+        <button class="test-opt" type="button">одразу переслати групі</button>
+        <button class="test-opt" type="button">зупинитися й не поширювати</button>
+        <button class="test-opt" type="button">поставити лайк</button>
+        <button class="test-opt" type="button">написати коментар</button>
+        <div class="test-feedback"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6 ============ -->
+  <section class="topic" id="vet">
+    <div class="topic-head"><span class="topic-num">06</span><h2>Безпека й медіаграмотність у професійній освіті</h2></div>
+
+    <p>Здобувачі освіти закладів професійної (професійно-технічної) освіти рано виходять на ринок праці, тож особливо вразливі до шахрайських вакансій, «легкого заробітку» та вимагання передоплати. Тому безпеку й медіаграмотність варто інтегрувати у фахові дисципліни, а не лише в окремі виховні години.</p>
+
+    <div class="cards two">
+      <div class="card"><div class="ic">💼</div><h3>Пошук роботи</h3><p>Як перевірити роботодавця, вакансію, договір; чому не можна надсилати фото паспорта в месенджер.</p></div>
+      <div class="card"><div class="ic">🌐</div><h3>Професійні соцмережі й портфоліо</h3><p>Що публікувати, щоб не розкрити персональних даних, і як цифровий слід впливає на працевлаштування.</p></div>
+      <div class="card"><div class="ic">🎬</div><h3>Технічні інструкції</h3><p>Перевірка відео «лайфхаків» із соцмереж, які можуть порушувати правила охорони праці.</p></div>
+      <div class="card"><div class="ic">🖥️</div><h3>Робочі акаунти й обладнання</h3><p>Безпечне користування комп’ютерами підприємства, верстатами з ЧПК, касовими програмами.</p></div>
+    </div>
+
+    <p class="table-cap"><b>Таблиця 4.</b> Три повідомлення для перевірки</p>
+    <div class="table-wrap">
+      <table class="data-table">
+        <thead><tr><th>№</th><th>Повідомлення</th><th>Підказка для аналізу</th></tr></thead>
+        <tbody>
+          <tr><td><b>1</b></td><td>«Терміново! Стипендію нараховано. Підтвердіть картку за посиланням bit.ly/… до 18:00»</td><td>Відправник, терміновість, посилання, прохання про дані картки</td></tr>
+          <tr><td><b>2</b></td><td>«Вакансія: зварювальник, 50 000 грн за тиждень без досвіду. Внесіть 500 грн за оформлення»</td><td>Нереалістичні умови, передоплата, відсутність даних роботодавця</td></tr>
+          <tr><td><b>3</b></td><td>«Нагадуємо: залік з охорони праці — у п’ятницю о 10:00, ауд. 214» (від куратора в офіційному чаті групи)</td><td>Відомий відправник, немає посилань і прохань про дані</td></tr>
+        </tbody>
+      </table>
+    </div>
+
     <div class="box task" id="task-1">
-      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 1</span> Назва практичного завдання<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 1</span> Безпечне чи шахрайське?<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
       <ol>
-        <li>Опишіть перший крок завдання.</li>
-        <li>Опишіть другий крок завдання.</li>
-        <li>Опишіть, де та як здобувач освіти здає результат (наприклад, у <b>Classroom</b>).</li>
+        <li>Прочитайте три повідомлення з таблиці 4.</li>
+        <li>Для кожного визначте: безпечне воно чи шахрайське.</li>
+        <li>Назвіть «червоні прапорці», які ви помітили, і що варто зробити.</li>
+        <li>Запишіть відповідь у Classroom. Час — 10 хвилин.</li>
+      </ol>
+    </div>
+
+    <div class="case">
+      <div class="box-title"><span class="box-tag">КЕЙС</span> «Пересилаю, бо раптом правда»</div>
+      <div class="case-cols">
+        <div class="case-side plus">
+          <h4>📲 Що сталося</h4>
+          <p>Здобувачка освіти переслала в чат групи відео, де нібито керівник області оголошує евакуацію коледжу через загрозу. Відео виглядає переконливо, звук і міміка природні. За кілька хвилин частина групи вже пакує речі, хтось телефонує батькам.</p>
+        </div>
+        <div class="case-side minus">
+          <h4>🔎 Що з’ясував куратор</h4>
+          <p>Офіційних повідомлень немає, на сайтах ОДА й закладу — тиша, а надійні медіа про це не пишуть. Пошук за кадром із відео показує, що оригінальний виступ стосувався зовсім іншої теми — голос і текст згенеровано штучним інтелектом.</p>
+        </div>
+      </div>
+      <div class="box-close"><i>Висновок для педагога:</i> у кризових ситуаціях діють лише офіційні канали; емоційне відео — привід зупинитися й перевірити, а не пересилати. Варто обговорити випадок із групою без осуду здобувачки освіти.</div>
+    </div>
+
+    <h3 class="sub-h">Принципи цифрової безпеки й медіаграмотності</h3>
+    <ul class="rules">
+      <li>Зупинись, перш ніж клікнути чи переслати.</li>
+      <li>Захищай акаунти: унікальні паролі та двофакторна автентифікація.</li>
+      <li>Перевіряй джерело й шукай підтвердження в надійних медіа.</li>
+      <li>Поважай приватність: публікуй чуже лише за згодою.</li>
+      <li>Не мовчи про кібербулінг: підтримай, збережи докази, повідом.</li>
+    </ul>
+
+    <div class="box task" id="task-2">
+      <div class="box-title"><span class="box-tag">ЗАВДАННЯ 2</span> Тест у Google Формах «Цифрова безпека та медіаграмотність»<span class="box-check">✓</span><span class="box-progress" data-progress></span></div>
+      <ol>
+        <li>Відкрийте в <b>Classroom</b> посилання на тест (20 питань, орієнтовно 15 хвилин).</li>
+        <li>Типи питань: один чи кілька правильних варіантів, «правда чи неправда», вибір зі списку, встановлення відповідності.</li>
+        <li>Після надсилання перегляньте результат і пояснення до відповідей.</li>
       </ol>
     </div>
   </section>
 
-  <!-- ================= ПІДСУМОК ================= -->
+  <!-- ============ SUMMARY ============ -->
   <section class="topic" id="summary">
-    <div class="topic-head">
-      <span class="topic-num">✓</span>
-      <h2>Ключові поняття та самоперевірка</h2>
-    </div>
-
+    <div class="topic-head"><span class="topic-num">✓</span><h2>Ключові поняття та самоперевірка</h2></div>
     <h3 class="sub-h" style="margin-top:0">Ключові поняття</h3>
     <dl class="glossary">
-      <div class="term"><dt>Термін 1</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 2</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 3</dt><dd class="placeholder">визначення терміна.</dd></div>
-      <div class="term"><dt>Термін 4</dt><dd class="placeholder">визначення терміна.</dd></div>
+      <div class="term"><dt>Цифрова безпека</dt><dd>знання, уміння й звички для захисту пристроїв, акаунтів, персональних даних і добробуту в цифровому середовищі.</dd></div>
+      <div class="term"><dt>Кібергігієна</dt><dd>щоденні правила безпечної поведінки в мережі: паролі, 2FA, оновлення, резервні копії.</dd></div>
+      <div class="term"><dt>Фішинг</dt><dd>шахрайські повідомлення й сайти, що виманюють паролі чи дані картки.</dd></div>
+      <div class="term"><dt>Соціальна інженерія</dt><dd>маніпулювання людиною, щоб вона сама виконала потрібну зловмиснику дію.</dd></div>
+      <div class="term"><dt>Двофакторна автентифікація</dt><dd>додатковий крок підтвердження входу, крім пароля.</dd></div>
+      <div class="term"><dt>Кібербулінг</dt><dd>цькування із застосуванням засобів електронних комунікацій.</dd></div>
+      <div class="term"><dt>Медіаграмотність</dt><dd>здатність знаходити, критично оцінювати, використовувати й створювати медіаконтент.</dd></div>
+      <div class="term"><dt>Латеральне читання</dt><dd>перевірка джерела через інші вкладки й джерела, а не лише на самій сторінці.</dd></div>
+      <div class="term"><dt>Prebunking</dt><dd>«психологічне щеплення»: заздалегідь знайомити з маніпулятивними прийомами.</dd></div>
+      <div class="term"><dt>Діпфейк</dt><dd>реалістичні фото, відео чи голос, згенеровані штучним інтелектом, які видають за справжні.</dd></div>
     </dl>
-
     <h3 class="sub-h">Питання для самоперевірки</h3>
     <ol class="questions">
-      <li class="placeholder">Питання для самоперевірки.</li>
-      <li class="placeholder">Питання для самоперевірки.</li>
-      <li class="placeholder">Питання для самоперевірки.</li>
+      <li>Що охоплює сфера «Безпека» в рамці DigComp 2.2?</li>
+      <li>Які кіберзагрози найпоширеніші і як від них захиститися?</li>
+      <li>Чому двофакторна автентифікація суттєво підвищує захист акаунтів?</li>
+      <li>Як педагог може забезпечити безпеку цифрового освітнього середовища групи?</li>
+      <li>Як закон визначає булінг (цькування) і які його ознаки?</li>
+      <li>Який алгоритм дій педагога у разі кібербулінгу?</li>
+      <li>У чому суть латерального читання та методу SIFT?</li>
+      <li>Як розпізнати шахрайську вакансію чи повідомлення?</li>
     </ol>
   </section>
 
-  <!-- ================= ЛІТЕРАТУРА ================= -->
-  <section class="lit end" id="literature">
+  <section class="lit" id="literature">
     <h2>Література <span>до теми</span></h2>
     <ol>
-      <li>Додайте джерело, оформлене за ДСТУ 8302:2015.</li>
-      <li>Для електронних ресурсів укажіть URL та дату звернення.</li>
+      <li>Індекс медіаграмотності українців-2025 : дослідження / Детектор медіа. 2026. URL: <a href="https://ms.detector.media/mediadoslidzhennya/post/39012/2026-03-13-69-ukraintsiv-mayut-vyshchyy-za-seredniy-abo-vysokyy-riven-mediagramotnosti-doslidzhennya-detektora-media/" target="_blank" rel="noopener">https://ms.detector.media/mediadoslidzhennya/post/39012/2026-03-13-69-ukraintsiv-mayut-vyshchyy-za-seredniy-abo-vysokyy-riven-mediagramotnosti-doslidzhennya-detektora-media/</a> (дата звернення: 17.11.2026).</li>
+      <li>МКІП презентувало національний проєкт з медіаграмотності «Фільтр» / Укрінформ. 03.08.2021. URL: <a href="https://www.ukrinform.ua/rubric-society/3291556-mkip-prezentuvalo-nacionalnij-proekt-z-mediagramotnosti-filtr.html" target="_blank" rel="noopener">https://www.ukrinform.ua/rubric-society/3291556-mkip-prezentuvalo-nacionalnij-proekt-z-mediagramotnosti-filtr.html</a> (дата звернення: 17.11.2026).</li>
+      <li>Про внесення змін до деяких законодавчих актів України щодо протидії булінгу (цькуванню) : Закон України від 18.12.2018 № 2657-VIII.</li>
+      <li>Про захист персональних даних : Закон України від 01.06.2010 № 2297-VI.</li>
+      <li>Про медіа : Закон України від 13.12.2022 № 2849-IX.</li>
+      <li>Про схвалення Концепції розвитку цифрових компетентностей та затвердження плану заходів щодо її реалізації : розпорядження Кабінету Міністрів України від 03.03.2021 № 167-р.</li>
+      <li>Caulfield M. The SIFT method / Check, Please! URL: <a href="https://checkplease.neocities.org/older-projects/sift-method/" target="_blank" rel="noopener">https://checkplease.neocities.org/older-projects/sift-method/</a> (дата звернення: 17.11.2026).</li>
+      <li>Roozenbeek J., van der Linden S., Goldberg B., Rathje S., Lewandowsky S. Psychological inoculation improves resilience against misinformation on social media // Science Advances. 2022. Vol. 8, No. 34. eabo6254. DOI: 10.1126/sciadv.abo6254.</li>
+      <li>Social media experiment reveals potential to «inoculate» millions of users against misinformation / University of Cambridge. 2022. URL: <a href="https://www.cam.ac.uk/stories/inoculateexperiment" target="_blank" rel="noopener">https://www.cam.ac.uk/stories/inoculateexperiment</a> (дата звернення: 17.11.2026).</li>
+      <li>Thomas K., Moscicki A. New research: How effective is basic account hygiene at preventing hijacking / Google Security Blog. 17.05.2019. URL: <a href="https://security.googleblog.com/2019/05/new-research-how-effective-is-basic.html" target="_blank" rel="noopener">https://security.googleblog.com/2019/05/new-research-how-effective-is-basic.html</a> (дата звернення: 17.11.2026).</li>
+      <li>Verizon. 2025 Data Breach Investigations Report. Verizon Business, 2025.</li>
+      <li>Vuorikari R., Kluzer S., Punie Y. DigComp 2.2: The Digital Competence Framework for Citizens. Luxembourg : Publications Office of the European Union, 2022. URL: <a href="https://publications.jrc.ec.europa.eu/repository/bitstream/JRC128415/JRC128415_01.pdf" target="_blank" rel="noopener">https://publications.jrc.ec.europa.eu/repository/bitstream/JRC128415/JRC128415_01.pdf</a> (дата звернення: 17.11.2026).</li>
+      <li>Wineburg S., McGrew S. Lateral reading and the nature of expertise: Reading less and learning more when evaluating digital information // Teachers College Record. 2019. Vol. 121, No. 11.</li>
     </ol>
   </section>
 
 </main>
 
-<nav class="lecture-nav" id="lectureNav" aria-label="Навігація між лекціями"></nav>
-
 <footer>
   <span>Лекція 14 · Тема 14 · Спеціальність «Професійна освіта»</span>
   <button class="reset-btn" id="resetBtn" type="button">↺ скинути прогрес</button>
-  <span class="mono">оновлено: 08.11.2026</span>
+  <span class="mono">оновлено: 17.11.2026</span>
 </footer>
 
-<script src="assets/js/course.js"></script>
-<script src="assets/js/lecture.js"></script>
+<script>
+(function(){
+  "use strict";
+  var STORE_KEY = 'lecture14-safety-progress-v1';
+
+  function loadState(){
+    try{
+      var raw = localStorage.getItem(STORE_KEY);
+      return raw ? JSON.parse(raw) : {};
+    }catch(e){ return {}; }
+  }
+  function saveState(state){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(state)); }catch(e){}
+  }
+
+  var state = loadState(); // { "task-1": [true,false,...], "test-1": 0 (chosen index) }
+
+  /* ---------- task checklists ---------- */
+  var taskBoxes = Array.prototype.slice.call(document.querySelectorAll('.box.task'));
+
+  function renderTaskBox(box){
+    var id = box.id;
+    var items = state[id] || [];
+    var lis = box.querySelectorAll('ol > li');
+    var doneCount = 0;
+    lis.forEach(function(li, i){
+      var checked = !!items[i];
+      if (checked) doneCount++;
+      var chk = li.querySelector('.chk');
+      if (chk){
+        chk.checked = checked;
+        li.querySelector('.step').classList.toggle('checked', checked);
+      }
+    });
+    var pill = box.querySelector('[data-progress]');
+    if (pill) pill.textContent = doneCount + ' / ' + lis.length + ' виконано';
+    box.classList.toggle('done', lis.length > 0 && doneCount === lis.length);
+    return { done: doneCount, total: lis.length };
+  }
+
+  taskBoxes.forEach(function(box){
+    var id = box.id;
+    var lis = Array.prototype.slice.call(box.querySelectorAll('ol > li'));
+    lis.forEach(function(li, i){
+      var step = document.createElement('label');
+      step.className = 'step';
+      var num = document.createElement('span');
+      num.className = 'num';
+      num.textContent = (i + 1);
+      var chk = document.createElement('input');
+      chk.type = 'checkbox';
+      chk.className = 'chk';
+      chk.setAttribute('aria-label', 'Крок ' + (i + 1) + ' виконано');
+      var textSpan = document.createElement('span');
+      textSpan.className = 'step-text';
+      while (li.firstChild) textSpan.appendChild(li.firstChild);
+      step.appendChild(chk);
+      step.appendChild(num);
+      step.appendChild(textSpan);
+      li.appendChild(step);
+      chk.addEventListener('change', function(){
+        if (!state[id]) state[id] = [];
+        state[id][i] = chk.checked;
+        saveState(state);
+        renderTaskBox(box);
+        updateOverall();
+      });
+    });
+    renderTaskBox(box);
+  });
+
+  /* ---------- quiz boxes ---------- */
+  var quizzes = Array.prototype.slice.call(document.querySelectorAll('.quiz'));
+  quizzes.forEach(function(quiz){
+    var box = quiz.closest('.box');
+    var boxId = box.id;
+    var correct = parseInt(quiz.getAttribute('data-correct'), 10);
+    var buttons = Array.prototype.slice.call(quiz.querySelectorAll('.test-opt'));
+    var feedback = quiz.querySelector('.test-feedback');
+
+    function applyAnswer(chosenIdx, silent){
+      buttons.forEach(function(btn, i){
+        btn.disabled = true;
+        if (i === correct) btn.classList.add('is-correct');
+        if (i === chosenIdx && chosenIdx !== correct) btn.classList.add('is-wrong');
+      });
+      feedback.classList.add('show');
+      if (chosenIdx === correct){
+        feedback.textContent = '✓ Правильно!';
+        feedback.classList.add('correct');
+      } else {
+        feedback.textContent = '✗ Неправильно. Правильна відповідь виділена зеленим.';
+        feedback.classList.add('wrong');
+      }
+      var pill = box.querySelector('[data-progress]');
+      if (pill) pill.textContent = 'пройдено';
+      box.classList.add('done');
+    }
+
+    buttons.forEach(function(btn, i){
+      btn.addEventListener('click', function(){
+        state[boxId] = i;
+        saveState(state);
+        applyAnswer(i);
+        updateOverall();
+      });
+    });
+
+    if (typeof state[boxId] === 'number'){
+      applyAnswer(state[boxId], true);
+    }
+  });
+
+  /* ---------- overall progress ---------- */
+  function updateOverall(){
+    var totalSteps = 0, doneSteps = 0;
+    taskBoxes.forEach(function(box){
+      var r = renderTaskBox(box);
+      totalSteps += r.total;
+      doneSteps += r.done;
+    });
+    quizzes.forEach(function(quiz){
+      totalSteps += 1;
+      var box = quiz.closest('.box');
+      if (box.classList.contains('done')) doneSteps += 1;
+    });
+    var pct = totalSteps ? Math.round((doneSteps / totalSteps) * 100) : 0;
+    var fill = document.getElementById('progressFill');
+    var label = document.getElementById('tocProgress');
+    if (fill) fill.style.width = pct + '%';
+    if (label) label.innerHTML = 'прогрес: <b>' + pct + '%</b>';
+  }
+  updateOverall();
+
+  /* ---------- reset ---------- */
+  var resetBtn = document.getElementById('resetBtn');
+  if (resetBtn){
+    resetBtn.addEventListener('click', function(){
+      try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+      location.reload();
+    });
+  }
+
+  /* ---------- scrollspy ---------- */
+  var sections = Array.prototype.slice.call(document.querySelectorAll('section.topic[id], section.lit[id]'));
+  var tocLinks = {};
+  Array.prototype.slice.call(document.querySelectorAll('.toc-inner a[data-toc]')).forEach(function(a){
+    tocLinks[a.getAttribute('data-toc')] = a;
+  });
+  if ('IntersectionObserver' in window && sections.length){
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var link = tocLinks[entry.target.id];
+        if (!link) return;
+        if (entry.isIntersecting){
+          Object.keys(tocLinks).forEach(function(k){ tocLinks[k].classList.remove('active'); });
+          link.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+    sections.forEach(function(s){ observer.observe(s); });
+  }
+})();
+</script>
+
 </body>
 </html>
